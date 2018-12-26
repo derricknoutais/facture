@@ -13,7 +13,6 @@
             </div>
             <div class="col text-right">
                 <div class="text-right">
-                    
                     <a name="" class="btn btn-secondary disabled" href="#" role="button"><i class="fa fa-envelope"></i></a>
                     <a name="" class="btn btn-secondary disabled" href="#" role="button"><i class="fa 
                     fa-stamp"></i></a>

@@ -62,6 +62,7 @@ Route::prefix('{company_name}')->group(function($company_name){
     Route::prefix('Client')->group(function(){
         Route::get('', 'ClientController@index');
         Route::get('{client}', 'ClientController@show');
+        Route::post('store', 'ClientController@store');
     }); 
     // Payements
     Route::prefix('Payement')->group(function(){
