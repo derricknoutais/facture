@@ -48607,8 +48607,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['document', 'type', 'clients'],
   data: function data() {
@@ -49440,21 +49438,23 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary",
-              attrs: { name: "", href: "#", role: "button" },
-              on: {
-                click: function($event) {
-                  _vm.addLine()
-                }
-              }
-            },
-            [_c("i", { staticClass: "fa fa-plus" })]
-          ),
+          !_vm.validé
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { name: "" },
+                  on: {
+                    click: function($event) {
+                      _vm.addLine()
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-plus" })]
+              )
+            : _vm._e(),
           _vm._v(" "),
-          this.editMode === false && this.infoEditMode === false
+          this.editMode === false && this.infoEditMode === false && !_vm.validé
             ? _c(
                 "button",
                 {
@@ -49502,20 +49502,24 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _c(
-            "a",
-            {
-              class: this.itemsChecked ? "btn btn-danger" : "btn btn-danger",
-              attrs: {
-                name: "",
-                href: "#",
-                role: "button",
-                "data-toggle": "modal",
-                "data-target": "#confirmDeleteModal"
-              }
-            },
-            [_c("i", { staticClass: "fa fa-trash" })]
-          )
+          !_vm.validé
+            ? _c(
+                "a",
+                {
+                  class: this.itemsChecked
+                    ? "btn btn-danger"
+                    : "btn btn-danger",
+                  attrs: {
+                    name: "",
+                    href: "#",
+                    role: "button",
+                    "data-toggle": "modal",
+                    "data-target": "#confirmDeleteModal"
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-trash" })]
+              )
+            : _vm._e()
         ])
       ])
     ]),

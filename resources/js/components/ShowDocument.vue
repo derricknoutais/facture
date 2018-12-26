@@ -135,13 +135,11 @@
                     <button type="button" class="btn btn-danger" v-if="eav" @click="ajouterARejetter(document)" >
                         <i class="fas fa-times"></i>
                     </button>
-                    <button name="" class="btn btn-primary" href="#" role="button" @click="addLine()">
-                        <i class="fa fa-plus"></i>
-                    </button>
-                    <button id="editButton" v-if="this.editMode === false && this.infoEditMode === false" class="btn btn-secondary" href="#" role="button" @click="editSelected()"><i class="fa fa-edit"></i></button>
+                    <button name="" class="btn btn-primary" v-if="!validé" @click="addLine()"><i class="fa fa-plus"></i></button>
+                    <button id="editButton" v-if="this.editMode === false && this.infoEditMode === false && !validé " class="btn btn-secondary" href="#" role="button" @click="editSelected()"><i class="fa fa-edit"></i></button>
                     <button name="" v-if="this.editMode === true" class="btn btn-primary" href="#" role="button" @click="updateSelected()"><i class="fa fa-save"></i></button>
                     <button name="" v-if="this.infoEditMode === true" class="btn btn-primary" href="#" role="button" @click="saveInfo()"><i class="fa fa-save"></i></button>
-                    <a name="" :class="this.itemsChecked ? 'btn btn-danger' : 'btn btn-danger'" href="#" role="button" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i></a>
+                    <a name="" v-if="!validé" :class="this.itemsChecked ? 'btn btn-danger' : 'btn btn-danger'" href="#" role="button" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i></a>
                 </div>
             </div>
         </div>
