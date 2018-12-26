@@ -29,10 +29,10 @@ writtenNumber.defaults.lang = 'fr';
 const app = new Vue({
     el: '#app',
     mounted(){
-        
         $(function () {
-          $('[data-toggle="popover"]').popover()
-        })
+            $('[data-toggle="popover"]').popover()
+            $('[data-toggle="tooltip"]').tooltip()
+        });
     }
 });
 global.wn = writtenNumber

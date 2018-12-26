@@ -9,7 +9,7 @@
         <!-- Boutons de Fonctionnalité -->
         <div class="row mt-5">
             <div class="col text-right">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#newClient"><i class="fa fa-plus"></i></button>
+                <span data-toggle="tooltip" title="Créer Nouveau Client"><button class="btn btn-primary" data-toggle="modal" data-target="#newClient"><i class="fa fa-plus"></i></button></span>
             </div>
         </div>
 

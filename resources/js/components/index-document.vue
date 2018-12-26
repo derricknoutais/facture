@@ -9,16 +9,12 @@
         <!-- Bouttons De Fonctionalité -->
         <div class="row mt-5">
             <div class="col"> 
-                <button data-toggle="collapse" data-target="#filterCollapse" type="button" class="btn btn-primary"><i class="fas fa-filter"></i></button>   
+                <span data-toggle="tooltip" :title="'Filtrer les' + ' ' + type + (type === 'Facture' ? 's': '' )"><button data-toggle="collapse" data-target="#filterCollapse" type="button" class="btn btn-primary"><i class="fas fa-filter"></i></button></span>   
             </div>
             <div class="col text-right">
                 <div class="text-right">
-                    <a name="" class="btn btn-secondary disabled" href="#" role="button"><i class="fa fa-envelope"></i></a>
-                    <a name="" class="btn btn-secondary disabled" href="#" role="button"><i class="fa 
-                    fa-stamp"></i></a>
-
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#newDocument"><i class="fa fa-plus"></i></button>
-                    <a name="" class="btn btn-danger" href="#" role="button" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i></a>
+                    <span data-toggle="tooltip" :title="'Créer ' +  (type === 'Facture' ? 'une nouvelle ': 'un nouveau ' ) + type "><button class="btn btn-primary" data-toggle="modal" data-target="#newDocument"><i class="fa fa-plus"></i></button></span>
+                    <span data-toggle="tooltip" :title="'Supprimer '  + type + (type === 'Facture' ? 's': '' )"><a name="" class="btn btn-danger" href="#" role="button" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i></a></span>
                 </div>
             </div>
         </div>
@@ -49,10 +45,10 @@
                     </select>
                 </div>
                 <div class="col">
-                    <button type="button" class="btn btn-primary mt-4" @click="filtrer()">
+                    <button type="button" class="btn btn-primary mt-4" @click="filtrer()" data-toggle="tooltip" title="Chercher">
                         <i class="fas fa-search"></i>
                     </button>
-                    <button type="button" class="btn btn-danger mt-4" @click="reinitialiserFiltres()">
+                    <button type="button" class="btn btn-danger mt-4" @click="reinitialiserFiltres()" data-toggle="tooltip" title="Réinitialiser Filtres">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
@@ -93,10 +89,10 @@
                             <td>{{ document.etat }}</td>
                             <td>
                                 <div v-if="document.etat === 'E.A.V'">
-                                    <button type="button" class="btn btn-primary btn-sm" @click="ajouterAValider(document)">
+                                    <button type="button" class="btn btn-primary btn-sm" @click="ajouterAValider(document)" data-toggle="tooltip" title="Valider">
                                         <i class="fas fa-check"></i>
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-sm" @click="ajouterARejetter(document)" >
+                                    <button type="button" class="btn btn-danger btn-sm" @click="ajouterARejetter(document)" data-toggle="tooltip" title="Rejeter">
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>

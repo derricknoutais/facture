@@ -14527,6 +14527,7 @@ var app = new Vue({
   mounted: function mounted() {
     $(function () {
       $('[data-toggle="popover"]').popover();
+      $('[data-toggle="tooltip"]').tooltip();
     });
   }
 });
@@ -49392,58 +49393,80 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "col text-right" }, [
         _c("div", { staticClass: "text-right" }, [
-          this.type === "Facture" && _vm.validé
-            ? _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: {
-                    "data-toggle": "modal",
-                    "data-target": "#payementModal"
-                  }
-                },
-                [_c("i", { staticClass: "far fa-money-bill-alt" })]
-              )
-            : _vm._e(),
+          _c(
+            "span",
+            { attrs: { "data-toggle": "tooltip", title: "Ajouter Payement" } },
+            [
+              this.type === "Facture" && _vm.validé
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: {
+                        "data-toggle": "modal",
+                        "data-target": "#payementModal"
+                      }
+                    },
+                    [_c("i", { staticClass: "far fa-money-bill-alt" })]
+                  )
+                : _vm._e()
+            ]
+          ),
           _vm._v(" "),
-          _vm.eav
-            ? _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.ajouterAValider(_vm.document)
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "fas fa-check" })]
-              )
-            : _vm._e(),
+          _c(
+            "span",
+            { attrs: { "data-toggle": "tooltip", title: "Valider" } },
+            [
+              _vm.eav
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.ajouterAValider(_vm.document)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-check" })]
+                  )
+                : _vm._e()
+            ]
+          ),
           _vm._v(" "),
-          _vm.eav
-            ? _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.ajouterARejetter(_vm.document)
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "fas fa-times" })]
-              )
-            : _vm._e(),
+          _c(
+            "span",
+            { attrs: { "data-toggle": "tooltip", title: "Rejetter" } },
+            [
+              _vm.eav
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.ajouterARejetter(_vm.document)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-times" })]
+                  )
+                : _vm._e()
+            ]
+          ),
           _vm._v(" "),
           !_vm.validé
             ? _c(
                 "button",
                 {
                   staticClass: "btn btn-primary",
-                  attrs: { name: "" },
+                  attrs: {
+                    name: "",
+                    "data-toggle": "tooltip",
+                    title: "Ajouter Ligne"
+                  },
                   on: {
                     click: function($event) {
                       _vm.addLine()
@@ -49459,7 +49482,11 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-secondary",
-                  attrs: { id: "editButton", href: "#", role: "button" },
+                  attrs: {
+                    id: "editButton",
+                    "data-toggle": "tooltip",
+                    title: "Modifier"
+                  },
                   on: {
                     click: function($event) {
                       _vm.editSelected()
@@ -49475,7 +49502,11 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-primary",
-                  attrs: { name: "", href: "#", role: "button" },
+                  attrs: {
+                    name: "",
+                    "data-toggle": "tooltip",
+                    title: "Sauvegarder Modifications"
+                  },
                   on: {
                     click: function($event) {
                       _vm.updateSelected()
@@ -49491,7 +49522,11 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-primary",
-                  attrs: { name: "", href: "#", role: "button" },
+                  attrs: {
+                    name: "",
+                    "data-toggle": "tooltip",
+                    title: "Sauvegarder Modifications"
+                  },
                   on: {
                     click: function($event) {
                       _vm.saveInfo()
@@ -49502,24 +49537,30 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          !_vm.validé
-            ? _c(
-                "a",
-                {
-                  class: this.itemsChecked
-                    ? "btn btn-danger"
-                    : "btn btn-danger",
-                  attrs: {
-                    name: "",
-                    href: "#",
-                    role: "button",
-                    "data-toggle": "modal",
-                    "data-target": "#confirmDeleteModal"
-                  }
-                },
-                [_c("i", { staticClass: "fa fa-trash" })]
-              )
-            : _vm._e()
+          _c(
+            "span",
+            { attrs: { "data-toggle": "tooltip", title: "Supprimer Lignes" } },
+            [
+              !_vm.validé
+                ? _c(
+                    "a",
+                    {
+                      class: this.itemsChecked
+                        ? "btn btn-danger"
+                        : "btn btn-danger",
+                      attrs: {
+                        name: "",
+                        href: "#",
+                        role: "button",
+                        "data-toggle": "modal",
+                        "data-target": "#confirmDeleteModal"
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-trash" })]
+                  )
+                : _vm._e()
+            ]
+          )
         ])
       ])
     ]),
@@ -51311,12 +51352,20 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row mt-5" }, [
       _c("div", { staticClass: "col text-right" }, [
         _c(
-          "button",
+          "span",
           {
-            staticClass: "btn btn-primary",
-            attrs: { "data-toggle": "modal", "data-target": "#newClient" }
+            attrs: { "data-toggle": "tooltip", title: "Créer Nouveau Client" }
           },
-          [_c("i", { staticClass: "fa fa-plus" })]
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { "data-toggle": "modal", "data-target": "#newClient" }
+              },
+              [_c("i", { staticClass: "fa fa-plus" })]
+            )
+          ]
         )
       ])
     ])
@@ -51406,10 +51455,6 @@ exports.push([module.i, "\n.no-border{\n      border: none!important;\n}\n.table
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
 //
 //
 //
@@ -51823,7 +51868,54 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(0),
+    _c("div", { staticClass: "row mt-5" }, [
+      _c("div", { staticClass: "col" }, [
+        _c(
+          "span",
+          {
+            attrs: {
+              "data-toggle": "tooltip",
+              title:
+                "Filtrer les" +
+                " " +
+                _vm.type +
+                (_vm.type === "Facture" ? "s" : "")
+            }
+          },
+          [_vm._m(0)]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col text-right" }, [
+        _c("div", { staticClass: "text-right" }, [
+          _c(
+            "span",
+            {
+              attrs: {
+                "data-toggle": "tooltip",
+                title:
+                  "Créer " +
+                  (_vm.type === "Facture" ? "une nouvelle " : "un nouveau ") +
+                  _vm.type
+              }
+            },
+            [_vm._m(1)]
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              attrs: {
+                "data-toggle": "tooltip",
+                title:
+                  "Supprimer " + _vm.type + (_vm.type === "Facture" ? "s" : "")
+              }
+            },
+            [_vm._m(2)]
+          )
+        ])
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -51973,7 +52065,11 @@ var render = function() {
               "button",
               {
                 staticClass: "btn btn-primary mt-4",
-                attrs: { type: "button" },
+                attrs: {
+                  type: "button",
+                  "data-toggle": "tooltip",
+                  title: "Chercher"
+                },
                 on: {
                   click: function($event) {
                     _vm.filtrer()
@@ -51987,7 +52083,11 @@ var render = function() {
               "button",
               {
                 staticClass: "btn btn-danger mt-4",
-                attrs: { type: "button" },
+                attrs: {
+                  type: "button",
+                  "data-toggle": "tooltip",
+                  title: "Réinitialiser Filtres"
+                },
                 on: {
                   click: function($event) {
                     _vm.reinitialiserFiltres()
@@ -52158,7 +52258,11 @@ var render = function() {
                           "button",
                           {
                             staticClass: "btn btn-primary btn-sm",
-                            attrs: { type: "button" },
+                            attrs: {
+                              type: "button",
+                              "data-toggle": "tooltip",
+                              title: "Valider"
+                            },
                             on: {
                               click: function($event) {
                                 _vm.ajouterAValider(document)
@@ -52172,7 +52276,11 @@ var render = function() {
                           "button",
                           {
                             staticClass: "btn btn-danger btn-sm",
-                            attrs: { type: "button" },
+                            attrs: {
+                              type: "button",
+                              "data-toggle": "tooltip",
+                              title: "Rejeter"
+                            },
                             on: {
                               click: function($event) {
                                 _vm.ajouterARejetter(document)
@@ -52209,7 +52317,7 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(1),
+              _vm._m(3),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _vm._v(
@@ -52334,7 +52442,7 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _vm._m(4),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _vm._v(
@@ -52342,7 +52450,7 @@ var render = function() {
                     _vm._s(this.message) +
                     "\n                    "
                 ),
-                _vm._m(3),
+                _vm._m(5),
                 _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
                   _c(
@@ -52395,7 +52503,7 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _vm._m(4)
+                _vm._m(6)
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
@@ -52447,7 +52555,7 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "row mt-3" }, [
-                  _vm._m(5),
+                  _vm._m(7),
                   _vm._v(" "),
                   _c("div", { staticClass: "col" }, [
                     _c("div", { staticClass: "form-check form-check-inline" }, [
@@ -52557,68 +52665,50 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mt-5" }, [
-      _c("div", { staticClass: "col" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary",
-            attrs: {
-              "data-toggle": "collapse",
-              "data-target": "#filterCollapse",
-              type: "button"
-            }
-          },
-          [_c("i", { staticClass: "fas fa-filter" })]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col text-right" }, [
-        _c("div", { staticClass: "text-right" }, [
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-secondary disabled",
-              attrs: { name: "", href: "#", role: "button" }
-            },
-            [_c("i", { staticClass: "fa fa-envelope" })]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-secondary disabled",
-              attrs: { name: "", href: "#", role: "button" }
-            },
-            [_c("i", { staticClass: "fa \n                fa-stamp" })]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary",
-              attrs: { "data-toggle": "modal", "data-target": "#newDocument" }
-            },
-            [_c("i", { staticClass: "fa fa-plus" })]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-danger",
-              attrs: {
-                name: "",
-                href: "#",
-                role: "button",
-                "data-toggle": "modal",
-                "data-target": "#confirmDeleteModal"
-              }
-            },
-            [_c("i", { staticClass: "fa fa-trash" })]
-          )
-        ])
-      ])
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        attrs: {
+          "data-toggle": "collapse",
+          "data-target": "#filterCollapse",
+          type: "button"
+        }
+      },
+      [_c("i", { staticClass: "fas fa-filter" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        attrs: { "data-toggle": "modal", "data-target": "#newDocument" }
+      },
+      [_c("i", { staticClass: "fa fa-plus" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "btn btn-danger",
+        attrs: {
+          name: "",
+          href: "#",
+          role: "button",
+          "data-toggle": "modal",
+          "data-target": "#confirmDeleteModal"
+        }
+      },
+      [_c("i", { staticClass: "fa fa-trash" })]
+    )
   },
   function() {
     var _vm = this

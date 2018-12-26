@@ -126,20 +126,20 @@
             </div>
             <div class="col text-right">
                 <div class="text-right">
-                    <button data-toggle="modal" data-target="#payementModal" class="btn btn-primary" v-if="this.type==='Facture' && validé">
+                    <span data-toggle="tooltip" title="Ajouter Payement"><button data-toggle="modal" data-target="#payementModal" class="btn btn-primary" v-if="this.type==='Facture' && validé">
                         <i class="far fa-money-bill-alt"></i>
-                    </button>
-                    <button type="button" class="btn btn-primary" v-if="eav" @click="ajouterAValider(document)">
+                    </button></span>
+                    <span data-toggle="tooltip" title="Valider"><button type="button" class="btn btn-primary" v-if="eav" @click="ajouterAValider(document)">
                         <i class="fas fa-check"></i>
-                    </button>
-                    <button type="button" class="btn btn-danger" v-if="eav" @click="ajouterARejetter(document)" >
+                    </button></span>
+                    <span data-toggle="tooltip" title="Rejetter"><button type="button" class="btn btn-danger" v-if="eav" @click="ajouterARejetter(document)" >
                         <i class="fas fa-times"></i>
-                    </button>
-                    <button name="" class="btn btn-primary" v-if="!validé" @click="addLine()"><i class="fa fa-plus"></i></button>
-                    <button id="editButton" v-if="this.editMode === false && this.infoEditMode === false && !validé " class="btn btn-secondary" href="#" role="button" @click="editSelected()"><i class="fa fa-edit"></i></button>
-                    <button name="" v-if="this.editMode === true" class="btn btn-primary" href="#" role="button" @click="updateSelected()"><i class="fa fa-save"></i></button>
-                    <button name="" v-if="this.infoEditMode === true" class="btn btn-primary" href="#" role="button" @click="saveInfo()"><i class="fa fa-save"></i></button>
-                    <a name="" v-if="!validé" :class="this.itemsChecked ? 'btn btn-danger' : 'btn btn-danger'" href="#" role="button" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i></a>
+                    </button></span>
+                    <button name="" class="btn btn-primary" v-if="!validé" @click="addLine()" data-toggle="tooltip" title="Ajouter Ligne"><i class="fa fa-plus"></i></button>
+                    <button id="editButton" v-if="this.editMode === false && this.infoEditMode === false && !validé " class="btn btn-secondary" @click="editSelected()" data-toggle="tooltip" title="Modifier"><i class="fa fa-edit"></i></button></span>
+                    <button name="" v-if="this.editMode === true" class="btn btn-primary" @click="updateSelected()" data-toggle="tooltip" title="Sauvegarder Modifications"><i class="fa fa-save"></i></button>
+                    <button name="" v-if="this.infoEditMode === true" class="btn btn-primary" @click="saveInfo()" data-toggle="tooltip" title="Sauvegarder Modifications"><i class="fa fa-save"></i></button>
+                    <span  data-toggle="tooltip" title="Supprimer Lignes"><a name="" v-if="!validé" :class="this.itemsChecked ? 'btn btn-danger' : 'btn btn-danger'" href="#" role="button" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i></a></span>
                 </div>
             </div>
         </div>
