@@ -5,7 +5,7 @@
                 <h1 class="text-center">Répertoire Clients</h1>
             </div>
         </div>
-
+        
         <!-- Boutons de Fonctionnalité -->
         <div class="row mt-5">
             <div class="col text-right">
@@ -35,15 +35,19 @@
 
         <!-- New Client -->
         <div class="modal fade" id="newClient" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
+                    
                     <div class="modal-header">
                         <h5 class="modal-title">Créer Nouveau Client</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    
                     <div class="modal-body">
+                        <div :class="isLoading ? 'spinner' : '' "></div>
                         <label>Nom:</label>
                         <input class="form-control" v-model="newClient.nom">
                         <label>Prénom:</label>
@@ -53,6 +57,7 @@
                         <label>Numéro:</label>
                         <input class="form-control" v-model="newClient.numéro">
                     </div>
+                    
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-success" @click="créerClient()">Créer</button>
@@ -73,7 +78,8 @@ export default {
                 prenom: null,
                 addresse: null,
                 numéro: null
-            }
+            },
+            isLoading: false,
         }
     },
     methods:{
@@ -88,5 +94,58 @@ export default {
     mounted(){
 
     },
+    created(){
+        axios.interceptors.request.use((config) => {
+            this.isLoading = true
+            return config;
+        }, (error) => {
+            this.isLoading = false
+            return Promise.reject(error);
+        });
+
+        axios.interceptors.response.use((response) => {
+            this.isLoading = false
+            return response;
+        }, (error) => {
+            this.isLoading = false
+            return Promise.reject(error);
+        });
+    }
 }
 </script>
+<style>
+    .spinner {
+        position: absolute;
+        left: 44%;
+        top: 43%;
+        height:60px;
+        width:60px;
+        margin:0px auto;
+        -webkit-animation: rotation .6s infinite linear;
+        -moz-animation: rotation .6s infinite linear;
+        -o-animation: rotation .6s infinite linear;
+        animation: rotation .6s infinite linear;
+        border-left:6px solid rgba(0,174,239,.15);
+        border-right:6px solid rgba(0,174,239,.15);
+        border-bottom:6px solid rgba(0,174,239,.15);
+        border-top:6px solid rgba(0,174,239,.8);
+        border-radius:100%;
+    }
+
+    @-webkit-keyframes rotation {
+        from {-webkit-transform: rotate(0deg);}
+        to {-webkit-transform: rotate(359deg);}
+    }
+    @-moz-keyframes rotation {
+        from {-moz-transform: rotate(0deg);}
+        to {-moz-transform: rotate(359deg);}
+    }
+    @-o-keyframes rotation {
+        from {-o-transform: rotate(0deg);}
+        to {-o-transform: rotate(359deg);}
+    }
+    @keyframes rotation {
+        from {transform: rotate(0deg);}
+        to {transform: rotate(359deg);}
+    }
+</style>

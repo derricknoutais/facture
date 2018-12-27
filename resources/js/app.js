@@ -35,5 +35,6 @@ const app = new Vue({
         });
     }
 });
+
 global.wn = writtenNumber
 global.vm = app;

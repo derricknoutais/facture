@@ -14389,6 +14389,10 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(86)
+}
 var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(62)
@@ -14397,7 +14401,7 @@ var __vue_template__ = __webpack_require__(63)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -51152,6 +51156,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['clients', 'company'],
   data: function data() {
@@ -51161,7 +51170,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         prenom: null,
         addresse: null,
         numéro: null
-      }
+      },
+      isLoading: false
     };
   },
   methods: {
@@ -51173,7 +51183,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     }
   },
-  mounted: function mounted() {}
+  mounted: function mounted() {},
+  created: function created() {
+    var _this = this;
+
+    axios.interceptors.request.use(function (config) {
+      _this.isLoading = true;
+      return config;
+    }, function (error) {
+      _this.isLoading = false;
+      return Promise.reject(error);
+    });
+    axios.interceptors.response.use(function (response) {
+      _this.isLoading = false;
+      return response;
+    }, function (error) {
+      _this.isLoading = false;
+      return Promise.reject(error);
+    });
+  }
 });
 
 /***/ }),
@@ -51237,6 +51265,8 @@ var render = function() {
               _vm._m(3),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
+                _c("div", { class: _vm.isLoading ? "spinner" : "" }),
+                _vm._v(" "),
                 _c("label", [_vm._v("Nom:")]),
                 _vm._v(" "),
                 _c("input", {
@@ -51471,7 +51501,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.no-border{\n      border: none!important;\n}\n.table td.fit, \n.table th.fit {\n    white-space: nowrap;\n    width: 1%;\n}\n.scroller {\n    overflow-y: scroll;\n}\n\n", ""]);
+exports.push([module.i, "\n.no-border{\n      border: none!important;\n}\n.table td.fit, \n.table th.fit {\n    white-space: nowrap;\n    width: 1%;\n}\n.scroller {\n    overflow-y: scroll;\n}\n.spinner {\n        position: absolute;\n        left: 44%;\n        top: 43%;\n        height:60px;\n        width:60px;\n        margin:0px auto;\n        -webkit-animation: rotation .6s infinite linear;\n        animation: rotation .6s infinite linear;\n        border-left:6px solid rgba(0,174,239,.15);\n        border-right:6px solid rgba(0,174,239,.15);\n        border-bottom:6px solid rgba(0,174,239,.15);\n        border-top:6px solid rgba(0,174,239,.8);\n        border-radius:100%;\n}\n@-webkit-keyframes rotation {\nfrom {-webkit-transform: rotate(0deg);\n}\nto {-webkit-transform: rotate(359deg);\n}\n}\n@keyframes rotation {\nfrom {-webkit-transform: rotate(0deg);transform: rotate(0deg);\n}\nto {-webkit-transform: rotate(359deg);transform: rotate(359deg);\n}\n}\n\n", ""]);
 
 // exports
 
@@ -51482,6 +51512,7 @@ exports.push([module.i, "\n.no-border{\n      border: none!important;\n}\n.table
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -52534,6 +52565,8 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
+                _c("div", { class: _vm.isLoading ? "spinner" : "" }),
+                _vm._v(" "),
                 _c("input", {
                   staticClass: "form-control",
                   attrs: { disabled: "" },
@@ -53146,6 +53179,49 @@ module.exports=function(r){var t={};function n(e){if(t[e])return t[e].exports;va
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(87);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("de5c712a", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1ba631f1\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./index-client.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1ba631f1\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./index-client.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.spinner {\n    position: absolute;\n    left: 44%;\n    top: 43%;\n    height:60px;\n    width:60px;\n    margin:0px auto;\n    -webkit-animation: rotation .6s infinite linear;\n    animation: rotation .6s infinite linear;\n    border-left:6px solid rgba(0,174,239,.15);\n    border-right:6px solid rgba(0,174,239,.15);\n    border-bottom:6px solid rgba(0,174,239,.15);\n    border-top:6px solid rgba(0,174,239,.8);\n    border-radius:100%;\n}\n@-webkit-keyframes rotation {\nfrom {-webkit-transform: rotate(0deg);\n}\nto {-webkit-transform: rotate(359deg);\n}\n}\n@keyframes rotation {\nfrom {-webkit-transform: rotate(0deg);transform: rotate(0deg);\n}\nto {-webkit-transform: rotate(359deg);transform: rotate(359deg);\n}\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);
