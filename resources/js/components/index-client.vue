@@ -23,7 +23,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="client in clients">
+                        <tr v-for="client in clientLocal">
                             <td scope="row"> 
                                 <a :href="'/' + company.name + '/Client/' + client.id">{{ client.nom + ' ' + client.prénom }}</a>
                             </td>
@@ -80,19 +80,23 @@ export default {
                 numéro: null
             },
             isLoading: false,
+            clientLocal: null
         }
     },
     methods:{
         créerClient(){
             axios.post('/' + this.company.name + '/Client/store', this.newClient ).then( response => {
-                console.log(response.data);
+                this.newClient.prénom = this.newClient.prenom;
+                this.clientLocal.push(this.newClient)
+                this.$forceUpdate();
+                $('#newClient').modal('hide')
             }).catch(error => {
                 console.log(error);
             });
         }
     },
     mounted(){
-
+        this.clientLocal = this.clients;
     },
     created(){
         axios.interceptors.request.use((config) => {

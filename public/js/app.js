@@ -51171,34 +51171,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         addresse: null,
         numéro: null
       },
-      isLoading: false
+      isLoading: false,
+      clientLocal: null
     };
   },
   methods: {
     créerClient: function crErClient() {
+      var _this = this;
+
       axios.post('/' + this.company.name + '/Client/store', this.newClient).then(function (response) {
-        console.log(response.data);
+        _this.newClient.prénom = _this.newClient.prenom;
+
+        _this.clientLocal.push(_this.newClient);
+
+        _this.$forceUpdate();
+
+        $('#newClient').modal('hide');
       }).catch(function (error) {
         console.log(error);
       });
     }
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.clientLocal = this.clients;
+  },
   created: function created() {
-    var _this = this;
+    var _this2 = this;
 
     axios.interceptors.request.use(function (config) {
-      _this.isLoading = true;
+      _this2.isLoading = true;
       return config;
     }, function (error) {
-      _this.isLoading = false;
+      _this2.isLoading = false;
       return Promise.reject(error);
     });
     axios.interceptors.response.use(function (response) {
-      _this.isLoading = false;
+      _this2.isLoading = false;
       return response;
     }, function (error) {
-      _this.isLoading = false;
+      _this2.isLoading = false;
       return Promise.reject(error);
     });
   }
@@ -51224,7 +51235,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.clients, function(client) {
+            _vm._l(_vm.clientLocal, function(client) {
               return _c("tr", [
                 _c("td", { attrs: { scope: "row" } }, [
                   _c(
