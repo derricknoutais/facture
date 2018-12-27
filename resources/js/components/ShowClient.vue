@@ -30,11 +30,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="transaction in transactions">
+                    <span>
+                        
+                    </span>
+                    <tr v-for="transaction in transactions" >
                         <td>{{ transaction.created_at }}</td>
-                        <td>{{ transaction.créateur.name }}</td>
+                        <td v-if="transaction.type !== 'Payement'">{{ transaction.créateur.name }}</td>
+                        <td v-else></td>
                         <td>{{ transaction.type }}</td>
-                        <td>{{ transaction.numéro }}</td>
+                        <td v-if="transaction.type !== 'Payement'">{{ transaction.numéro }}</td>
+                        <td v-else></td>
                         <td>{{ transaction.total | currency }}</td>
                         <td>
                             <a :href="'/'+ company.name+'/' + transaction.type + '/' + transaction.numéro" class="btn btn-primary">
@@ -42,6 +47,7 @@
                             </a>
                         </td>
                     </tr>
+                    
                 </tbody>
             </table>
         </div>
@@ -72,7 +78,12 @@ export default {
             this.transactions.push(devis)
         });
         this.client.factures.forEach( facture => {
-            facture.type = 'Facture'
+            facture.type = 'Facture';
+            console.log(facture.payements)
+            facture.payements.forEach( payement => {
+                payement.type = 'Payement';
+                this.transactions.push(payement)
+            })
             this.transactions.push(facture)
         });
         this.transactions.sort((a,b) => {
@@ -80,11 +91,15 @@ export default {
         })
         this.transactions.reverse();
         this.transactions.forEach(transaction => {
-            let total = 0;
-            transaction.entrees.forEach(entree => {
-                total += (entree.quantité * entree.prix_unitaire)
-            })
-            transaction.total = total
+            if(transaction.type !== 'Payement' ){
+                let total = 0;
+                transaction.entrees.forEach(entree => {
+                    total += (entree.quantité * entree.prix_unitaire)
+                })
+                transaction.total = total
+            } else {
+                transaction.total = transaction.montant
+            }
         })
     }
 }

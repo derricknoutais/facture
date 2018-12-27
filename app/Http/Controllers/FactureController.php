@@ -16,7 +16,7 @@ class FactureController extends Controller
     {
         $company = Company::where('name', $company_name)->first();
         $facture = $company->factures;
-        $clients = Client::all();
+        $clients = $company->clients;
         $vendeurs = Company::where('name', $company_name)->first()->users;
         $facture->loadMissing('créateur', 'company', 'client');
         return view('facture.index', compact('facture', 'clients', 'vendeurs', 'company'));

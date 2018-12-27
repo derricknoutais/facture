@@ -35,7 +35,7 @@ class ClientController extends Controller
     public function show($company, Client $client)
     {
         $company = Company::where('name', $company)->first();
-        $client->loadMissing('factures', 'devis', 'factures.créateur', 'factures.entrees', 'devis.créateur', 'devis.entrees');
+        $client->loadMissing('factures', 'devis', 'factures.créateur', 'factures.entrees', 'factures.payements', 'devis.créateur', 'devis.entrees');
         return view('client.show', compact('client', 'company'));
     }
     public function edit(Client $client)
