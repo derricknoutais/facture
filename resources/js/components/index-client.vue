@@ -96,6 +96,7 @@ export default {
         }
     },
     mounted(){
+        // console.log(this.$root.$data.isLoading)
         this.clientLocal = this.clients;
     },
     created(){
@@ -106,7 +107,6 @@ export default {
             this.isLoading = false
             return Promise.reject(error);
         });
-
         axios.interceptors.response.use((response) => {
             this.isLoading = false
             return response;
@@ -135,7 +135,6 @@ export default {
         border-top:6px solid rgba(0,174,239,.8);
         border-radius:100%;
     }
-
     @-webkit-keyframes rotation {
         from {-webkit-transform: rotate(0deg);}
         to {-webkit-transform: rotate(359deg);}

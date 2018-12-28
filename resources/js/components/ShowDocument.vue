@@ -80,18 +80,7 @@
                     <input type="date" class="form-control" placeholder="Vendeur" v-model="infos.date">
                     <div class="input-group-append">
                         <button class="btn btn-outline-primary" type="button" @click="saveInfo()">
-                            <i class="fa fa-save"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!-- Vendeur -->
-            <div class="col">
-                <div class="input-group mb-3" v-if="document.vendeur === null">
-                    <input type="text" class="form-control" placeholder="Vendeur" v-model="infos.vendeur">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-primary" type="button" @click="saveInfo()">
-                            <i class="fa fa-save"></i>
+                            <i class="fa" :class="isLoading ? 'fa-spinner' : ' fa-save'"></i>
                         </button>
                     </div>
                 </div>
@@ -102,8 +91,9 @@
                     <input type="text" class="form-control" placeholder="Objet" v-model="infos.objet">
                     <div class="input-group-append">
                         <button class="btn btn-outline-primary" type="button" @click="saveInfo()">
-                            <i class="fa fa-save"></i>
+                            <i class="fa" :class="isLoading ? 'fa-spinner' : 'fa-save'"></i>
                         </button>
+
                     </div>
                 </div>
             </div>  
@@ -113,7 +103,7 @@
                     <input type="date" class="form-control" placeholder="Échéance" v-model="infos.échéance">
                     <div class="input-group-append">
                         <button class="btn btn-outline-primary" type="button" @click="saveInfo()">
-                            <i class="fa fa-save"></i>
+                            <i class="fa" :class="isLoading ? 'fa-spinner' : ' fa-save'" ></i>
                         </button>
                     </div>
                 </div>
@@ -396,13 +386,12 @@ export default {
             infoEditMode: false,
             isTaxable18: true,
             isTaxableCss: true,
-
+            isLoading: false,
             itemsChecked: [],
             nouvellesEntrées: [],
             entrees: [],
             message: '',
             errorMsg: '',
-            
             infos: {
                 client_id: null,
                 date: null,
@@ -671,6 +660,7 @@ export default {
     }, 
     mounted(){
         this.entrees = this.document.entrees
+        this.infos.date = this.document.date
         this.infos.vendeur = this.document.vendeur
         this.infos.objet = this.document.objet
     },
@@ -678,6 +668,20 @@ export default {
         this.payment.facture_id = this.document.id
         this.setEntreeEditToFalse();
         this.setElementsCheckedToFalse();
+        axios.interceptors.request.use((config) => {
+            this.isLoading = true
+            return config;
+        }, (error) => {
+            this.isLoading = false
+            return Promise.reject(error);
+        });
+        axios.interceptors.response.use((response) => {
+            this.isLoading = false
+            return response;
+        }, (error) => {
+            this.isLoading = false
+            return Promise.reject(error);
+        });
     }
 }
 </script>

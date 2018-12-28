@@ -511,110 +511,6 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(27);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(10);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(10);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  /**
-   * A timeout in milliseconds to abort a request. If set to 0 (default) a
-   * timeout is not created.
-   */
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports) {
 
 /*
@@ -696,7 +592,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -922,6 +818,110 @@ function applyToTag (styleElement, obj) {
   }
 }
 
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(27);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(10);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(10);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
 /* 6 */
@@ -14391,13 +14391,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(86)
+  __webpack_require__(62)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(62)
+var __vue_script__ = __webpack_require__(64)
 /* template */
-var __vue_template__ = __webpack_require__(63)
+var __vue_template__ = __webpack_require__(65)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -14442,13 +14442,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(64)
+  __webpack_require__(66)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(66)
+var __vue_script__ = __webpack_require__(68)
 /* template */
-var __vue_template__ = __webpack_require__(67)
+var __vue_template__ = __webpack_require__(69)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -14491,7 +14491,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(18);
-module.exports = __webpack_require__(82);
+module.exports = __webpack_require__(84);
 
 
 /***/ }),
@@ -14500,7 +14500,7 @@ module.exports = __webpack_require__(82);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_currency_filter__ = __webpack_require__(81);
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_currency_filter__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_currency_filter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_currency_filter__);
 __webpack_require__(19);
 
@@ -14515,7 +14515,7 @@ Vue.component('company-home', __webpack_require__(14));
 Vue.component('index-document', __webpack_require__(16));
 Vue.component('index-client', __webpack_require__(15)); //Plugins
 
-window.writtenNumber = __webpack_require__(68);
+window.writtenNumber = __webpack_require__(70);
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_currency_filter___default.a, {
   symbol: '',
@@ -14528,12 +14528,17 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_currency_filter___default.a, {
 writtenNumber.defaults.lang = 'fr';
 var app = new Vue({
   el: '#app',
+  data: {
+    isLoading: false
+  },
+  methods: {},
   mounted: function mounted() {
     $(function () {
       $('[data-toggle="popover"]').popover();
       $('[data-toggle="tooltip"]').tooltip();
     });
-  }
+  },
+  created: function created() {}
 });
 global.wn = writtenNumber;
 global.vm = app;
@@ -35701,7 +35706,7 @@ module.exports = __webpack_require__(24);
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(8);
 var Axios = __webpack_require__(26);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(5);
 
 /**
  * Create an instance of Axios
@@ -35784,7 +35789,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(5);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(35);
 var dispatchRequest = __webpack_require__(36);
@@ -36323,7 +36328,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(37);
 var isCancel = __webpack_require__(12);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(5);
 var isAbsoluteURL = __webpack_require__(38);
 var combineURLs = __webpack_require__(39);
 
@@ -48183,7 +48188,7 @@ var content = __webpack_require__(51);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(5)("4a6fefe0", content, false, {});
+var update = __webpack_require__(4)("4a6fefe0", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -48202,7 +48207,7 @@ if(false) {
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(3)(false);
 // imports
 
 
@@ -48629,16 +48634,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['document', 'type', 'clients'],
   data: function data() {
@@ -48648,6 +48643,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       infoEditMode: false,
       isTaxable18: true,
       isTaxableCss: true,
+      isLoading: false,
       itemsChecked: [],
       nouvellesEntrées: [],
       entrees: [],
@@ -48933,13 +48929,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   mounted: function mounted() {
     this.entrees = this.document.entrees;
+    this.infos.date = this.document.date;
     this.infos.vendeur = this.document.vendeur;
     this.infos.objet = this.document.objet;
   },
   created: function created() {
+    var _this11 = this;
+
     this.payment.facture_id = this.document.id;
     this.setEntreeEditToFalse();
     this.setElementsCheckedToFalse();
+    axios.interceptors.request.use(function (config) {
+      _this11.isLoading = true;
+      return config;
+    }, function (error) {
+      _this11.isLoading = false;
+      return Promise.reject(error);
+    });
+    axios.interceptors.response.use(function (response) {
+      _this11.isLoading = false;
+      return response;
+    }, function (error) {
+      _this11.isLoading = false;
+      return Promise.reject(error);
+    });
   }
 });
 
@@ -49279,51 +49292,12 @@ var render = function() {
                       }
                     }
                   },
-                  [_c("i", { staticClass: "fa fa-save" })]
-                )
-              ])
-            ])
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col" }, [
-        _vm.document.vendeur === null
-          ? _c("div", { staticClass: "input-group mb-3" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.infos.vendeur,
-                    expression: "infos.vendeur"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", placeholder: "Vendeur" },
-                domProps: { value: _vm.infos.vendeur },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.infos, "vendeur", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group-append" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-outline-primary",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.saveInfo()
-                      }
-                    }
-                  },
-                  [_c("i", { staticClass: "fa fa-save" })]
+                  [
+                    _c("i", {
+                      staticClass: "fa",
+                      class: _vm.isLoading ? "fa-spinner" : " fa-save"
+                    })
+                  ]
                 )
               ])
             ])
@@ -49367,7 +49341,12 @@ var render = function() {
                       }
                     }
                   },
-                  [_c("i", { staticClass: "fa fa-save" })]
+                  [
+                    _c("i", {
+                      staticClass: "fa",
+                      class: _vm.isLoading ? "fa-spinner" : "fa-save"
+                    })
+                  ]
                 )
               ])
             ])
@@ -49411,7 +49390,12 @@ var render = function() {
                       }
                     }
                   },
-                  [_c("i", { staticClass: "fa fa-save" })]
+                  [
+                    _c("i", {
+                      staticClass: "fa",
+                      class: _vm.isLoading ? "fa-spinner" : " fa-save"
+                    })
+                  ]
                 )
               ])
             ])
@@ -50724,7 +50708,7 @@ var content = __webpack_require__(56);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(5)("3a7cd194", content, false, {});
+var update = __webpack_require__(4)("3a7cd194", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -50743,7 +50727,7 @@ if(false) {
 /* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(3)(false);
 // imports
 
 
@@ -51087,6 +51071,46 @@ if (false) {
 
 /***/ }),
 /* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(63);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("de5c712a", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1ba631f1\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./index-client.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1ba631f1\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./index-client.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.spinner {\n    position: absolute;\n    left: 44%;\n    top: 43%;\n    height:60px;\n    width:60px;\n    margin:0px auto;\n    -webkit-animation: rotation .6s infinite linear;\n    animation: rotation .6s infinite linear;\n    border-left:6px solid rgba(0,174,239,.15);\n    border-right:6px solid rgba(0,174,239,.15);\n    border-bottom:6px solid rgba(0,174,239,.15);\n    border-top:6px solid rgba(0,174,239,.8);\n    border-radius:100%;\n}\n@-webkit-keyframes rotation {\nfrom {-webkit-transform: rotate(0deg);\n}\nto {-webkit-transform: rotate(359deg);\n}\n}\n@keyframes rotation {\nfrom {-webkit-transform: rotate(0deg);transform: rotate(0deg);\n}\nto {-webkit-transform: rotate(359deg);transform: rotate(359deg);\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51193,6 +51217,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   mounted: function mounted() {
+    // console.log(this.$root.$data.isLoading)
     this.clientLocal = this.clients;
   },
   created: function created() {
@@ -51216,7 +51241,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 63 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -51478,17 +51503,17 @@ if (false) {
 }
 
 /***/ }),
-/* 64 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(65);
+var content = __webpack_require__(67);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(5)("38d929cc", content, false, {});
+var update = __webpack_require__(4)("38d929cc", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -51504,21 +51529,21 @@ if(false) {
 }
 
 /***/ }),
-/* 65 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(3)(false);
 // imports
 
 
 // module
-exports.push([module.i, "\n.no-border{\n      border: none!important;\n}\n.table td.fit, \n.table th.fit {\n    white-space: nowrap;\n    width: 1%;\n}\n.scroller {\n    overflow-y: scroll;\n}\n.spinner {\n        position: absolute;\n        left: 44%;\n        top: 43%;\n        height:60px;\n        width:60px;\n        margin:0px auto;\n        -webkit-animation: rotation .6s infinite linear;\n        animation: rotation .6s infinite linear;\n        border-left:6px solid rgba(0,174,239,.15);\n        border-right:6px solid rgba(0,174,239,.15);\n        border-bottom:6px solid rgba(0,174,239,.15);\n        border-top:6px solid rgba(0,174,239,.8);\n        border-radius:100%;\n}\n@-webkit-keyframes rotation {\nfrom {-webkit-transform: rotate(0deg);\n}\nto {-webkit-transform: rotate(359deg);\n}\n}\n@keyframes rotation {\nfrom {-webkit-transform: rotate(0deg);transform: rotate(0deg);\n}\nto {-webkit-transform: rotate(359deg);transform: rotate(359deg);\n}\n}\n\n", ""]);
+exports.push([module.i, "\n.no-border{\n      border: none!important;\n}\n.table td.fit, \n.table th.fit {\n    white-space: nowrap;\n    width: 1%;\n}\n.scroller {\n    overflow-y: scroll;\n}\n.spinner {\n    position: absolute;\n    left: 44%;\n    top: 43%;\n    height:60px;\n    width:60px;\n    margin:0px auto;\n    -webkit-animation: rotation .6s infinite linear;\n    animation: rotation .6s infinite linear;\n    border-left:6px solid rgba(0,174,239,.15);\n    border-right:6px solid rgba(0,174,239,.15);\n    border-bottom:6px solid rgba(0,174,239,.15);\n    border-top:6px solid rgba(0,174,239,.8);\n    border-radius:100%;\n}\n@-webkit-keyframes rotation {\nfrom {-webkit-transform: rotate(0deg);\n}\nto {-webkit-transform: rotate(359deg);\n}\n}\n@keyframes rotation {\nfrom {-webkit-transform: rotate(0deg);transform: rotate(0deg);\n}\nto {-webkit-transform: rotate(359deg);transform: rotate(359deg);\n}\n}\n\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 66 */
+/* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51744,6 +51769,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       isAllChecked: false,
+      isLoading: false,
       aModifier: {
         document: null,
         type: null
@@ -51916,12 +51942,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.localDocs = this.documents;
   },
   created: function created() {
+    var _this8 = this;
+
     this.setElementsCheckedToFalse();
+    axios.interceptors.request.use(function (config) {
+      _this8.isLoading = true;
+      return config;
+    }, function (error) {
+      // this.isLoading = false
+      return Promise.reject(error);
+    });
+    axios.interceptors.response.use(function (response) {
+      // this.isLoading = false
+      return response;
+    }, function (error) {
+      // this.isLoading = false
+      return Promise.reject(error);
+    });
   }
 });
 
 /***/ }),
-/* 67 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -52886,27 +52928,27 @@ if (false) {
 }
 
 /***/ }),
-/* 68 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 exports = module.exports = writtenNumber;
-var util = __webpack_require__(69);
+var util = __webpack_require__(71);
 
 var languages = ["en", "es", "pt", "fr", "eo", "it", "vi", "tr"];
 var i18n = {
-  en: __webpack_require__(70),
-  es: __webpack_require__(71),
-  pt: __webpack_require__(72),
-  ptPT: __webpack_require__(73),
-  fr: __webpack_require__(74),
-  eo: __webpack_require__(75),
-  it: __webpack_require__(76),
-  vi: __webpack_require__(77),
-  tr: __webpack_require__(78),
-  hu: __webpack_require__(79),
-  enIndian: __webpack_require__(80)
+  en: __webpack_require__(72),
+  es: __webpack_require__(73),
+  pt: __webpack_require__(74),
+  ptPT: __webpack_require__(75),
+  fr: __webpack_require__(76),
+  eo: __webpack_require__(77),
+  it: __webpack_require__(78),
+  vi: __webpack_require__(79),
+  tr: __webpack_require__(80),
+  hu: __webpack_require__(81),
+  enIndian: __webpack_require__(82)
 };
 exports.i18n = i18n;
 
@@ -53086,7 +53128,7 @@ function handleSmallerThan100(n, language, unit, baseCardinals, options) {
 
 
 /***/ }),
-/* 69 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53114,125 +53156,82 @@ exports.defaults = defaults;
 
 
 /***/ }),
-/* 70 */
+/* 72 */
 /***/ (function(module, exports) {
 
 module.exports = {"useLongScale":false,"baseSeparator":"-","unitSeparator":"and ","base":{"0":"zero","1":"one","2":"two","3":"three","4":"four","5":"five","6":"six","7":"seven","8":"eight","9":"nine","10":"ten","11":"eleven","12":"twelve","13":"thirteen","14":"fourteen","15":"fifteen","16":"sixteen","17":"seventeen","18":"eighteen","19":"nineteen","20":"twenty","30":"thirty","40":"forty","50":"fifty","60":"sixty","70":"seventy","80":"eighty","90":"ninety"},"units":["hundred","thousand","million","billion","trillion","quadrillion","quintillion","sextillion","septillion","octillion","nonillion","decillion","undecillion","duodecillion","tredecillion","quattuordecillion","quindecillion"],"unitExceptions":[]}
 
 /***/ }),
-/* 71 */
+/* 73 */
 /***/ (function(module, exports) {
 
 module.exports = {"useLongScale":true,"baseSeparator":" y ","unitSeparator":"","base":{"0":"cero","1":"uno","2":"dos","3":"tres","4":"cuatro","5":"cinco","6":"seis","7":"siete","8":"ocho","9":"nueve","10":"diez","11":"once","12":"doce","13":"trece","14":"catorce","15":"quince","16":"dieciséis","17":"diecisiete","18":"dieciocho","19":"diecinueve","20":"veinte","21":"veintiuno","22":"veintidós","23":"veintitrés","24":"veinticuatro","25":"veinticinco","26":"veintiséis","27":"veintisiete","28":"veintiocho","29":"veintinueve","30":"treinta","40":"cuarenta","50":"cincuenta","60":"sesenta","70":"setenta","80":"ochenta","90":"noventa","100":"cien","200":"doscientos","300":"trescientos","400":"cuatrocientos","500":"quinientos","600":"seiscientos","700":"setecientos","800":"ochocientos","900":"novecientos","1000":"mil"},"unitExceptions":{"1":"un"},"units":[{"singular":"ciento","useBaseInstead":true,"useBaseException":[1]},{"singular":"mil","avoidPrefixException":[1]},{"singular":"millón","plural":"millones"},{"singular":"billón","plural":"billones"},{"singular":"trillón","plural":"trillones"},{"singular":"cuatrillón","plural":"cuatrillones"},{"singular":"quintillón","plural":"quintillones"},{"singular":"sextillón","plural":"sextillones"},{"singular":"septillón","plural":"septillones"},{"singular":"octillón","plural":"octillones"},{"singular":"nonillón","plural":"nonillones"},{"singular":"decillón","plural":"decillones"},{"singular":"undecillón","plural":"undecillones"},{"singular":"duodecillón","plural":"duodecillones"},{"singular":"tredecillón","plural":"tredecillones"},{"singular":"cuatrodecillón","plural":"cuatrodecillones"},{"singular":"quindecillón","plural":"quindecillones"}]}
 
 /***/ }),
-/* 72 */
+/* 74 */
 /***/ (function(module, exports) {
 
 module.exports = {"useLongScale":false,"baseSeparator":" e ","unitSeparator":"e ","andWhenTrailing":true,"base":{"0":"zero","1":"um","2":"dois","3":"três","4":"quatro","5":"cinco","6":"seis","7":"sete","8":"oito","9":"nove","10":"dez","11":"onze","12":"doze","13":"treze","14":"catorze","15":"quinze","16":"dezesseis","17":"dezessete","18":"dezoito","19":"dezenove","20":"vinte","30":"trinta","40":"quarenta","50":"cinquenta","60":"sessenta","70":"setenta","80":"oitenta","90":"noventa","100":"cem","200":"duzentos","300":"trezentos","400":"quatrocentos","500":"quinhentos","600":"seiscentos","700":"setecentos","800":"oitocentos","900":"novecentos","1000":"mil"},"unitExceptions":{"1":"um"},"units":[{"singular":"cento","useBaseInstead":true,"useBaseException":[1],"useBaseExceptionWhenNoTrailingNumbers":true,"andException":true},{"singular":"mil","avoidPrefixException":[1],"andException":true},{"singular":"milhão","plural":"milhões"},{"singular":"bilhão","plural":"bilhões"},{"singular":"trilhão","plural":"trilhões"},{"singular":"quadrilhão","plural":"quadrilhão"},{"singular":"quintilhão","plural":"quintilhões"},{"singular":"sextilhão","plural":"sextilhões"},{"singular":"septilhão","plural":"septilhões"},{"singular":"octilhão","plural":"octilhões"},{"singular":"nonilhão","plural":"nonilhões"},{"singular":"decilhão","plural":"decilhões"},{"singular":"undecilhão","plural":"undecilhões"},{"singular":"doudecilhão","plural":"doudecilhões"},{"singular":"tredecilhão","plural":"tredecilhões"}]}
 
 /***/ }),
-/* 73 */
+/* 75 */
 /***/ (function(module, exports) {
 
 module.exports = {"useLongScale":true,"baseSeparator":" e ","unitSeparator":"e ","andWhenTrailing":true,"base":{"0":"zero","1":"um","2":"dois","3":"três","4":"quatro","5":"cinco","6":"seis","7":"sete","8":"oito","9":"nove","10":"dez","11":"onze","12":"doze","13":"treze","14":"catorze","15":"quinze","16":"dezasseis","17":"dezassete","18":"dezoito","19":"dezanove","20":"vinte","30":"trinta","40":"quarenta","50":"cinquenta","60":"sessenta","70":"setenta","80":"oitenta","90":"noventa","100":"cem","200":"duzentos","300":"trezentos","400":"quatrocentos","500":"quinhentos","600":"seiscentos","700":"setecentos","800":"oitocentos","900":"novecentos","1000":"mil"},"unitExceptions":{"1":"um"},"units":[{"singular":"cento","useBaseInstead":true,"useBaseException":[1],"useBaseExceptionWhenNoTrailingNumbers":true,"andException":true},{"singular":"mil","avoidPrefixException":[1],"andException":true},{"singular":"milhão","plural":"milhões"},{"singular":"bilião","plural":"biliões"},{"singular":"trilião","plural":"triliões"},{"singular":"quadrilião","plural":"quadriliões"},{"singular":"quintilião","plural":"quintiliões"},{"singular":"sextilião","plural":"sextiliões"},{"singular":"septilião","plural":"septiliões"},{"singular":"octilião","plural":"octiliões"},{"singular":"nonilião","plural":"noniliões"},{"singular":"decilião","plural":"deciliões"}]}
 
 /***/ }),
-/* 74 */
+/* 76 */
 /***/ (function(module, exports) {
 
 module.exports = {"useLongScale":false,"baseSeparator":"-","unitSeparator":"","base":{"0":"zéro","1":"un","2":"deux","3":"trois","4":"quatre","5":"cinq","6":"six","7":"sept","8":"huit","9":"neuf","10":"dix","11":"onze","12":"douze","13":"treize","14":"quatorze","15":"quinze","16":"seize","17":"dix-sept","18":"dix-huit","19":"dix-neuf","20":"vingt","30":"trente","40":"quarante","50":"cinquante","60":"soixante","70":"soixante-dix","80":"quatre-vingt","90":"quatre-vingt-dix"},"units":[{"singular":"cent","plural":"cents","avoidInNumberPlural":true,"avoidPrefixException":[1]},{"singular":"mille","avoidPrefixException":[1]},{"singular":"million","plural":"millions"},{"singular":"milliard","plural":"milliards"},{"singular":"billion","plural":"billions"},{"singular":"billiard","plural":"billiards"},{"singular":"trillion","plural":"trillions"},{"singular":"trilliard","plural":"trilliards"},{"singular":"quadrillion","plural":"quadrillions"},{"singular":"quadrilliard","plural":"quadrilliards"},{"singular":"quintillion","plural":"quintillions"},{"singular":"quintilliard","plural":"quintilliards"},{"singular":"sextillion","plural":"sextillions"},{"singular":"sextilliard","plural":"sextilliards"},{"singular":"septillion","plural":"septillions"},{"singular":"septilliard","plural":"septilliards"},{"singular":"octillion","plural":"octillions"}],"unitExceptions":{"71":"soixante et onze","72":"soixante-douze","73":"soixante-treize","74":"soixante-quatorze","75":"soixante-quinze","76":"soixante-seize","77":"soixante-dix-sept","78":"soixante-dix-huit","79":"soixante-dix-neuf","80":"quatre-vingts","91":"quatre-vingt-onze","92":"quatre-vingt-douze","93":"quatre-vingt-treize","94":"quatre-vingt-quatorze","95":"quatre-vingt-quinze","96":"quatre-vingt-seize","97":"quatre-vingt-dix-sept","98":"quatre-vingt-dix-huit","99":"quatre-vingt-dix-neuf"}}
 
 /***/ }),
-/* 75 */
+/* 77 */
 /***/ (function(module, exports) {
 
 module.exports = {"useLongScale":false,"baseSeparator":" ","unitSeparator":"","base":{"0":"nulo","1":"unu","2":"du","3":"tri","4":"kvar","5":"kvin","6":"ses","7":"sep","8":"ok","9":"naŭ","10":"dek","20":"dudek","30":"tridek","40":"kvardek","50":"kvindek","60":"sesdek","70":"sepdek","80":"okdek","90":"naŭdek","100":"cent","200":"ducent","300":"tricent","400":"kvarcent","500":"kvincent","600":"sescent","700":"sepcent","800":"okcent","900":"naŭcent"},"units":[{"useBaseInstead":true,"useBaseException":[]},{"singular":"mil","avoidPrefixException":[1]},{"singular":"miliono","plural":"milionoj","avoidPrefixException":[1]},{"singular":"miliardo","plural":"miliardoj","avoidPrefixException":[1]},{"singular":"biliono","plural":"bilionoj","avoidPrefixException":[1]}],"unitExceptions":[]}
 
 /***/ }),
-/* 76 */
+/* 78 */
 /***/ (function(module, exports) {
 
 module.exports = {"useLongScale":false,"baseSeparator":"","unitSeparator":"","generalSeparator":"","wordSeparator":"","base":{"0":"zero","1":"uno","2":"due","3":"tre","4":"quattro","5":"cinque","6":"sei","7":"sette","8":"otto","9":"nove","10":"dieci","11":"undici","12":"dodici","13":"tredici","14":"quattordici","15":"quindici","16":"sedici","17":"diciassette","18":"diciotto","19":"diciannove","20":"venti","21":"ventuno","23":"ventitré","28":"ventotto","30":"trenta","31":"trentuno","33":"trentatré","38":"trentotto","40":"quaranta","41":"quarantuno","43":"quaranta­tré","48":"quarantotto","50":"cinquanta","51":"cinquantuno","53":"cinquantatré","58":"cinquantotto","60":"sessanta","61":"sessantuno","63":"sessanta­tré","68":"sessantotto","70":"settanta","71":"settantuno","73":"settantatré","78":"settantotto","80":"ottanta","81":"ottantuno","83":"ottantatré","88":"ottantotto","90":"novanta","91":"novantuno","93":"novantatré","98":"novantotto","100":"cento","101":"centuno","108":"centootto","180":"centottanta","201":"duecentuno","301":"tre­cent­uno","401":"quattro­cent­uno","501":"cinque­cent­uno","601":"sei­cent­uno","701":"sette­cent­uno","801":"otto­cent­uno","901":"nove­cent­uno"},"unitExceptions":{"1":"un"},"units":[{"singular":"cento","avoidPrefixException":[1]},{"singular":"mille","plural":"mila","avoidPrefixException":[1]},{"singular":"milione","plural":"milioni"},{"singular":"miliardo","plural":"miliardi"},{"singular":"bilione","plural":"bilioni"},{"singular":"biliardo","plural":"biliardi"},{"singular":"trilione","plural":"trilioni"},{"singular":"triliardo","plural":"triliardi"},{"singular":"quadrilione","plural":"quadrilioni"},{"singular":"quadriliardo","plural":"quadriliardi"}]}
 
 /***/ }),
-/* 77 */
+/* 79 */
 /***/ (function(module, exports) {
 
 module.exports = {"useLongScale":false,"baseSeparator":" ","unitSeparator":"và ","base":{"0":"không","1":"một","2":"hai","3":"ba","4":"bốn","5":"năm","6":"sáu","7":"bảy","8":"tám","9":"chín","10":"mười","15":"mười lăm","20":"hai mươi","21":"hai mươi mốt","25":"hai mươi lăm","30":"ba mươi","31":"ba mươi mốt","40":"bốn mươi","41":"bốn mươi mốt","45":"bốn mươi lăm","50":"năm mươi","51":"năm mươi mốt","55":"năm mươi lăm","60":"sáu mươi","61":"sáu mươi mốt","65":"sáu mươi lăm","70":"bảy mươi","71":"bảy mươi mốt","75":"bảy mươi lăm","80":"tám mươi","81":"tám mươi mốt","85":"tám mươi lăm","90":"chín mươi","91":"chín mươi mốt","95":"chín mươi lăm"},"units":["trăm","ngàn","triệu","tỷ","nghìn tỷ"],"unitExceptions":[]}
 
 /***/ }),
-/* 78 */
+/* 80 */
 /***/ (function(module, exports) {
 
 module.exports = {"useLongScale":false,"baseSeparator":" ","unitSeparator":"","base":{"0":"sıfır","1":"bir","2":"iki","3":"üç","4":"dört","5":"beş","6":"altı","7":"yedi","8":"sekiz","9":"dokuz","10":"on","20":"yirmi","30":"otuz","40":"kırk","50":"elli","60":"altmış","70":"yetmiş","80":"seksen","90":"doksan"},"units":[{"singular":"yüz","avoidPrefixException":[1]},{"singular":"bin","avoidPrefixException":[1]},"milyon","milyar","trilyon","katrilyon","kentilyon","sekstilyon","septilyon","oktilyon","nonilyon","desilyon","andesilyon","dodesilyon","tredesilyon","katordesilyon","kendesilyon"],"unitExceptions":[]}
 
 /***/ }),
-/* 79 */
+/* 81 */
 /***/ (function(module, exports) {
 
 module.exports = {"useLongScale":true,"baseSeparator":"","unitSeparator":"és ","base":{"0":"nulla","1":"egy","2":"kettő","3":"három","4":"négy","5":"öt","6":"hat","7":"hét","8":"nyolc","9":"kilenc","10":"tíz","11":"tizenegy","12":"tizenkettő","13":"tizenhárom","14":"tizennégy","15":"tizenöt","16":"tizenhat","17":"tizenhét","18":"tizennyolc","19":"tizenkilenc","20":"húsz","21":"huszonegy","22":"huszonkettő","23":"huszonhárom","24":"huszonnégy","25":"huszonöt","26":"huszonhat","27":"huszonhét","28":"huszonnyolc","29":"huszonkilenc","30":"harminc","40":"negyven","50":"ötven","60":"hatvan","70":"hetven","80":"nyolcvan","90":"kilencven","100":"száz","200":"kétszáz","300":"háromszáz","400":"négyszáz","500":"ötszáz","600":"hatszáz","700":"hétszáz","800":"nyolcszáz","900":"kilencszáz","1000":"ezer"},"unitExceptions":{"1":"egy"},"units":[{"singular":"száz","useBaseInstead":true,"useBaseException":[1]},{"singular":"ezer","avoidPrefixException":[1]},{"singular":"millió","avoidPrefixException":[1]},{"singular":"milliárd","avoidPrefixException":[1]},{"singular":"-billió","avoidPrefixException":[1]},{"singular":"billiárd","avoidPrefixException":[1]},{"singular":"trillió","avoidPrefixException":[1]},{"singular":"trilliárd","avoidPrefixException":[1]},{"singular":"kvadrillió","avoidPrefixException":[1]},{"singular":"kvadrilliárd","avoidPrefixException":[1]},{"singular":"kvintillió","avoidPrefixException":[1]},{"singular":"kvintilliárd","avoidPrefixException":[1]},{"singular":"szextillió","avoidPrefixException":[1]},{"singular":"szeptillió","avoidPrefixException":[1]},{"singular":"oktillió","avoidPrefixException":[1]},{"singular":"nonillió","avoidPrefixException":[1]}]}
 
 /***/ }),
-/* 80 */
+/* 82 */
 /***/ (function(module, exports) {
 
 module.exports = {"useLongScale":false,"baseSeparator":"-","unitSeparator":"and ","base":{"0":"zero","1":"one","2":"two","3":"three","4":"four","5":"five","6":"six","7":"seven","8":"eight","9":"nine","10":"ten","11":"eleven","12":"twelve","13":"thirteen","14":"fourteen","15":"fifteen","16":"sixteen","17":"seventeen","18":"eighteen","19":"nineteen","20":"twenty","30":"thirty","40":"forty","50":"fifty","60":"sixty","70":"seventy","80":"eighty","90":"ninety"},"units":{"2":"hundred","3":"thousand","5":"lakh","7":"crore"},"unitExceptions":[]}
 
 /***/ }),
-/* 81 */
+/* 83 */
 /***/ (function(module, exports) {
 
 module.exports=function(r){var t={};function n(e){if(t[e])return t[e].exports;var o=t[e]={i:e,l:!1,exports:{}};return r[e].call(o.exports,o,o.exports,n),o.l=!0,o.exports}return n.m=r,n.c=t,n.d=function(r,t,e){n.o(r,t)||Object.defineProperty(r,t,{enumerable:!0,get:e})},n.r=function(r){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(r,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(r,"__esModule",{value:!0})},n.t=function(r,t){if(1&t&&(r=n(r)),8&t)return r;if(4&t&&"object"==typeof r&&r&&r.__esModule)return r;var e=Object.create(null);if(n.r(e),Object.defineProperty(e,"default",{enumerable:!0,value:r}),2&t&&"string"!=typeof r)for(var o in r)n.d(e,o,function(t){return r[t]}.bind(null,o));return e},n.n=function(r){var t=r&&r.__esModule?function(){return r.default}:function(){return r};return n.d(t,"a",t),t},n.o=function(r,t){return Object.prototype.hasOwnProperty.call(r,t)},n.p="",n(n.s=0)}([function(r,t,n){"use strict";n.r(t);var e=Array.prototype.map,o=Array.isArray,a=Object.prototype.toString,i={__isNull:function(r){return void 0===r||null===r},__isString:function(r){return!!(""===r||r&&r.charCodeAt&&r.substr)},__isArray:function(r){return o?o(r):"[object Array]"===a.call(r)},__isObject:function(r){return r&&"[object Object]"===a.call(r)},__defaults:function(r,t){var n;for(n in r=r||{},t=t||{})t.hasOwnProperty(n)&&null==r[n]&&(r[n]=t[n]);return r},__map:function(r,t,n){var o,a,i=[];if(!r)return i;if(e&&r.map===e)return r.map(t,n);for(o=0,a=r.length;o<a;o++)i[o]=t.call(n,r[o],o,r);return i}},u={};function s(r,t){return r=Math.round(Math.abs(r)),isNaN(r)?t:r}u.settings={currency:{symbol:"$",format:"%s%v",decimal:".",thousand:",",precision:2,grouping:3},number:{precision:0,grouping:3,thousand:",",decimal:"."}};var c=u.unformat=u.parse=function(r,t){if(i.__isArray(r))return i.__map(r,function(r){return c(r,t)});if("number"==typeof(r=r||0))return r;t=t||u.settings.number.decimal;var n=new RegExp("[^0-9-"+t+"]",["g"]),e=parseFloat((""+r).replace(/\((?=\d+)(.*)\)/,"-$1").replace(n,"").replace(t,"."));return isNaN(e)?0:e},f=u.toFixed=function(r,t){t=s(t,u.settings.number.precision);var n=Number(u.unformat(r)+"e"+t),e=Math.round(n);return Number(e+"e-"+t).toFixed(t)},l=u.formatNumber=u.format=function(r,t,n,e){if(i.__isArray(r))return i.__map(r,function(r){return l(r,t,n,e)});r=c(r);var o=i.__defaults(i.__isObject(t)?t:{precision:t,thousand:n,decimal:e},u.settings.number),a=s(o.precision),p=r<0?"-":"",m=parseInt(f(Math.abs(r||0),a),10)+"",y=m.length>3?m.length%3:0;return p+(y?m.substr(0,y)+o.thousand:"")+m.substr(y).replace(/(\d{3})(?=\d)/g,"$1"+o.thousand)+(a?o.decimal+f(Math.abs(r),a).split(".")[1]:"")},p=u.formatMoney=function(r,t,n,e,o,a){if(i.__isArray(r))return i.__map(r,function(r){return p(r,t,n,e,o,a)});r=c(r);var f=i.__defaults(i.__isObject(t)?t:{symbol:t,precision:n,thousand:e,decimal:o,format:a},u.settings.currency),m=function(r){var t=u.settings.currency.format;return"function"==typeof r&&(r=r()),i.__isString(r)&&r.match("%v")?{pos:r,neg:r.replace("-","").replace("%v","-%v"),zero:r}:r&&r.pos&&r.pos.match("%v")?r:i.__isString(t)?u.settings.currency.format={pos:t,neg:t.replace("%v","-%v"),zero:t}:t}(f.format);return(r>0?m.pos:r<0?m.neg:m.zero).replace("%s",f.symbol).replace("%v",l(Math.abs(r),s(f.precision),f.thousand,f.decimal))},m=u;function y(r){return(y="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(r){return typeof r}:function(r){return r&&"function"==typeof Symbol&&r.constructor===Symbol&&r!==Symbol.prototype?"symbol":typeof r})(r)}var b={install:function(r,t){var n={symbol:"",thousandsSeparator:".",fractionCount:0,fractionSeparator:",",symbolPosition:"front",symbolSpacing:!0};i.__isNull(t)&&(t={});var e=i.__defaults(t,n);r.filter("currency",function(r,t,n,o,a,u,s){var c=i.__defaults({symbol:t,thousandsSeparator:n,fractionCount:o,fractionSeparator:a,symbolPosition:u,symbolSpacing:s},e);"object"===y(t)&&(c=i.__defaults(t,e));var f=0,l="-"===String(r).charAt(0);l&&(r=String(r).slice(1));var p=parseFloat(r);isNaN(p)||(f=p);var b="%s%v";return b="front"===c.symbolPosition?c.symbolSpacing?"%s %v":"%s%v":c.symbolSpacing?"%v %s":"%v%s",c.fractionCount>0&&(r=m.toFixed(r,c.fractionCount)),f=m.formatMoney(r,{format:b,symbol:c.symbol,precision:c.fractionCount,thousand:c.thousandsSeparator,decimal:c.fractionSeparator}),l&&(f="-"+f),f}),r.prototype.$CurrencyFilter={setConfig:function(r){e=i.__defaults(r,n)},getConfig:function(){return e}}}};t.default=b}]);
 
 /***/ }),
-/* 82 */
+/* 84 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 83 */,
-/* 84 */,
-/* 85 */,
-/* 86 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(87);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(5)("de5c712a", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1ba631f1\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./index-client.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1ba631f1\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./index-client.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 87 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(4)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.spinner {\n    position: absolute;\n    left: 44%;\n    top: 43%;\n    height:60px;\n    width:60px;\n    margin:0px auto;\n    -webkit-animation: rotation .6s infinite linear;\n    animation: rotation .6s infinite linear;\n    border-left:6px solid rgba(0,174,239,.15);\n    border-right:6px solid rgba(0,174,239,.15);\n    border-bottom:6px solid rgba(0,174,239,.15);\n    border-top:6px solid rgba(0,174,239,.8);\n    border-radius:100%;\n}\n@-webkit-keyframes rotation {\nfrom {-webkit-transform: rotate(0deg);\n}\nto {-webkit-transform: rotate(359deg);\n}\n}\n@keyframes rotation {\nfrom {-webkit-transform: rotate(0deg);transform: rotate(0deg);\n}\nto {-webkit-transform: rotate(359deg);transform: rotate(359deg);\n}\n}\n", ""]);
-
-// exports
-
 
 /***/ })
 /******/ ]);

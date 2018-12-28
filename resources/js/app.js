@@ -28,11 +28,20 @@ writtenNumber.defaults.lang = 'fr';
 
 const app = new Vue({
     el: '#app',
+    data: {
+        isLoading: false
+    },
+    methods: {
+        
+    },
     mounted(){
         $(function () {
             $('[data-toggle="popover"]').popover()
             $('[data-toggle="tooltip"]').tooltip()
         });
+    },
+    created(){
+
     }
 });
 
