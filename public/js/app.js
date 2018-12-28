@@ -51794,8 +51794,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   computed: {
     newNumber: function newNumber() {
       var firstLetter = '';
-      this.newDocument.numero = this.type.substring(0, 1) + (this.documents.length + 1);
-      return this.type.substring(0, 1) + (this.documents.length + 1);
+      var number = null;
+      if (this.documents.length + 1 < 10) number = '00' + (this.documents.length + 1);else if (this.documents.length + 1 < 100) number = '0' + (this.documents.length + 1);else number = this.documents.length + 1;
+      this.newDocument.numero = this.type.substring(0, 1) + number + '/' + new Date().getFullYear();
+      return this.type.substring(0, 1) + number + '/' + new Date().getFullYear();
     }
   },
   methods: {
@@ -51940,6 +51942,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   mounted: function mounted() {
     this.localDocs = this.documents;
+    console.log();
   },
   created: function created() {
     var _this8 = this;

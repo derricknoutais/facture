@@ -246,8 +246,17 @@ export default {
     computed:{
         newNumber(){
             let firstLetter = '';
-            this.newDocument.numero = (this.type.substring(0,1)  + (this.documents.length + 1));
-            return (this.type.substring(0,1)  + (this.documents.length + 1))
+            let number = null
+            if(this.documents.length + 1 < 10 )
+                number = '00' + (this.documents.length + 1)
+            else if( this.documents.length + 1 < 100 )
+                number = '0' + (this.documents.length + 1)
+            else
+                number = (this.documents.length + 1)
+            
+            this.newDocument.numero = (this.type.substring(0,1)  + number + '/' + new Date().getFullYear());            
+
+            return (this.type.substring(0,1)  + number + '/' + new Date().getFullYear())
         }
     },
     methods:{
@@ -371,6 +380,7 @@ export default {
     },
     mounted(){
         this.localDocs = this.documents;
+        console.log()
     },
     created(){
         this.setElementsCheckedToFalse();
