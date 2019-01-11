@@ -33,8 +33,8 @@
                 <p>Nº {{ type }}: {{ document.numéro }}</p>
                 <p>Vendeur: {{ document.créateur.name }}</p>
                 <p v-if="document.objet !== null">Objet: {{ document.objet }}</p>
-                <p v-if="document.échéance !== null">Échéance: {{ document.échéance }}</p>
-                <p v-if="type === 'Facture' && validé"><a href="#" data-toggle="modal" data-target="#modalPayements"><strong>{{ this.document.payements.length }} {{ this.document.payements.length > 1 ? 'Payements Reçus: ' : 'Payement Reçu: '}}</strong></a> {{ totalPayements | currency}}</p>
+                <p v-if="document.échéance !== null  && this.type === 'Facture'">Échéance: {{ document.échéance }}</p>
+                <p v-if="type === 'Facture' && (validé || eap)"><a href="#" data-toggle="modal" data-target="#modalPayements"><strong>{{ this.document.payements.length }} {{ this.document.payements.length > 1 ? 'Payements Reçus: ' : 'Payement Reçu: '}}</strong></a> {{ totalPayements | currency}}</p>
             </div>
             <div class="col text-right" v-else>
                 <!-- Date -->
@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-
+        <!-- Infos Document -->
         <div class="row mt-5">
             <!-- Date -->
             <div class="col">
@@ -116,7 +116,11 @@
             </div>
             <div class="col text-right">
                 <div class="text-right">
-                    <span data-toggle="tooltip" title="Ajouter Payement"><button data-toggle="modal" data-target="#payementModal" class="btn btn-primary" v-if="this.type==='Facture' && validé">
+                    
+                    <span data-toggle="tooltip" title="Créer Facture"><button data-toggle="modal" data-target="#devisToFactureModal" class="btn btn-primary" v-if="this.type==='Devis' && validé">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </button></span>
+                    <span data-toggle="tooltip" title="Ajouter Payement"><button data-toggle="modal" data-target="#payementModal" class="btn btn-primary" v-if="this.type==='Facture' && (validé || eap || pp) ">
                         <i class="far fa-money-bill-alt"></i>
                     </button></span>
                     <span data-toggle="tooltip" title="Valider"><button type="button" class="btn btn-primary" v-if="eav" @click="ajouterAValider(document)">
@@ -125,11 +129,11 @@
                     <span data-toggle="tooltip" title="Rejetter"><button type="button" class="btn btn-danger" v-if="eav" @click="ajouterARejetter(document)" >
                         <i class="fas fa-times"></i>
                     </button></span>
-                    <button name="" class="btn btn-primary" v-if="!validé" @click="addLine()" data-toggle="tooltip" title="Ajouter Ligne"><i class="fa fa-plus"></i></button>
-                    <button id="editButton" v-if="this.editMode === false && this.infoEditMode === false && !validé " class="btn btn-secondary" @click="editSelected()" data-toggle="tooltip" title="Modifier"><i class="fa fa-edit"></i></button></span>
+                    <button name="" class="btn btn-primary" v-if="!validé && !eap " @click="addLine()" data-toggle="tooltip" title="Ajouter Ligne"><i class="fa fa-plus"></i></button>
+                    <button id="editButton" v-if="this.editMode === false && this.infoEditMode === false && !validé && !eap " class="btn btn-secondary" @click="editSelected()" data-toggle="tooltip" title="Modifier"><i class="fa fa-edit"></i></button></span>
                     <button name="" v-if="this.editMode === true" class="btn btn-primary" @click="updateSelected()" data-toggle="tooltip" title="Sauvegarder Modifications"><i class="fa fa-save"></i></button>
                     <button name="" v-if="this.infoEditMode === true" class="btn btn-primary" @click="saveInfo()" data-toggle="tooltip" title="Sauvegarder Modifications"><i class="fa fa-save"></i></button>
-                    <span  data-toggle="tooltip" title="Supprimer Lignes"><a name="" v-if="!validé" :class="this.itemsChecked ? 'btn btn-danger' : 'btn btn-danger'" href="#" role="button" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i></a></span>
+                    <span  data-toggle="tooltip" title="Supprimer Lignes"><a name="" v-if="!validé && !eap " :class="this.itemsChecked ? 'btn btn-danger' : 'btn btn-danger'" href="#" role="button" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i></a></span>
                 </div>
             </div>
         </div>
@@ -245,7 +249,7 @@
                         <button type="button" class="btn btn-danger" @click="rejetter()" v-if="this.aModifier.etat === 'Rejetté'">
                             Rejeter
                         </button>
-                        <button type="button" class="btn btn-primary" @click="valider()" v-else-if="this.aModifier.etat === 'Validé' || this.aModifier.etat === 'E.A.V'">
+                        <button type="button" class="btn btn-primary" @click="valider()" v-else-if="this.aModifier.etat === 'Validé' || this.aModifier.etat === 'E.A.V' || this.aModifier.etat === 'E.A.P'">
                             Valider
                         </button>
                         <button v-else type="button" class="btn btn-danger"  @click="deleteSelected()" >Delete</button>
@@ -373,12 +377,34 @@
                 </div>
             </div>
         </div>
+
+        <!-- Devis en Facture Modal  -->
+        <div v-if="this.type ==='Devis'" class="modal fade" id="devisToFactureModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Devis ==> Facture</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body">
+                        Êtes-vous sûr de créer une Facture pour ce Devis?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger"  @click="devisToFacture()">Créer Facture</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </template>
 
 <script>
 export default {
-    props:['document', 'type', 'clients'],
+    props:['document', 'type', 'clients', 'documents'],
     data(){
         return {
             isAllChecked: false,
@@ -406,6 +432,12 @@ export default {
                 document: null,
                 type: null
             },
+            newFacture : {
+                client: null,
+                taxable: 0,
+                numero: null,
+                entrees: [],
+            }
         }
     },
     computed: {
@@ -455,12 +487,42 @@ export default {
                 return false
             }
         },
+        eap(){
+           if(this.document.etat === 'E.A.P'){
+               return true
+           } else {
+               return false
+           } 
+        },
         ouvert(){
             if(this.document.etat === 'Ouvert'){
                 return true
             } else {
                 return false
             }
+        },
+        pp(){
+           if(this.document.etat === 'Paiement Partiel'){
+               return true
+            } else {
+               return false
+            }
+        },
+        
+        newNumber(){
+            let firstLetter = '';
+            let number = null
+
+            if(this.documents.length + 1 < 10 )
+                number = '00' + (this.documents.length + 1)
+            else if( this.documents.length + 1 < 100 )
+                number = '0' + (this.documents.length + 1)
+            else
+                number = (this.documents.length + 1)
+
+            this.newFacture.numero = (this.type.substring(0,1)  + number + '/' + new Date().getFullYear());            
+
+            return (this.type.substring(0,1)  + number + '/' + new Date().getFullYear())
         }
     },
     methods:{
@@ -572,6 +634,9 @@ export default {
         },
         // Fonction pour sauvegarder les Informations liés au document (Vendeur,Objet, ...)
         saveInfo(){
+            if(this.document.client_id !== null){
+                this.infos.client_id = this.document.client_id;
+            }
             axios.post('/' + this.document.company.name + '/' + this.type + '/' + this.document.id + '/saveInfo', this.infos).then(response => {
                 this.document.objet = this.infos.objet;
                 this.document.date = this.infos.date;
@@ -607,10 +672,18 @@ export default {
         },
         addPayment(){
             axios.post('/' + this.document.company.name + '/Payement/' + this.document.id + '/addPayment', this.payment ).then(response => {
-                console.log(response.data);
-                $('#payementModal').modal('hide');
-                this.displayModal('Le Payement a été enregistré avec succès')
-
+                if(response.data === 'Erreur'){
+                    $('#payementModal').modal('hide');
+                    this.displayErrorModal("Le montant rentré est supérieur au montant de la facture.", "")
+                    setTimeout(() => {
+                        $('#errorModal').modal('hide')
+                        $('#payementModal').modal('show');
+                    }, 3000);
+                } else {
+                    $('#payementModal').modal('hide');
+                    this.displayModal('Le Payement a été enregistré avec succès')
+                }
+                
             }).catch(error => {
                 console.log(error);
             });
@@ -618,50 +691,70 @@ export default {
         ajouterARejetter(document){
             this.message = "Voulez-vous vraiment rejetter " + this.type + " Nº" + document.numéro + ". Cette action est irréversible";
             this.aModifier.document = document
-            this.aModifier.etat = "Rejetté";
+            this.aModifier.etat = "Rejetté"
             this.$forceUpdate()
             $('#confirmDeleteModal').modal('show')
 
         },
         ajouterAValider(document){
-            this.message = "Voulez-vous vraiment rejetter " + this.type + " Nº" + document.numéro + ". Cette action est irréversible";
+            this.message = "Voulez-vous vraiment valider " + this.type + " Nº" + document.numéro + ". Cette action est irréversible";
             this.aModifier.document = document
-            this.aModifier.etat = "Validé";
+            if (this.type === 'Facture')
+                this.aModifier.etat = "E.A.P"
+            else
+                this.aModifier.etat = "Validé"
             this.$forceUpdate()
             $('#confirmDeleteModal').modal('show')
 
         },
         ajouterAEAV(document){
-            this.message = "Voulez-vous vraiment enregistrer. Une demande de validation sera envoyée si nécessaire " + this.type + " Nº" + document.numéro + ".";
+            this.message = "Voulez-vous vraiment enregistrer la " + this.type + " Nº" + document.numéro + ". Une demande de validation sera envoyée si nécessaire.";
             this.aModifier.document = document
-            this.aModifier.etat = "E.A.V";
+            this.aModifier.etat = "E.A.V"
             this.$forceUpdate()
             $('#confirmDeleteModal').modal('show')
-
         },
         rejetter(){
             axios.post('/' + this.document.company.name + '/' + this.type + '/rejetter', this.aModifier).then(response => {
-                this.displayModal('Le Devis Nº' + this.aModifier.document.numéro +  ' ont été supprimés avec succès')
+                this.displayModal(this.type === 'Facture' ? 'La ' : 'Le ' + this.type + ' Nº' + this.aModifier.document.numéro +  ' a été validé avec succès')
                 this.aModifier.document = null;
                 this.aModifier.etat = null;
             }).catch(error => {
                 this.displayErrorModal("Une erreur est survenue lors du rejet de la nouvelle entrée. S'il vous plaît, veuillez réessayer!", (error.message + '' + error.response.data.message) );
             });
-        },
+        },   
         valider(){
             axios.post('/' + this.document.company.name + '/' + this.type + '/rejetter', this.aModifier).then(response => {
-                this.displayModal('La' + this.type + 'Nº' + this.aModifier.document.numéro +  ' ont été supprimés avec succès')
+                if(this.aModifier.etat === 'E.A.V'){
+                    this.displayModal( (this.type === 'Facture' ? 'La ' : 'Le ') + this.type + ' Nº ' + this.aModifier.document.numéro +  ' a été enregistré avec succès');
+                } else {
+                    this.displayModal( (this.type === 'Facture' ? 'La ' : 'Le ') + this.type + ' Nº ' + this.aModifier.document.numéro +  ' a été validé avec succès');
+                }  
                 this.aModifier.document = null;
                 this.aModifier.etat = null;
             }).catch(error => {
-                this.displayErrorModal("Une erreur est survenue lors du rejet de la nouvelle entrée. S'il vous plaît, veuillez réessayer!", (error.message + '' + error.response.data.message) );
+                this.displayErrorModal("Une erreur est survenue lors de la validation du document. S'il vous plaît, veuillez réessayer!", (error.message + '' + error.response.data.message) );
             });
         },
+        // Transformer un devis en facture
+        devisToFacture(){
+            this.newFacture.client = this.document.client_id;
+            this.newFacture.numero = this.newNumber.replace('D', 'F');
+            this.newFacture.entrees = this.document.entrees;
+            
+            axios.post('/' + this.document.company.name + '/Facture/store', {company: this.document.company_id, document: this.newFacture, infos: this.infos}).then(response => {
+                $('#newDocument').modal('hide');
+                // console.log(response.data.id)
+                window.location.href = '/' + this.document.company.name + '/Facture/' + response.data.id;
+            }).catch(error => {
+                console.log(error);
+            });
+        }
     }, 
     mounted(){
         this.entrees = this.document.entrees
         this.infos.date = this.document.date
-        this.infos.vendeur = this.document.vendeur
+        this.infos.vendeur = this.document.créateur
         this.infos.objet = this.document.objet
     },
     created(){

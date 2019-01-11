@@ -28,4 +28,20 @@ class Facture extends Model
     {
         return $this->hasMany('App\Payement', 'facture_id');
     }
+
+    public function totalPayé(){
+        $total = 0;
+        foreach($this->payements as $payement){
+            $total += $payement->montant;
+        }
+        return $total;
+    }
+    public function montantTotal(){
+        $total = 0;
+        foreach ($this->entrees as $entree) {
+            $total += $entree->quantité * $entree->prix_unitaire;
+        }
+        return $total;
+    }
+
 }

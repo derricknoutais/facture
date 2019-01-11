@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Devis;
+use App\Facture;
 use App\DevisEntree;
 use App\Company;
 use App\Client;
@@ -19,11 +20,13 @@ class DevisController extends Controller
      */
     public function index($company_name)
     {
+        $title = "Cashier | Devis ";
+        $company =  Company::where('name', $company_name)->first();
         $devis = Company::where('name', $company_name)->first()->devis;
-        $clients = Client::all();
+        $clients =  Company::where('name', $company_name)->first()->clients;
         $vendeurs = Company::where('name', $company_name)->first()->users;
         $devis->loadMissing('créateur', 'company', 'client');
-        return view('devis.index', compact('devis', 'clients', 'vendeurs'));
+        return view('devis.index', compact('devis', 'clients', 'vendeurs', 'title', 'company'));
     }
 
     /**
@@ -35,31 +38,28 @@ class DevisController extends Controller
     {
         //
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $devis = Devis::create([
+            'numéro' => $request['document']['numero'],
+            'company_id' => $request->company,
+            'etabli_par' => Auth::user()->id,
+            'client_id'=> $request['document']['client'],
+            'etat' => 'Ouvert'
+        ]);
+        if($devis)
+            return $devis;
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Devis  $devis
-     * @return \Illuminate\Http\Response
-     */
     public function show($company_name, $numero)
     {
+    
         $company = Company::where('name', $company_name)->first();
-        $devis = Devis::where(['company_id' => $company->id, 'numéro' => $numero])->first();
+        $devis = Devis::find($numero);
+        $title = "Cashier | Devis Nº " . $devis->numéro ;
+        $factures = Facture::where('company_id', $company->id)->get();
         $devis->loadMissing(['entrees', 'company', 'client', 'créateur']);
-        $clients = Client::all();
-        return view('devis.show', compact('devis', 'clients'));
+        $clients = $company->clients;
+        return view('devis.show', compact('devis', 'clients', 'factures', 'title'));
     }
 
     /**
@@ -94,7 +94,7 @@ class DevisController extends Controller
     }
 
     public function saveLine($company_name, $numero, Request $request){
-        $devis = Devis::where('numéro', $numero)->first();
+        $devis = Devis::find($numero);
         $devis->loadMissing('entrees');
         $ligne = new DevisEntree();
         $ligne->quantité = $request['quantité'];
@@ -105,7 +105,7 @@ class DevisController extends Controller
     }
 
     public function saveInfo($company_name, $numero, Request $request){
-        $devis = Devis::where('numéro', $numero)->first();
+        $devis = Devis::find( $numero);
         $devis->update([
             'client_id' => $request['client_id'],
             'date' => $request['date'],
@@ -138,7 +138,7 @@ class DevisController extends Controller
 
     public function destroyEntries($company, $numero, Request $request)
     {
-        $devis = Devis::where('numéro', $numero)->first();
+        $devis = Devis::find($numero);
         $devis->loadMissing('entrees');
         for ($i=0; $i < sizeof($request->all()) ; $i++) { 
             if($request[$i] == true){

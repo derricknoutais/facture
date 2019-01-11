@@ -10,6 +10,7 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 Vue.component('company-home', require('./components/company/company-home.vue'));
 Vue.component('index-document', require('./components/index-document.vue'));
 Vue.component('index-client', require('./components/index-client.vue'));
+// Vue.component('caisse-index', require('./components/CaisseIndex.vue'));
 
 //Plugins
 window.writtenNumber = require('written-number');

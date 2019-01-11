@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
+    protected $guarded = [];
     public function users()
     {
         return $this->belongsToMany('App\User', 'user_companies', 'company_id', 'user_id');
@@ -22,5 +23,17 @@ class Company extends Model
     {
         return $this->hasMany('App\Facture', 'company_id');
     }
-
+    public function caisse(){
+        $this->loadMissing(['factures', 'factures.payements']);
+        $totalPaiements = 0;
+        foreach($this->factures as $facture){
+            foreach($facture->payements as $payement){
+                $totalPaiements += $payement->montant;
+            }
+        }
+        return $totalPaiements;
+    }
+    public function retraits(){
+        return $this->hasMany('App\Retrait', 'company_id');
+    }
 }

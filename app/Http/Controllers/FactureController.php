@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Facture;
@@ -14,29 +13,48 @@ class FactureController extends Controller
 {
     public function index($company_name)
     {
+        $title = "Cashier | Facture ";
         $company = Company::where('name', $company_name)->first();
         $facture = $company->factures;
         $clients = $company->clients;
         $vendeurs = Company::where('name', $company_name)->first()->users;
         $facture->loadMissing('créateur', 'company', 'client');
-        return view('facture.index', compact('facture', 'clients', 'vendeurs', 'company'));
+        return view('facture.index', compact('facture', 'clients', 'vendeurs', 'company', 'title'));
     }
     public function create()
-    {
-        
+    { 
     }
     public function store($company, Request $request)
     {
-
         $facture = Facture::create([
             'numéro' => $request['document']['numero'],
             'company_id' => $request->company,
             'etabli_par' => Auth::user()->id,
             'client_id'=> $request['document']['client'],
             'taxable' => $request['document']['taxable'],
-            'etat' => 'Ouvert'
+            'etat' => 'Ouvert',
+            // 'created_by'
         ]);
+        
+        // Si la facture est créée
         if($facture){
+            // Si on veut changer Devis en Facture
+            if(isset($request['document']['entrees'])){
+                $facture->update([
+                    'objet' => $request['infos']['objet'],
+                    'date' => $request['infos']['date'],
+                ]);
+                // Boucle les entrees du devis et cree pour $facture
+                foreach ($request['document']['entrees'] as $entree) {
+                    FactureEntree::create([
+                        'facture_id' => $facture->id,
+                        'quantité' => $entree['quantité'],
+                        'description' => $entree['description'],
+                        'prix_unitaire' => $entree['prix_unitaire']
+                    ]);
+                }
+            }
+            
             return $facture;
         }
     }
@@ -44,9 +62,10 @@ class FactureController extends Controller
     {
         $company = Company::where('name', $company_name)->first();
         $facture = Facture::find($numero);
+        $title = "Cashier | Facture ". $facture->numéro ;
         $facture->loadMissing(['entrees', 'company', 'client', 'créateur', 'payements']);
-        $clients = Client::all();
-        return view('facture.show', compact('facture', 'clients'));
+        $clients = $company->clients;
+        return view('facture.show', compact('facture', 'clients', 'title'));
     }
     public function edit(Devis $devis)
     {
@@ -91,11 +110,6 @@ class FactureController extends Controller
         if($request['objet'] != null){
             $facture->update([
                 'objet' => $request['objet'],
-            ]);
-        }
-        if($request['vendeur'] != null){
-            $facture->update([
-                'vendeur' => $request['vendeur'],
             ]);
         }
         if($request['échéance'] != null){

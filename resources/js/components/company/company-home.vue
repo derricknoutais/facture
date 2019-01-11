@@ -1,35 +1,39 @@
 <template>
-    <div class='container-fluid'>
-        <div class="row mt-6">
-            <div class="col-md-12">
-                <h1 class="text-center">Système de Facturation {{ company.name }} </h1>
+    <div>
+        <div class="container-fluid">
+            <div class="row jumbotron black-gradient">
+                <div class="col-md-12">
+                    <h1 class="text-center text-white">Système de Facturation {{ company.name }} </h1>
+                </div>
             </div>
         </div>
-        <div class="row mt-7 px-7">
-            <a :href="'/' + company.name + '/' + 'Devis'" class=" col border rounded text-center py-6 mx-3 bg-primary">
-                <div>
-                    <img src="/img/icons8-cashflow.png">
-                    <h2 class="mt-3 text-white">Devis</h2>
-                </div>
-            </a>
-            <a :href="'/' + company.name + '/' + 'Facture'" class=" col border rounded text-center py-6 mx-3 bg-primary">
-                <div>
-                    <img src="/img/icons8-receipt.png">
-                    <h3 class="mt-3 text-white">Factures</h3>
-                </div>
-            </a>
-            <a :href="'/' + company.name + '/' + 'Payements'" class=" col border rounded text-center py-6 mx-3 bg-primary">
-                <div>
-                    <img src="/img/icons8-cash_in_hand.png">
-                    <h3 class="mt-3 text-white">Payements</h3>
-                </div>
-            </a>
-            <a :href="'/' + company.name + '/' + 'Client'" class=" col border rounded text-center py-6 mx-3 bg-primary">
-                <div>
-                    <img src="/img/icons8-queue.png">
-                    <h3 class="mt-3 text-white">Clients</h3>
-                </div>
-            </a>
+        <div class='container-fluid'>
+            <div class="row mt-7 px-7">
+                <a :href="'/' + company.name + '/' + 'Devis'" class=" col border rounded text-center py-7 px-3 bg-primary">
+                    <div>
+                        <img src="/img/icons8-cashflow.png">
+                        <h2 class="mt-3 text-white">Devis</h2>
+                    </div>
+                </a>
+                <a :href="'/' + company.name + '/' + 'Facture'" class=" col border rounded text-center py-7 px-3 bg-primary">
+                    <div>
+                        <img src="/img/icons8-receipt.png">
+                        <h3 class="mt-3 text-white">Factures</h3>
+                    </div>
+                </a>
+                <a :href="'/' + company.name + '/' + 'Payement'" class=" col border rounded text-center py-7 px-3 bg-primary">
+                    <div>
+                        <img src="/img/icons8-cash_in_hand.png">
+                        <h3 class="mt-3 text-white">Caisse</h3>
+                    </div>
+                </a>
+                <a :href="'/' + company.name + '/' + 'Client'" class=" col border rounded text-center py-7 px-3 bg-primary">
+                    <div>
+                        <img src="/img/icons8-queue.png">
+                        <h3 class="mt-3 text-white">Clients</h3>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 </template>
@@ -39,7 +43,7 @@ export default {
     props: ['company'],
     data(){
         return {
-
+            
         }
     },
     methods:{
@@ -52,4 +56,11 @@ export default {
 </script>
 <style>
 a { text-decoration: none !important }
+.black-gradient {
+    background: rgb(181,189,200); /* Old browsers */
+    background: -moz-linear-gradient(left, rgba(181,189,200,1) 0%, rgba(130,140,149,1) 40%, rgba(130,140,149,1) 50%, rgba(130,140,149,1) 56%, rgba(130,140,149,1) 62%, rgba(181,189,200,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, rgba(181,189,200,1) 0%,rgba(130,140,149,1) 40%,rgba(130,140,149,1) 50%,rgba(130,140,149,1) 56%,rgba(130,140,149,1) 62%,rgba(181,189,200,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, rgba(181,189,200,1) 0%,rgba(130,140,149,1) 40%,rgba(130,140,149,1) 50%,rgba(130,140,149,1) 56%,rgba(130,140,149,1) 62%,rgba(181,189,200,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5bdc8', endColorstr='#b5bdc8',GradientType=1 ); /* IE6-9 */
+}
 </style>

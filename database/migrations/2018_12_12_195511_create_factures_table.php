@@ -21,7 +21,7 @@ class CreateFacturesTable extends Migration
             $table->unsignedInteger('etabli_par');
             $table->foreign('etabli_par')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('client_id')->nullable();
-            $table->enum('etat', ['Ouvert', 'E.A.V', 'Validé', 'Rejetté', 'Annulé'])->nullable();
+            $table->enum('etat', ['Ouvert', 'E.A.V', 'Validé', 'Rejetté', 'Annulé', 'E.A.P', 'Paiement Partiel', 'Payé', 'Impayé'])->nullable();
             $table->unsignedInteger('verifie_par')->nullable();
             $table->unsignedInteger('facture_id')->nullable();
             $table->longText('objet')->nullable();

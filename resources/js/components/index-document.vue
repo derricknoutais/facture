@@ -57,7 +57,7 @@
         <!-- Tableau des Devis -->
         <div class="row mt-3">
             <div class="col">
-                <table class="table">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th class="fit">
@@ -75,7 +75,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(document, index) in localDocs">
+                        <tr v-for="(document, index) in localDocs" @click="redirectToDocument(document)"> 
                             <td>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
@@ -376,6 +376,9 @@ export default {
             }).catch(error => {
                 console.log(error);
             });
+        },
+        redirectToDocument(document){
+            window.location = '/'+ document.company.name+'/' + this.type + '/' + document.id ;
         }
     },
     mounted(){

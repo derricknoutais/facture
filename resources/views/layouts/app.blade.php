@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ $title }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -20,8 +20,23 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .bg-grey {
+            background-color: #e9ecef
+        }
+        .full-height{
+           height: 100vh; 
+        }
+        .black-gradient {
+            background: rgb(181,189,200); /* Old browsers */
+            background: -moz-linear-gradient(left, rgba(181,189,200,1) 0%, rgba(130,140,149,1) 40%, rgba(130,140,149,1) 50%, rgba(130,140,149,1) 56%, rgba(130,140,149,1) 62%, rgba(181,189,200,1) 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(left, rgba(181,189,200,1) 0%,rgba(130,140,149,1) 40%,rgba(130,140,149,1) 50%,rgba(130,140,149,1) 56%,rgba(130,140,149,1) 62%,rgba(181,189,200,1) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to right, rgba(181,189,200,1) 0%,rgba(130,140,149,1) 40%,rgba(130,140,149,1) 50%,rgba(130,140,149,1) 56%,rgba(130,140,149,1) 62%,rgba(181,189,200,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5bdc8', endColorstr='#b5bdc8',GradientType=1 ); /* IE6-9 */
+        }
+    </style>
 </head>
-<body>
+<body class="full-height flex">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
@@ -74,9 +89,23 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 mb-4">
             @yield('content')
         </main>
+
+        <footer class="fixed-bottom black-gradient">
+            <div class="row pt-4">
+                <div class="col">
+                    <a class="ml-5 mr-2" href="https://www.facebook.com/serv2i" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a class="mx-2" href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+                <div class="col mr-5">
+                    <p class="text-right">
+                        Log'ici<span class="mx-1">&copy;</span>{{ now()->format('Y') }}
+                    </p>
+                </div>
+            </div>
+        </footer>
     </div>
 </body>
 </html>

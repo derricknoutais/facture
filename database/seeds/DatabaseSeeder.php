@@ -24,15 +24,18 @@ class DatabaseSeeder extends Seeder
                         'client_id' => $customer->id
                     ]);
                 }
+                $i == 9 ? $numéro = 'D0' . ($i + 1) . '/2019' :  $numéro = 'D00' . ($i + 1) . '/2019' ;
                 $company->devis()->save( $devis = factory(App\Devis::class)->make([
+                    'numéro' => $numéro,
                     'etabli_par' => $user->id,
                     'client_id' => $customer->id
                 ]));
                 for ($j=0; $j < 10; $j++) { 
                     $devis->entrees()->save(factory(App\DevisEntree::class)->make());
                 }
-
+                $i == 9 ? $numéro = 'F0' . ($i + 1) . '/2019' :  $numéro = 'F00' . ($i + 1) . '/2019' ;
                 $company->factures()->save( $facture = factory(App\Facture::class)->make([
+                    'numéro' => $numéro,
                     'etabli_par' => $user->id,
                     'client_id' => $customer->id
                 ]));

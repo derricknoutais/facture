@@ -8,12 +8,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // Companies
 Route::prefix('{company_name}')->group(function($company_name){
+    Route::post('fermer-caisse', 'CompanyController@fermerCaisse');
     // Devis
     Route::prefix('Devis')->group(function(){
         //Index
         Route::get('', 'DevisController@index');
+
         //Show
         Route::get('{numero}', 'DevisController@show');
+
+        //Store
+        Route::post('/store', 'DevisController@store');
 
         //Delete Entries
         Route::post('{numero}/deleteSelectedItems', 'DevisController@destroyEntries');
@@ -66,6 +71,8 @@ Route::prefix('{company_name}')->group(function($company_name){
     }); 
     // Payements
     Route::prefix('Payement')->group(function(){
+        Route::get('/', 'PayementController@index');
         Route::post('{facture}/addPayment', 'PayementController@store');
+        Route::post('retirer-cash', 'RetraitController@store');
     });
 });

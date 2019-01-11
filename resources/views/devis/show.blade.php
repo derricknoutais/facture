@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.app' , ['title' => $title])
 
 
 @section('content')
-    <show-document :document="{{ $devis }}" type="Devis" :clients="{{ $clients }}"></show-document>
+    <show-document :document="{{ $devis }}" type="Devis" :clients="{{ $clients }}" :documents="{{ $factures }}"></show-document>
 @endsection

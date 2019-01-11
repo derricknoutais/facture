@@ -11,9 +11,10 @@ class ClientController extends Controller
     public function index($company_name)
     {
         $company = Company::where('name', $company_name)->first();
+        $title = 'Cashier | Client';
         $clients = $company->clients;
         
-        return view('client.index', compact(['clients', 'company']));
+        return view('client.index', compact(['clients', 'company', 'title']));
     }
     public function create()
     {
@@ -35,8 +36,9 @@ class ClientController extends Controller
     public function show($company, Client $client)
     {
         $company = Company::where('name', $company)->first();
+        $title = 'Cashier | Détails ' . $client->nom . ' ' . $client->prénom;
         $client->loadMissing('factures', 'devis', 'factures.créateur', 'factures.entrees', 'factures.payements', 'devis.créateur', 'devis.entrees');
-        return view('client.show', compact('client', 'company'));
+        return view('client.show', compact('client', 'company', 'title'));
     }
     public function edit(Client $client)
     {

@@ -14,7 +14,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        return view('company.index');
+        $title = "Cashier | Accueil ";
+        return view('company.index', compact('title'));
     }
 
     /**
@@ -22,9 +23,12 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function fermerCaisse($company_name)
     {
-        //
+        $company = Company::where('name', $company_name)->first();
+        $company->update([
+            'derniere_fermeture_caisse' => now()
+        ]);
     }
 
     /**
