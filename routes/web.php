@@ -1,10 +1,10 @@
 <?php
 // Auth::loginUsingId(1);
-Route::get('/', 'CompanyController@index');
+Route::view('/', 'auth.login');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'CompanyController@index')->name('home');
 
 // Companies
 Route::prefix('{company_name}')->group(function($company_name){
