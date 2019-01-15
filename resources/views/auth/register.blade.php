@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title' => "Cashier | S'enregistrer"])
 
 @section('content')
 <div class="container">
