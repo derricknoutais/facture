@@ -9,25 +9,25 @@
         </div>
         <div class='container-fluid'>
             <div class="row mt-7 px-7">
-                <a :href="'/' + company.name + '/' + 'Devis'" class=" col border rounded text-center py-7 px-3 bg-primary">
+                <a :href="'/' + company.name + '/' + 'Devis'" class=" col border rounded text-center py-7 px-3 mx-1 bg-primary">
                     <div>
                         <img src="/img/icons8-cashflow.png">
                         <h2 class="mt-3 text-white">Devis</h2>
                     </div>
                 </a>
-                <a :href="'/' + company.name + '/' + 'Facture'" class=" col border rounded text-center py-7 px-3 bg-primary">
+                <a :href="'/' + company.name + '/' + 'Facture'" class=" col border rounded text-center py-7 px-3 mx-1 bg-primary">
                     <div>
                         <img src="/img/icons8-receipt.png">
                         <h3 class="mt-3 text-white">Factures</h3>
                     </div>
                 </a>
-                <a :href="'/' + company.name + '/' + 'Payement'" class=" col border rounded text-center py-7 px-3 bg-primary">
+                <a :href="'/' + company.name + '/' + 'Payement'" class=" col border rounded text-center py-7 px-3 mx-1 bg-primary">
                     <div>
                         <img src="/img/icons8-cash_in_hand.png">
                         <h3 class="mt-3 text-white">Caisse</h3>
                     </div>
                 </a>
-                <a :href="'/' + company.name + '/' + 'Client'" class=" col border rounded text-center py-7 px-3 bg-primary">
+                <a :href="'/' + company.name + '/' + 'Client'" class=" col border rounded text-center py-7 px-3 mx-1 bg-primary">
                     <div>
                         <img src="/img/icons8-queue.png">
                         <h3 class="mt-3 text-white">Clients</h3>

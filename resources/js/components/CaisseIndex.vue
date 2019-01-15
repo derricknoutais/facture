@@ -199,7 +199,7 @@ export default {
             return Date.parse(a.created_at) - Date.parse(b.created_at)
         })
         this.transactions.reverse();
-        $('#fermerCaisse').modal('show')
+
     }
 }
 </script>

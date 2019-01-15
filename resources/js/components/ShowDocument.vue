@@ -73,7 +73,7 @@
             </div>
         </div>
         <!-- Infos Document -->
-        <div class="row mt-5">
+        <div class="row mt-5" v-if="!validé && !payé">
             <!-- Date -->
             <div class="col">
                 <div class="input-group mb-3" v-if="document.date === null">
@@ -129,11 +129,11 @@
                     <span data-toggle="tooltip" title="Rejetter"><button type="button" class="btn btn-danger" v-if="eav" @click="ajouterARejetter(document)" >
                         <i class="fas fa-times"></i>
                     </button></span>
-                    <button name="" class="btn btn-primary" v-if="!validé && !eap " @click="addLine()" data-toggle="tooltip" title="Ajouter Ligne"><i class="fa fa-plus"></i></button>
-                    <button id="editButton" v-if="this.editMode === false && this.infoEditMode === false && !validé && !eap " class="btn btn-secondary" @click="editSelected()" data-toggle="tooltip" title="Modifier"><i class="fa fa-edit"></i></button></span>
+                    <button name="" class="btn btn-primary" v-if="!validé && !eap && !payé" @click="addLine()" data-toggle="tooltip" title="Ajouter Ligne"><i class="fa fa-plus"></i></button>
+                    <button id="editButton" v-if="this.editMode === false && this.infoEditMode === false && !validé && !eap && !payé " class="btn btn-secondary" @click="editSelected()" data-toggle="tooltip" title="Modifier"><i class="fa fa-edit"></i></button></span>
                     <button name="" v-if="this.editMode === true" class="btn btn-primary" @click="updateSelected()" data-toggle="tooltip" title="Sauvegarder Modifications"><i class="fa fa-save"></i></button>
                     <button name="" v-if="this.infoEditMode === true" class="btn btn-primary" @click="saveInfo()" data-toggle="tooltip" title="Sauvegarder Modifications"><i class="fa fa-save"></i></button>
-                    <span  data-toggle="tooltip" title="Supprimer Lignes"><a name="" v-if="!validé && !eap " :class="this.itemsChecked ? 'btn btn-danger' : 'btn btn-danger'" href="#" role="button" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i></a></span>
+                    <span  data-toggle="tooltip" title="Supprimer Lignes"><a name="" v-if="!validé && !eap && !payé" :class="this.itemsChecked ? 'btn btn-danger' : 'btn btn-danger'" href="#" role="button" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i></a></span>
                 </div>
             </div>
         </div>
@@ -474,7 +474,7 @@ export default {
             } 
         },
         validé(){
-            if(this.document.etat === 'Validé'){
+            if(this.document.etat === 'Validé' || this.eap || this.pp ){
                 return true
             } else {
                 return false
@@ -508,7 +508,13 @@ export default {
                return false
             }
         },
-        
+        payé(){
+           if(this.document.etat === 'Payé'){
+              return true
+           } else {
+              return false
+           } 
+        },
         newNumber(){
             let firstLetter = '';
             let number = null
