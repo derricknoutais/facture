@@ -1,5 +1,5 @@
 <?php
-// Auth::loginUsingId(1);
+Auth::loginUsingId(1);
 Route::view('/', 'auth.login');
 
 Auth::routes();

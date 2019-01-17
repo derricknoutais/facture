@@ -65,7 +65,8 @@ class FactureController extends Controller
         $title = "Cashier | Facture ". $facture->numéro ;
         $facture->loadMissing(['entrees', 'company', 'client', 'créateur', 'payements']);
         $clients = $company->clients;
-        return view('facture.show', compact('facture', 'clients', 'title'));
+        $user = Auth::user();
+        return view('facture.show', compact('facture', 'clients', 'title', 'user'));
     }
     public function edit(Devis $devis)
     {

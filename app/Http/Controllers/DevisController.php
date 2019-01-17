@@ -25,6 +25,7 @@ class DevisController extends Controller
         $devis = Company::where('name', $company_name)->first()->devis;
         $clients =  Company::where('name', $company_name)->first()->clients;
         $vendeurs = Company::where('name', $company_name)->first()->users;
+        
         $devis->loadMissing('créateur', 'company', 'client');
         return view('devis.index', compact('devis', 'clients', 'vendeurs', 'title', 'company'));
     }
@@ -59,7 +60,8 @@ class DevisController extends Controller
         $factures = Facture::where('company_id', $company->id)->get();
         $devis->loadMissing(['entrees', 'company', 'client', 'créateur']);
         $clients = $company->clients;
-        return view('devis.show', compact('devis', 'clients', 'factures', 'title'));
+        $user = Auth::user();
+        return view('devis.show', compact('devis', 'clients', 'factures', 'title', 'user'));
     }
 
     /**

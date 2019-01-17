@@ -21,7 +21,7 @@
                         <h3 class="mt-3 text-white">Factures</h3>
                     </div>
                 </a>
-                <a :href="'/' + company.name + '/' + 'Payement'" class=" col border rounded text-center py-7 px-3 mx-1 bg-primary">
+                <a :href="'/' + company.name + '/' + 'Payement'" class=" col border rounded text-center py-7 px-3 mx-1 bg-primary" v-if="manager">
                     <div>
                         <img src="/img/icons8-cash_in_hand.png">
                         <h3 class="mt-3 text-white">Caisse</h3>
@@ -40,7 +40,7 @@
 
 <script>
 export default {
-    props: ['company'],
+    props: ['company', 'user'],
     data(){
         return {
             
@@ -48,6 +48,15 @@ export default {
     },
     methods:{
 
+    },
+    computed: {
+        manager(){
+            if(this.user.role === 'Manager'){
+                return true
+            } else {
+                return false
+            }
+        }
     },
     mounted(){
 

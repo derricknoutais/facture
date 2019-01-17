@@ -26,7 +26,7 @@
             <div 
                 @if($loop->first) class="tab-pane fade show active" @else class="tab-pane fade" @endif
                 id="company{{ $company->id }}" role="tabpanel" aria-labelledby="nav-profile-tab">
-                <company-home :company="{{ $company }}"></company-home>
+                <company-home :company="{{ $company }}" :user="{{ $user }}"></company-home>
             </div>
             
         @endforeach

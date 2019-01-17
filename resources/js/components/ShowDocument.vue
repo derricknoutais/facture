@@ -1,5 +1,5 @@
 <template>
-    <div class='container'>
+    <div class='container mb$user = Auth::user();$user = Auth::user();$user = Auth::user();$user = Auth::user();$user = Auth::user();$user = Auth::user();-5'>
         <!-- En-tête  -->
         <div class="row mt-3">
             <div class="col">
@@ -117,22 +117,30 @@
             <div class="col text-right">
                 <div class="text-right">
                     
-                    <span data-toggle="tooltip" title="Créer Facture"><button data-toggle="modal" data-target="#devisToFactureModal" class="btn btn-primary" v-if="this.type==='Devis' && validé">
+                    <!-- Créer Facture -->
+                    <span data-toggle="tooltip" title="Créer Facture"><button data-toggle="modal" data-target="#devisToFactureModal" class="btn btn-primary" v-if="this.type==='Devis' && validé && manager">
                         <i class="fas fa-file-invoice-dollar"></i>
                     </button></span>
-                    <span data-toggle="tooltip" title="Ajouter Payement"><button data-toggle="modal" data-target="#payementModal" class="btn btn-primary" v-if="this.type==='Facture' && (validé || eap || pp) ">
+                    <!-- Ajouter Payement -->
+                    <span data-toggle="tooltip" title="Ajouter Payement"><button data-toggle="modal" data-target="#payementModal" class="btn btn-primary" v-if="this.type==='Facture' && (validé || eap || pp) && manager">
                         <i class="far fa-money-bill-alt"></i>
                     </button></span>
-                    <span data-toggle="tooltip" title="Valider"><button type="button" class="btn btn-primary" v-if="eav" @click="ajouterAValider(document)">
+                    <!-- Valider Facture -->
+                    <span data-toggle="tooltip" title="Valider"><button type="button" class="btn btn-primary" v-if="eav && manager" @click="ajouterAValider(document)">
                         <i class="fas fa-check"></i>
                     </button></span>
-                    <span data-toggle="tooltip" title="Rejetter"><button type="button" class="btn btn-danger" v-if="eav" @click="ajouterARejetter(document)" >
+                    <!-- Rejetter Facture -->
+                    <span data-toggle="tooltip" title="Rejetter"><button type="button" class="btn btn-danger" v-if="eav && manager" @click="ajouterARejetter(document)" >
                         <i class="fas fa-times"></i>
                     </button></span>
+                    <!-- Ajouter Ligne -->
                     <button name="" class="btn btn-primary" v-if="!validé && !eap && !payé" @click="addLine()" data-toggle="tooltip" title="Ajouter Ligne"><i class="fa fa-plus"></i></button>
+                    <!-- Editer -->
                     <button id="editButton" v-if="this.editMode === false && this.infoEditMode === false && !validé && !eap && !payé " class="btn btn-secondary" @click="editSelected()" data-toggle="tooltip" title="Modifier"><i class="fa fa-edit"></i></button></span>
+                    <!-- Sauvegarder Modif -->
                     <button name="" v-if="this.editMode === true" class="btn btn-primary" @click="updateSelected()" data-toggle="tooltip" title="Sauvegarder Modifications"><i class="fa fa-save"></i></button>
                     <button name="" v-if="this.infoEditMode === true" class="btn btn-primary" @click="saveInfo()" data-toggle="tooltip" title="Sauvegarder Modifications"><i class="fa fa-save"></i></button>
+                    <!-- Supprimer  -->
                     <span  data-toggle="tooltip" title="Supprimer Lignes"><a name="" v-if="!validé && !eap && !payé" :class="this.itemsChecked ? 'btn btn-danger' : 'btn btn-danger'" href="#" role="button" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i></a></span>
                 </div>
             </div>
@@ -404,7 +412,7 @@
 
 <script>
 export default {
-    props:['document', 'type', 'clients', 'documents'],
+    props:['document', 'type', 'clients', 'documents', 'user'],
     data(){
         return {
             isAllChecked: false,
@@ -529,6 +537,13 @@ export default {
             this.newFacture.numero = (this.type.substring(0,1)  + number + '/' + new Date().getFullYear());            
 
             return (this.type.substring(0,1)  + number + '/' + new Date().getFullYear())
+        },
+        manager(){
+            if(this.user.role === 'Manager'){
+                return true
+            } else {
+                return false
+            }
         }
     },
     methods:{

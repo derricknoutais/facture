@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use Auth;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -15,7 +16,8 @@ class CompanyController extends Controller
     public function index()
     {
         $title = "Cashier | Accueil ";
-        return view('company.index', compact('title'));
+        $user = Auth::user();
+        return view('company.index', compact('title', 'user'));
     }
 
     /**
