@@ -1,10 +1,15 @@
 <?php
 Auth::loginUsingId(1);
+if(Auth::user()){
 Route::view('/', 'auth.login');
-
-Auth::routes();
+} else {
+Route::get('/accueil', 'CompanyController@index');
+}
 
 Route::get('/accueil', 'CompanyController@index');
+Auth::routes();
+
+
 
 // Companies
 Route::prefix('{company_name}')->group(function($company_name){
