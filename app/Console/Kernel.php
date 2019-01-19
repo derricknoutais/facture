@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Console;
-
+use \App\Company;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,8 +24,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-                 ->everyMinute();
+        $schedule->call(function(){
+            Company::create([
+                'name' => 'Test' . rand(10, 100)
+            ]);
+        })->everyMinute();
     }
 
     /**

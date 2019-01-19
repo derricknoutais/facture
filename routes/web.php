@@ -1,4 +1,7 @@
 <?php
+
+
+
 Auth::loginUsingId(1);
 if(Auth::user()){
 Route::view('/', 'auth.login');
@@ -81,3 +84,4 @@ Route::prefix('{company_name}')->group(function($company_name){
         Route::post('retirer-cash', 'RetraitController@store');
     });
 });
+
