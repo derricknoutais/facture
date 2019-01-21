@@ -3,16 +3,9 @@
 
 
 Auth::loginUsingId(1);
-if(Auth::user()){
-Route::view('/', 'auth.login');
-} else {
-Route::get('/accueil', 'CompanyController@index');
-}
-
+Route::get('/', 'CompanyController@index');
 Route::get('/accueil', 'CompanyController@index');
 Auth::routes();
-
-
 
 // Companies
 Route::prefix('{company_name}')->group(function($company_name){
@@ -70,6 +63,8 @@ Route::prefix('{company_name}')->group(function($company_name){
 
         //Sauvegarde Infos
         Route::post('{numero}/saveInfo', 'FactureController@saveInfo');
+
+        Route::get('{facture}/api', 'FactureController@getFacture');
     });
     //Client
     Route::prefix('Client')->group(function(){
@@ -83,5 +78,7 @@ Route::prefix('{company_name}')->group(function($company_name){
         Route::post('{facture}/addPayment', 'PayementController@store');
         Route::post('retirer-cash', 'RetraitController@store');
     });
+    // Paramètres
+    Route::get('paramètres', 'ParamètreController@index');
 });
 

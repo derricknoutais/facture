@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['company' => $company])
 
 
 @section('content')

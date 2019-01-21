@@ -48090,6 +48090,91 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['company', 'caisse'],
   data: function data() {
@@ -48104,7 +48189,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       retrait: {
         montant: null,
         note: null
-      }
+      },
+      payment: {
+        facture_id: null,
+        montant: null,
+        note: null
+      },
+      successMessage: null,
+      errorMessage: null,
+      facture: null
     };
   },
   computed: {
@@ -48122,6 +48215,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     differenceCaisse: function differenceCaisse() {
       if (this.fermeture.compté) {
         return this.fermeture.compté - this.totalCaisse;
+      }
+    },
+    subtotal: function subtotal() {
+      var sub = 0;
+
+      if (this.facture) {
+        this.facture.entrees.forEach(function (element) {
+          sub += element.quantité * element.prix_unitaire;
+        });
+        return sub;
+      }
+    },
+    tva: function tva() {
+      if (this.isTaxable18 && this.document.taxable) return Math.ceil(this.subtotal * 0.095);else return 0;
+    },
+    grandTotal: function grandTotal() {
+      return this.subtotal - this.tva;
+    },
+    totalPayements: function totalPayements() {
+      if (this.facture) {
+        var total = 0;
+        this.facture.payements.forEach(function (payement) {
+          total += payement.montant;
+        });
+        return total;
       }
     }
   },
@@ -48157,6 +48275,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       axios.post('/' + this.company.name + '/fermer-caisse').then(function (response) {
         console.log(response.data);
         location.reload();
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    chercheFacture: function chercheFacture(id) {
+      var _this2 = this;
+
+      axios.get('/' + this.company.name + '/Facture/' + id + '/api').then(function (response) {
+        _this2.facture = response.data;
+      }).catch(function (error) {});
+    },
+    addPayment: function addPayment() {
+      var _this3 = this;
+
+      axios.post('/' + this.company.name + '/Payement/' + this.payment.facture_id + '/addPayment', this.payment).then(function (response) {
+        if (response.data === 'Erreur') {
+          $('#payementModal').modal('hide');
+
+          _this3.displayErrorModal("Le montant rentré est supérieur au montant de la facture.", "");
+
+          setTimeout(function () {
+            $('#errorModal').modal('hide');
+            $('#payementModal').modal('show');
+          }, 3000);
+        } else {
+          _this3.successMessage = 'Le Payement a été enregistré avec succès';
+          setTimeout(function () {
+            $('#recevoirPayement').modal('hide');
+          }, 3000); // 
+          // this.displayModal('Le Payement a été enregistré avec succès')
+        }
       }).catch(function (error) {
         console.log(error);
       });
@@ -48203,11 +48352,13 @@ var render = function() {
             "tbody",
             _vm._l(_vm.transactions, function(transaction) {
               return _c("tr", [
-                _c("td", [_vm._v(_vm._s(transaction.type))]),
-                _vm._v(" "),
                 _c("td", { attrs: { scope: "row" } }, [
                   _vm._v(_vm._s(transaction.created_at))
                 ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(transaction.type))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(transaction.note))]),
                 _vm._v(" "),
                 _c("td", [
                   _vm._v(_vm._s(_vm._f("currency")(transaction.montant)))
@@ -48452,6 +48603,278 @@ var render = function() {
           ]
         )
       ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "recevoirPayement",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "modelTitleId",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(6),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col" }, [
+                    _vm.successMessage
+                      ? _c("p", { staticClass: "text-success text-center" }, [
+                          _vm._v(_vm._s(_vm.successMessage))
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.errorMessage
+                      ? _c("p", { staticClass: "text-danger text-center" }, [
+                          _vm._v(_vm._s(_vm.errorMessage))
+                        ])
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "row flex justify-content-center mb-3" },
+                  [
+                    _c("div", { staticClass: "form-group col-9" }, [
+                      _c("label", { attrs: { for: "" } }),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.payment.facture_id,
+                              expression: "payment.facture_id"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          on: {
+                            change: [
+                              function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.payment,
+                                  "facture_id",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              },
+                              function($event) {
+                                _vm.chercheFacture(_vm.payment.facture_id)
+                              }
+                            ]
+                          }
+                        },
+                        _vm._l(_vm.company.factures, function(facture) {
+                          return facture.etat === "Validé" ||
+                            facture.etat === "Paiement Partiel"
+                            ? _c(
+                                "option",
+                                { domProps: { value: facture.id } },
+                                [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(facture.numéro) +
+                                      "\n                                "
+                                  )
+                                ]
+                              )
+                            : _vm._e()
+                        })
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(7),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "row flex justify-content-between px-3 mt-0" },
+                  [
+                    _c("p", [
+                      _vm._v(
+                        _vm._s(
+                          _vm.facture
+                            ? _vm.facture.client.nom +
+                                " " +
+                                _vm.facture.client.prénom
+                            : "N/A"
+                        )
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm.facture
+                      ? _c("p", [
+                          _vm._v(_vm._s(_vm._f("currency")(_vm.grandTotal)))
+                        ])
+                      : _c("p", [_vm._v("N/A")])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "row flex justify-content-between px-3" },
+                  [
+                    _c("p", [
+                      _vm.facture
+                        ? _c("strong", [
+                            _vm._v(
+                              _vm._s(this.facture.payements.length) +
+                                " " +
+                                _vm._s(
+                                  this.facture.payements.length > 1
+                                    ? "Payements Reçus"
+                                    : "Payement Reçu"
+                                ) +
+                                " "
+                            )
+                          ])
+                        : _c("strong", [_vm._v("0 Payement Reçu")])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(8)
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "row flex justify-content-between px-3 mt-0" },
+                  [
+                    _c("p", [
+                      _vm.facture
+                        ? _c("strong", [
+                            _vm._v(
+                              _vm._s(_vm._f("currency")(_vm.totalPayements))
+                            )
+                          ])
+                        : _c("strong", [_vm._v("N/A")])
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-danger" }, [
+                      _c("strong", [
+                        _vm._v(
+                          _vm._s(
+                            _vm._f("currency")(
+                              _vm.grandTotal -
+                                _vm.totalPayements -
+                                _vm.payment.montant
+                            )
+                          )
+                        )
+                      ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "row flex justify-content-center" }, [
+                  _c("div", { staticClass: "form-group col-9" }, [
+                    _c("label", { attrs: { for: "" } }, [
+                      _vm._v("Montant Payement")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.payment.montant,
+                          expression: "payment.montant"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.payment.montant },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.payment, "montant", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row flex justify-content-center" }, [
+                  _c("div", { staticClass: "form-group col-9" }, [
+                    _c("label", { attrs: { for: "" } }, [_vm._v("Note")]),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.payment.note,
+                          expression: "payment.note"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", rows: "3" },
+                      domProps: { value: _vm.payment.note },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.payment, "note", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.addPayment()
+                      }
+                    }
+                  },
+                  [_vm._v("Ajouter Paiement")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
     )
   ])
 }
@@ -48461,6 +48884,19 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "lead mt-5" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success btn-lg",
+          attrs: {
+            role: "button",
+            "data-toggle": "modal",
+            "data-target": "#recevoirPayement"
+          }
+        },
+        [_vm._v("Reçevoir Payement")]
+      ),
+      _vm._v(" "),
       _c(
         "button",
         {
@@ -48494,9 +48930,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c("th", [_vm._v("Date")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Type")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Date")]),
+        _c("th", [_vm._v("Note")]),
         _vm._v(" "),
         _c("th", [_vm._v("Montant")])
       ])
@@ -48573,6 +49011,43 @@ var staticRenderFns = [
         _c("th", [_vm._v("Différence (FCFA)")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Effectuer Payement")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row flex justify-content-between px-3" }, [
+      _c("p", [_c("strong", [_vm._v("Client:")])]),
+      _vm._v(" "),
+      _c("p", [_c("strong", [_vm._v("Montant Facture:")])])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [_c("strong", [_vm._v("Reste à Payer")])])
   }
 ]
 render._withStripped = true
@@ -49384,6 +49859,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['document', 'type', 'clients', 'documents', 'user'],
   data: function data() {
@@ -49407,7 +49891,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       },
       payment: {
         facture_id: null,
-        montant: null
+        montant: null,
+        note: null
       },
       aModifier: {
         document: null,
@@ -49432,9 +49917,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     // Calcule La Taxe 18%
     tva: function tva() {
       if (this.isTaxable18 && this.document.taxable) return Math.ceil(this.subtotal * 0.095);else return 0;
-    },
-    taxecss: function taxecss() {
-      if (this.isTaxableCss) return Math.ceil(this.subtotal * 0.01);else return 0;
     },
     grandTotal: function grandTotal() {
       return this.subtotal - this.tva;
@@ -51352,6 +51834,38 @@ var render = function() {
                         })
                       ])
                     ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row flex justify-content-center" },
+                    [
+                      _c("div", { staticClass: "form-group col-9" }, [
+                        _c("label", { attrs: { for: "" } }, [_vm._v("Note")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.payment.note,
+                              expression: "payment.note"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.payment.note },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.payment, "note", $event.target.value)
+                            }
+                          }
+                        })
+                      ])
+                    ]
                   )
                 ]),
                 _vm._v(" "),
@@ -51414,13 +51928,15 @@ var render = function() {
                           "tbody",
                           _vm._l(_vm.document.payements, function(payement) {
                             return _c("tr", [
+                              _c("td", [_vm._v(_vm._s(payement.created_at))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(payement.note))]),
+                              _vm._v(" "),
                               _c("td", [
                                 _vm._v(
                                   _vm._s(_vm._f("currency")(payement.montant))
                                 )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(payement.created_at))])
+                              ])
                             ])
                           })
                         )
@@ -51643,9 +52159,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Montant")]),
+        _c("th", [_vm._v("Date")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Date")])
+        _c("th", [_vm._v("Note")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Montant")])
       ])
     ])
   },

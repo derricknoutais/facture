@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title }}</title>
+    <title>{{ isset($title) ? $title : '' }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -71,7 +71,13 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/settings" >Mes Settings</a>
+                                    <a class="dropdown-item" href="{{ $company['name'] }}/paramètres">Paramètres</a>
+                                    @isset($company)
+                                        
+                                        <a class="dropdown-item">{{ Carbon::parse(now()->startOfDay())->diffInDays($company['expiry_date'])}} Credit(s) Restant(s)</a>
+                                    @endisset
+                                    <div class="dropdown-divider"></div>
+                                    
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

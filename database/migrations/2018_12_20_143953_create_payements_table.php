@@ -18,6 +18,7 @@ class CreatePayementsTable extends Migration
             $table->unsignedInteger('facture_id');
             $table->foreign('facture_id')->references('id')->on('factures')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('montant');
+            $table->text('note');
             $table->timestamps();
         });
     }
