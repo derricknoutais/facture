@@ -1,8 +1,4 @@
 <?php
-
-
-
-Auth::loginUsingId(1);
 Route::get('/', 'CompanyController@index');
 Route::get('/accueil', 'CompanyController@index');
 Auth::routes();
