@@ -61,7 +61,7 @@ class DevisController extends Controller
         $devis->loadMissing(['entrees', 'company', 'client', 'créateur']);
         $clients = $company->clients;
         $user = Auth::user();
-        return view('devis.show', compact('devis', 'clients', 'factures', 'title', 'user'));
+        return view('devis.show', compact('devis', 'clients', 'factures', 'title', 'user', 'company'));
     }
 
     /**

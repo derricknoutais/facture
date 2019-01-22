@@ -148,7 +148,7 @@ class FactureController extends Controller
     }
 
     public function getFacture($company_name, Facture $facture){
-        return $facture->loadMissing('client', 'payements', 'entrees');
+        return $facture->loadMissing('client', 'payements', 'entrees', 'company');
     }
 
 }
