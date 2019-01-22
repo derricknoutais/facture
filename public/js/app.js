@@ -49985,6 +49985,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       } else {
         return false;
       }
+    },
+    agent: function agent() {
+      if (this.user.role === 'Agent') {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   methods: {
@@ -50780,7 +50787,7 @@ var render = function() {
               "span",
               { attrs: { "data-toggle": "tooltip", title: "Valider" } },
               [
-                _vm.eav && _vm.manager
+                (_vm.eav && _vm.manager) || (this.type === "Devis" && _vm.agent)
                   ? _c(
                       "button",
                       {
@@ -50802,7 +50809,7 @@ var render = function() {
               "span",
               { attrs: { "data-toggle": "tooltip", title: "Rejetter" } },
               [
-                _vm.eav && _vm.manager
+                (_vm.eav && _vm.manager) || (this.type === "Devis" && _vm.agent)
                   ? _c(
                       "button",
                       {

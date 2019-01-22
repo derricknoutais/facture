@@ -126,11 +126,11 @@
                         <i class="far fa-money-bill-alt"></i>
                     </button></span>
                     <!-- Valider Facture -->
-                    <span data-toggle="tooltip" title="Valider"><button type="button" class="btn btn-primary" v-if="eav && manager" @click="ajouterAValider(document)">
+                    <span data-toggle="tooltip" title="Valider"><button type="button" class="btn btn-primary" v-if="(eav && manager) || (this.type === 'Devis' && agent)" @click="ajouterAValider(document)">
                         <i class="fas fa-check"></i>
                     </button></span>
                     <!-- Rejetter Facture -->
-                    <span data-toggle="tooltip" title="Rejetter"><button type="button" class="btn btn-danger" v-if="eav && manager" @click="ajouterARejetter(document)" >
+                    <span data-toggle="tooltip" title="Rejetter"><button type="button" class="btn btn-danger" v-if="(eav && manager) || (this.type === 'Devis' && agent)" @click="ajouterARejetter(document)" >
                         <i class="fas fa-times"></i>
                     </button></span>
                     <!-- Ajouter Ligne -->
@@ -544,6 +544,13 @@ export default {
         },
         manager(){
             if(this.user.role === 'Manager'){
+                return true
+            } else {
+                return false
+            }
+        },
+        agent(){
+            if(this.user.role === 'Agent'){
                 return true
             } else {
                 return false
