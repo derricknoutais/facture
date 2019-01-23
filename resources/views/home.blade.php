@@ -14,7 +14,7 @@
         <p class="lead text">Un Agent Validera votre demande dans les plus Brefs Délais</p>
         <p class="lead">
             <a class="btn btn-primary btn-lg" href="/register" role="button">Créer un Compte</a>
-            <a class="btn btn-primary btn-lg" href="/login" role="button">Se Conencter</a>
+            <a class="btn btn-primary btn-lg" href="/login" role="button">Se Connecter</a>
         </p>
     </div>
 </div>
