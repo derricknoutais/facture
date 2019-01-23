@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="row">
-            <table class="table mt-3">
+            <table class="table table-hover mt-3">
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -33,7 +33,7 @@
                     <span>
                         
                     </span>
-                    <tr v-for="transaction in transactions" >
+                    <tr v-for="transaction in transactions" @click="redirectTo(transaction) ">
                         <td>{{ transaction.created_at }}</td>
                         <td v-if="transaction.type !== 'Payement'">{{ transaction.créateur.name }}</td>
                         <td v-else></td>
@@ -42,7 +42,7 @@
                         <td v-else></td>
                         <td>{{ transaction.total | currency }}</td>
                         <td>
-                            <a :href="'/'+ company.name+'/' + transaction.type + '/' + transaction.numéro" class="btn btn-primary">
+                            <a :href="'/'+ company.name+'/' + transaction.type + '/' + transaction.id" class="btn btn-primary">
                                 <i class="fas fa-eye"></i>
                             </a>
                         </td>
@@ -64,7 +64,9 @@ export default {
         }
     },
     methods:{
-
+        redirectTo(transaction){
+            window.location = '/'+ this.company.name+'/' + transaction.type + '/' + transaction.id
+        }
     },
     computed:{
         totalTransaction(){

@@ -49176,7 +49176,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       transactions: []
     };
   },
-  methods: {},
+  methods: {
+    redirectTo: function redirectTo(transaction) {
+      window.location = '/' + this.company.name + '/' + transaction.type + '/' + transaction.id;
+    }
+  },
   computed: {
     totalTransaction: function totalTransaction() {}
   },
@@ -49244,7 +49248,7 @@ var render = function() {
     _vm._m(1),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _c("table", { staticClass: "table mt-3" }, [
+      _c("table", { staticClass: "table table-hover mt-3" }, [
         _vm._m(2),
         _vm._v(" "),
         _c(
@@ -49253,42 +49257,52 @@ var render = function() {
             _c("span"),
             _vm._v(" "),
             _vm._l(_vm.transactions, function(transaction) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(transaction.created_at))]),
-                _vm._v(" "),
-                transaction.type !== "Payement"
-                  ? _c("td", [_vm._v(_vm._s(transaction.créateur.name))])
-                  : _c("td"),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(transaction.type))]),
-                _vm._v(" "),
-                transaction.type !== "Payement"
-                  ? _c("td", [_vm._v(_vm._s(transaction.numéro))])
-                  : _c("td"),
-                _vm._v(" "),
-                _c("td", [
-                  _vm._v(_vm._s(_vm._f("currency")(transaction.total)))
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: {
-                        href:
-                          "/" +
-                          _vm.company.name +
-                          "/" +
-                          transaction.type +
-                          "/" +
-                          transaction.numéro
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-eye" })]
-                  )
-                ])
-              ])
+              return _c(
+                "tr",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.redirectTo(transaction)
+                    }
+                  }
+                },
+                [
+                  _c("td", [_vm._v(_vm._s(transaction.created_at))]),
+                  _vm._v(" "),
+                  transaction.type !== "Payement"
+                    ? _c("td", [_vm._v(_vm._s(transaction.créateur.name))])
+                    : _c("td"),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(transaction.type))]),
+                  _vm._v(" "),
+                  transaction.type !== "Payement"
+                    ? _c("td", [_vm._v(_vm._s(transaction.numéro))])
+                    : _c("td"),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(_vm._s(_vm._f("currency")(transaction.total)))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: {
+                          href:
+                            "/" +
+                            _vm.company.name +
+                            "/" +
+                            transaction.type +
+                            "/" +
+                            transaction.id
+                        }
+                      },
+                      [_c("i", { staticClass: "fas fa-eye" })]
+                    )
+                  ])
+                ]
+              )
             })
           ],
           2
@@ -52726,6 +52740,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         addresse: null,
         numéro: null
       },
+      newCompany: {},
       isLoading: false,
       clientLocal: null
     };

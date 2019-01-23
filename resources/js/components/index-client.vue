@@ -79,6 +79,9 @@ export default {
                 addresse: null,
                 numéro: null
             },
+            newCompany : {
+
+            },
             isLoading: false,
             clientLocal: null
         }
