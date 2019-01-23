@@ -1,5 +1,5 @@
 <?php
-Auth::loginUsingId(1);
+// Auth::loginUsingId(1);
 Auth::routes();
 Route::view('/home', 'home')->name('home');
 Route::group(['middleware' => ['auth']], function () {
