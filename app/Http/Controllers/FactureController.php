@@ -21,9 +21,7 @@ class FactureController extends Controller
         $facture->loadMissing('créateur', 'company', 'client');
         return view('facture.index', compact('facture', 'clients', 'vendeurs', 'company', 'title'));
     }
-    public function create()
-    { 
-    }
+
     public function store($company, Request $request)
     {
         $facture = Facture::create([
@@ -58,6 +56,7 @@ class FactureController extends Controller
             return $facture;
         }
     }
+    
     public function show($company_name, $numero)
     {
         $company = Company::where('name', $company_name)->first();
@@ -66,10 +65,7 @@ class FactureController extends Controller
         $facture->loadMissing(['entrees', 'company', 'client', 'créateur', 'payements']);
         $clients = $company->clients;
         $user = Auth::user();
-        return view('facture.show', compact('facture', 'clients', 'title', 'user'));
-    }
-    public function edit(Devis $devis)
-    {
+        return view('facture.show', compact('facture', 'clients', 'title', 'user', 'company'));
     }
 
     public function updateEntries($company, $numero, Request $request)
@@ -84,6 +80,7 @@ class FactureController extends Controller
             ]);
         }
     }
+
     public function saveLine($company_name, $numero, Request $request)
     {
         $facture = Facture::find($numero);
@@ -119,6 +116,7 @@ class FactureController extends Controller
             ]);
         }
     }
+
     public function modifierEtat($company_name, Request $request)
     {
         $facture = Facture::find($request['document']['id']);
@@ -147,6 +145,10 @@ class FactureController extends Controller
                 $facture->entrees[$i]->delete();
             }
         }
+    }
+
+    public function getFacture($company_name, Facture $facture){
+        return $facture->loadMissing('client', 'payements', 'entrees', 'company');
     }
 
 }

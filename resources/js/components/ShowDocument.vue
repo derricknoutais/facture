@@ -126,11 +126,11 @@
                         <i class="far fa-money-bill-alt"></i>
                     </button></span>
                     <!-- Valider Facture -->
-                    <span data-toggle="tooltip" title="Valider"><button type="button" class="btn btn-primary" v-if="eav && manager" @click="ajouterAValider(document)">
+                    <span data-toggle="tooltip" title="Valider"><button type="button" class="btn btn-primary" v-if="(eav && manager) || (this.type === 'Devis' && agent)" @click="ajouterAValider(document)">
                         <i class="fas fa-check"></i>
                     </button></span>
                     <!-- Rejetter Facture -->
-                    <span data-toggle="tooltip" title="Rejetter"><button type="button" class="btn btn-danger" v-if="eav && manager" @click="ajouterARejetter(document)" >
+                    <span data-toggle="tooltip" title="Rejetter"><button type="button" class="btn btn-danger" v-if="(eav && manager) || (this.type === 'Devis' && agent)" @click="ajouterARejetter(document)" >
                         <i class="fas fa-times"></i>
                     </button></span>
                     <!-- Ajouter Ligne -->
@@ -347,6 +347,12 @@
                                 <input type="text" class="form-control" v-model="payment.montant">
                             </div>
                         </div>
+                        <div class="row flex justify-content-center">
+                            <div class="form-group col-9">
+                                <label for="">Note</label>
+                                <input type="text" class="form-control" v-model="payment.note">
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -370,14 +376,17 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Montant</th>
                                     <th>Date</th>
+                                    <th>Note</th>
+                                    <th>Montant</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="payement in document.payements">
-                                    <td>{{ payement.montant | currency }}</td>
                                     <td>{{ payement.created_at }}</td>
+                                    <td>{{ payement.note }}</td>
+                                    <td>{{ payement.montant | currency }}</td>
+                                    
                                 </tr>
                             </tbody>
                         </table>
@@ -434,7 +443,8 @@ export default {
             },
             payment: {
                 facture_id: null,
-                montant: null
+                montant: null,
+                note: null
             },
             aModifier: {
                 document: null,
@@ -461,12 +471,6 @@ export default {
             if(this.isTaxable18 && this.document.taxable)
                 return Math.ceil(this.subtotal * 0.095)
             else 
-                return 0
-        },
-        taxecss(){
-            if (this.isTaxableCss)
-                return Math.ceil(this.subtotal * 0.01)
-            else
                 return 0
         },
         grandTotal(){
@@ -540,6 +544,13 @@ export default {
         },
         manager(){
             if(this.user.role === 'Manager'){
+                return true
+            } else {
+                return false
+            }
+        },
+        agent(){
+            if(this.user.role === 'Agent'){
                 return true
             } else {
                 return false

@@ -1,78 +1,85 @@
 <?php
-Auth::loginUsingId(1);
-Route::view('/', 'auth.login');
-
+// Auth::loginUsingId(1);
 Auth::routes();
+Route::view('/home', 'home')->name('home');
+Route::group(['middleware' => ['auth']], function () {
+    
+    Route::get('/accueil', 'CompanyController@index');
+    Route::get('/', 'CompanyController@index');
+    // Companies
+    Route::prefix('{company_name}')->group(function($company_name){
+        Route::post('fermer-caisse', 'CompanyController@fermerCaisse');
+        // Devis
+        Route::prefix('Devis')->group(function(){
+            //Index
+            Route::get('', 'DevisController@index');
 
-Route::get('/accueil', 'CompanyController@index');
+            //Show
+            Route::get('{numero}', 'DevisController@show');
 
-// Companies
-Route::prefix('{company_name}')->group(function($company_name){
-    Route::post('fermer-caisse', 'CompanyController@fermerCaisse');
-    // Devis
-    Route::prefix('Devis')->group(function(){
-        //Index
-        Route::get('', 'DevisController@index');
+            //Store
+            Route::post('/store', 'DevisController@store');
 
-        //Show
-        Route::get('{numero}', 'DevisController@show');
+            //Delete Entries
+            Route::post('{numero}/deleteSelectedItems', 'DevisController@destroyEntries');
 
-        //Store
-        Route::post('/store', 'DevisController@store');
+            //Delete Devis
+            Route::post('/deleteSelectedDocuments', 'DevisController@destroyDevis');
 
-        //Delete Entries
-        Route::post('{numero}/deleteSelectedItems', 'DevisController@destroyEntries');
+            //Rejette Devis
+            Route::post('/rejetter', 'DevisController@modifierEtat');
 
-        //Delete Devis
-        Route::post('/deleteSelectedDocuments', 'DevisController@destroyDevis');
+            //Update
+            Route::post('{numero}/updateSelectedItems', 'DevisController@updateEntries');
 
-        //Rejette Devis
-        Route::post('/rejetter', 'DevisController@modifierEtat');
+            //Sauvegarde Line
+            Route::post('{numero}/saveLine', 'DevisController@saveLine');
 
-        //Update
-        Route::post('{numero}/updateSelectedItems', 'DevisController@updateEntries');
+            //Sauvegarde Infos
+            Route::post('{numero}/saveInfo', 'DevisController@saveInfo');
+        });
+        // Facture
+        Route::prefix('Facture')->group(function(){
+            //Index
+            Route::get('', 'FactureController@index');
+            //Show
+            Route::get('{numero}', 'FactureController@show');
+            Route::post('/store', 'FactureController@store');
+            //Delete Entries
+            Route::post('{numero}/deleteSelectedItems', 'FactureController@destroyEntries');
 
-        //Sauvegarde Line
-        Route::post('{numero}/saveLine', 'DevisController@saveLine');
+            //Delete Devis
+            Route::post('/deleteSelectedDocuments', 'FactureController@destroyDevis');
 
-        //Sauvegarde Infos
-        Route::post('{numero}/saveInfo', 'DevisController@saveInfo');
-    });
-    // Facture
-    Route::prefix('Facture')->group(function(){
-        //Index
-        Route::get('', 'FactureController@index');
-        //Show
-        Route::get('{numero}', 'FactureController@show');
-        Route::post('/store', 'FactureController@store');
-        //Delete Entries
-        Route::post('{numero}/deleteSelectedItems', 'FactureController@destroyEntries');
+            //Rejette Devis
+            Route::post('/rejetter', 'FactureController@modifierEtat');
 
-        //Delete Devis
-        Route::post('/deleteSelectedDocuments', 'FactureController@destroyDevis');
+            //Update
+            Route::post('{numero}/updateSelectedItems', 'FactureController@updateEntries');
 
-        //Rejette Devis
-        Route::post('/rejetter', 'FactureController@modifierEtat');
+            //Sauvegarde Line
+            Route::post('{numero}/saveLine', 'FactureController@saveLine');
 
-        //Update
-        Route::post('{numero}/updateSelectedItems', 'FactureController@updateEntries');
+            //Sauvegarde Infos
+            Route::post('{numero}/saveInfo', 'FactureController@saveInfo');
 
-        //Sauvegarde Line
-        Route::post('{numero}/saveLine', 'FactureController@saveLine');
-
-        //Sauvegarde Infos
-        Route::post('{numero}/saveInfo', 'FactureController@saveInfo');
-    });
-    //Client
-    Route::prefix('Client')->group(function(){
-        Route::get('', 'ClientController@index');
-        Route::get('{client}', 'ClientController@show');
-        Route::post('store', 'ClientController@store');
-    }); 
-    // Payements
-    Route::prefix('Payement')->group(function(){
-        Route::get('/', 'PayementController@index');
-        Route::post('{facture}/addPayment', 'PayementController@store');
-        Route::post('retirer-cash', 'RetraitController@store');
+            Route::get('{facture}/api', 'FactureController@getFacture');
+        });
+        //Client
+        Route::prefix('Client')->group(function(){
+            Route::get('', 'ClientController@index');
+            Route::get('{client}', 'ClientController@show');
+            Route::post('store', 'ClientController@store');
+        }); 
+        // Payements
+        Route::prefix('Payement')->group(function(){
+            Route::get('/', 'PayementController@index');
+            Route::post('{facture}/addPayment', 'PayementController@store');
+            Route::post('retirer-cash', 'RetraitController@store');
+        });
+        // Paramètres
+        Route::get('paramètres', 'ParamètreController@index');
     });
 });
+
+

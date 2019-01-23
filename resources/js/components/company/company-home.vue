@@ -42,13 +42,9 @@
 export default {
     props: ['company', 'user'],
     data(){
-        return {
-            
-        }
+        return {}
     },
-    methods:{
-
-    },
+    methods:{},
     computed: {
         manager(){
             if(this.user.role === 'Manager'){
