@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="container-fluid">
-            <div class="row jumbotron black-gradient">
+        <div class="container-fluid ">
+            <div class="row jumbotron black-gradient box-shadow">
                 <div class="col-md-12">
                     <h1 class="text-center text-white">Système de Facturation {{ company.name }} </h1>
                 </div>
@@ -9,27 +9,27 @@
         </div>
         <div class='container-fluid'>
             <div class="row mt-7 px-7">
-                <a :href="'/' + company.name + '/' + 'Devis'" class=" col border rounded text-center py-7 px-3 mx-1 bg-primary">
+                <a :href="'/' + company.name + '/' + 'Devis'" class="text-shadow box-shadow col border rounded text-center py-7 px-3 mx-1 bg-warning">
                     <div>
-                        <img src="/img/icons8-cashflow.png">
-                        <h2 class="mt-3 text-white">Devis</h2>
+                        <i class="fas fa-file-invoice fa-3x text-light"></i>
+                        <h3 class="mt-3 text-white">Devis</h3>
                     </div>
                 </a>
-                <a :href="'/' + company.name + '/' + 'Facture'" class=" col border rounded text-center py-7 px-3 mx-1 bg-primary">
+                <a :href="'/' + company.name + '/' + 'Facture'" class=" box-shadow col border rounded text-center py-7 px-3 mx-1 bg-info">
                     <div>
-                        <img src="/img/icons8-receipt.png">
+                        <i class="fas fa-file-invoice-dollar fa-3x text-light"></i>
                         <h3 class="mt-3 text-white">Factures</h3>
                     </div>
                 </a>
-                <a :href="'/' + company.name + '/' + 'Payement'" class=" col border rounded text-center py-7 px-3 mx-1 bg-primary" v-if="manager">
+                <a :href="'/' + company.name + '/' + 'Payement'" class=" box-shadow col border rounded text-center py-7 px-3 mx-1 bg-danger" v-if="manager">
                     <div>
-                        <img src="/img/icons8-cash_in_hand.png">
+                        <i class="fas fa-calculator fa-3x text-light"></i>
                         <h3 class="mt-3 text-white">Caisse</h3>
                     </div>
                 </a>
-                <a :href="'/' + company.name + '/' + 'Client'" class=" col border rounded text-center py-7 px-3 mx-1 bg-primary">
+                <a :href="'/' + company.name + '/' + 'Client'" class=" box-shadow col border rounded text-center py-7 px-3 mx-1 bg-success">
                     <div>
-                        <img src="/img/icons8-queue.png">
+                        <i class="fas fa-users fa-3x text-light"></i>
                         <h3 class="mt-3 text-white">Clients</h3>
                     </div>
                 </a>

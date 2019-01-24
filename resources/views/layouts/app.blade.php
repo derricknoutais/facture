@@ -41,7 +41,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/accueil') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <img class="mt-1" src="/img/logo.png" width="80vw">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -50,6 +50,33 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item ml-5 text-center ">
+                            <a class="nav-link mt-4 " href="{{ $company->name . '/Devis'}}">
+                                <i class="fas fa-file-invoice fa-2x text-warning"></i>
+                                <p>Devis</p>
+                            </a>
+                        </li>
+                        <li class="nav-item ml-5 text-center">
+                            <a class="nav-link mt-4 " href="{{ $company->name . '/Facture'}}">
+                                <i class="fas fa-file-invoice-dollar fa-2x text-info"></i>
+                                <p>Facture</p>
+                            </a>
+                        </li> 
+                        @if (Auth::user()->role == 'Manager')
+                            <li class="nav-item ml-5 text-center">
+                                <a class="nav-link mt-4" href="{{ $company->name . '/Client'}}">
+                                    <i class="fas fa-calculator fa-2x text-danger"></i>
+                                    <p class="">Caisse</p>
+                                </a>
+                            </li>
+                        @endif
+                        
+                        <li class="nav-item ml-5 text-center">
+                            <a class="nav-link mt-4 " href="{{ $company->name . '/Client'}}">
+                                <i class="fas fa-users fa-2x text-success"></i>
+                                <p class="">Clients</p>
+                            </a>
+                        </li> 
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -57,7 +84,7 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">Se Connecter</a>
                             </li> 
                         @else
                             <li class="nav-item dropdown">
@@ -94,7 +121,7 @@
             @yield('content')
         </main>
 
-        <footer class="fixed-bottom black-gradient">
+        <footer class="fixed-bottom black-gradient box-shadow">
             <div class="row pt-4">
                 <div class="col">
                     <a class="ml-5 mr-2" href="https://www.facebook.com/serv2i" target="_blank"><i class="fab fa-facebook-f"></i></a>

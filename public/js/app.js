@@ -52332,8 +52332,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "container-fluid" }, [
-      _c("div", { staticClass: "row jumbotron black-gradient" }, [
+    _c("div", { staticClass: "container-fluid " }, [
+      _c("div", { staticClass: "row jumbotron black-gradient box-shadow" }, [
         _c("div", { staticClass: "col-md-12" }, [
           _c("h1", { staticClass: "text-center text-white" }, [
             _vm._v("Système de Facturation " + _vm._s(_vm.company.name) + " ")
@@ -52348,7 +52348,7 @@ var render = function() {
           "a",
           {
             staticClass:
-              " col border rounded text-center py-7 px-3 mx-1 bg-primary",
+              "text-shadow box-shadow col border rounded text-center py-7 px-3 mx-1 bg-warning",
             attrs: { href: "/" + _vm.company.name + "/" + "Devis" }
           },
           [_vm._m(0)]
@@ -52358,7 +52358,7 @@ var render = function() {
           "a",
           {
             staticClass:
-              " col border rounded text-center py-7 px-3 mx-1 bg-primary",
+              " box-shadow col border rounded text-center py-7 px-3 mx-1 bg-info",
             attrs: { href: "/" + _vm.company.name + "/" + "Facture" }
           },
           [_vm._m(1)]
@@ -52369,7 +52369,7 @@ var render = function() {
               "a",
               {
                 staticClass:
-                  " col border rounded text-center py-7 px-3 mx-1 bg-primary",
+                  " box-shadow col border rounded text-center py-7 px-3 mx-1 bg-danger",
                 attrs: { href: "/" + _vm.company.name + "/" + "Payement" }
               },
               [_vm._m(2)]
@@ -52380,7 +52380,7 @@ var render = function() {
           "a",
           {
             staticClass:
-              " col border rounded text-center py-7 px-3 mx-1 bg-primary",
+              " box-shadow col border rounded text-center py-7 px-3 mx-1 bg-success",
             attrs: { href: "/" + _vm.company.name + "/" + "Client" }
           },
           [_vm._m(3)]
@@ -52395,9 +52395,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [
-      _c("img", { attrs: { src: "/img/icons8-cashflow.png" } }),
+      _c("i", { staticClass: "fas fa-file-invoice fa-3x text-light" }),
       _vm._v(" "),
-      _c("h2", { staticClass: "mt-3 text-white" }, [_vm._v("Devis")])
+      _c("h3", { staticClass: "mt-3 text-white" }, [_vm._v("Devis")])
     ])
   },
   function() {
@@ -52405,7 +52405,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [
-      _c("img", { attrs: { src: "/img/icons8-receipt.png" } }),
+      _c("i", { staticClass: "fas fa-file-invoice-dollar fa-3x text-light" }),
       _vm._v(" "),
       _c("h3", { staticClass: "mt-3 text-white" }, [_vm._v("Factures")])
     ])
@@ -52415,7 +52415,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [
-      _c("img", { attrs: { src: "/img/icons8-cash_in_hand.png" } }),
+      _c("i", { staticClass: "fas fa-calculator fa-3x text-light" }),
       _vm._v(" "),
       _c("h3", { staticClass: "mt-3 text-white" }, [_vm._v("Caisse")])
     ])
@@ -52425,7 +52425,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [
-      _c("img", { attrs: { src: "/img/icons8-queue.png" } }),
+      _c("i", { staticClass: "fas fa-users fa-3x text-light" }),
       _vm._v(" "),
       _c("h3", { staticClass: "mt-3 text-white" }, [_vm._v("Clients")])
     ])

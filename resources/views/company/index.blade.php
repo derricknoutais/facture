@@ -2,7 +2,7 @@
 
 
 @section('content')
-    <nav class="nav nav-pills justify-content-around nav-fill">
+    <nav class="nav nav-pills justify-content-around nav-fill box-shadow">
         <div class="nav nav-tabs w-100 text-right" id="nav-tab" role="tablist">
             @foreach (Auth::user()->companies as $company)
                 <a  
