@@ -46,7 +46,8 @@ class DevisController extends Controller
             'company_id' => $request->company,
             'etabli_par' => Auth::user()->id,
             'client_id'=> $request['document']['client'],
-            'etat' => 'Ouvert'
+            'etat' => 'Ouvert',
+            'taxable' => $request['document']['taxable'],
         ]);
         if($devis)
             return $devis;

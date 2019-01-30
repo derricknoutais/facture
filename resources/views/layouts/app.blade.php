@@ -50,6 +50,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     @auth
+                    @isset($company)
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item ml-5 text-center ">
                                 <a class="nav-link mt-4 " href="{{ $company->name . '/Devis'}}">
@@ -71,7 +72,6 @@
                                     </a>
                                 </li>
                             @endif
-
                             <li class="nav-item ml-5 text-center">
                                 <a class="nav-link mt-4 " href="{{ $company->name . '/Client'}}">
                                     <i class="fas fa-users fa-2x text-success"></i>
@@ -79,6 +79,8 @@
                                 </a>
                             </li> 
                         </ul>
+                    @endisset
+                        
                     @endauth
                     
 
@@ -90,6 +92,9 @@
                                 <a class="nav-link" href="{{ route('login') }}">Se Connecter</a>
                             </li> 
                         @else
+                        @isset($record)
+                            
+                        @endisset
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

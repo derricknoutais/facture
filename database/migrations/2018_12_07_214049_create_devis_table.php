@@ -26,6 +26,7 @@ class CreateDevisTable extends Migration
             $table->unsignedInteger('facture_id')->nullable();
             $table->longText('objet')->nullable();
             $table->date('date')->nullable();
+            $table->boolean('taxable')->default(0);
             $table->timestamps();
         });
     }

@@ -49876,12 +49876,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['document', 'type', 'clients', 'documents', 'user'],
   data: function data() {
@@ -51384,37 +51378,7 @@ var render = function() {
                           }),
                           _vm._v(" "),
                           _c("td", { staticClass: "text-right border-left" }, [
-                            _vm._v(
-                              "\n                            \n                            TVA -9.5%"
-                            ),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "ml-2 btn-sm",
-                                class: _vm.isTaxable18
-                                  ? "btn btn-danger"
-                                  : "btn btn-primary",
-                                attrs: { name: "", id: "", role: "button" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.isTaxable18 = !_vm.isTaxable18
-                                  }
-                                }
-                              },
-                              [
-                                _vm.isTaxable18
-                                  ? _c("i", {
-                                      staticClass: "fas fa-minus-circle"
-                                    })
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                !_vm.isTaxable18
-                                  ? _c("i", {
-                                      staticClass: "fas fa-plus-circle"
-                                    })
-                                  : _vm._e()
-                              ]
-                            )
+                            _vm._v("TVA -9.5%")
                           ]),
                           _vm._v(" "),
                           _c("td", {}, [

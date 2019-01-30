@@ -203,13 +203,7 @@
                         </tr>
                         <tr v-if="this.document.entrees.length > 0 && this.document.taxable">
                             <td colspan="3" class="no-border"></td>
-                            <td class="text-right border-left">
-                                
-                                TVA -9.5%<button name="" class="ml-2 btn-sm"  id="" :class="isTaxable18 ? 'btn btn-danger' : 'btn btn-primary' " role="button" @click="isTaxable18 = !isTaxable18">
-                                    <i class="fas fa-minus-circle" v-if="isTaxable18"></i> 
-                                    <i class="fas fa-plus-circle" v-if="!isTaxable18"></i> 
-                                </button>
-                            </td>
+                            <td class="text-right border-left">TVA -9.5%</td>
                             <td class=""> <b>{{ tva | currency }}</b></td>
                         </tr>
                         <tr v-if="this.document.entrees.length > 0">
