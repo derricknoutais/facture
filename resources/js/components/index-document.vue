@@ -55,8 +55,8 @@
             </div>
         </div>
         <!-- Tableau des Devis -->
-        <div class="row mt-3">
-            <div class="col">
+        <div class="row mt-3 ">
+            <div class="col-8 offset-2">
                 <table class="table table-hover">
                     <thead>
                         <tr>

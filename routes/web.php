@@ -1,7 +1,39 @@
 <?php
+
+use App\Facture;
+use Illuminate\Foundation\Auth\User;
+use Illuminate\Http\Request;
+
+header('Access-Control-Allow-Origin:  *');
+header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
+header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-Type, X-Auth-Token, Origin, Authorization');
+
 Auth::loginUsingId(1);
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::post('/api/facture', function(Request $request){
+    $facture = Facture::create([
+        'company_id' => 1,
+        'etabli_par' => 1,
+        'etat' => 'Validé',
+        'objet' => $request->objet,
+        'date' => today(),
+        'échéance' => $request->échéance,
+        'taxable' => false
+    ]);
+    App\FactureEntree::create([
+        'facture_id' => $facture->id,
+        'quantité' => $request->quantité,
+        'description' => $request->description,
+        'prix_unitaire' => $request->prix_unitaire
+    ]);
+
+    return $request;
+});
+
+
+
 
 Route::group(['middleware' => ['auth']], function () {
     

@@ -52,32 +52,52 @@
                     @auth
                     @isset($company)
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item ml-5 text-center ">
-                                <a class="nav-link mt-4 " href="{{ $company->name . '/Devis'}}">
+                            <li class="nav-item ml-4 text-center ">
+                                <a class="nav-link mt-4 " href="{{ '/' . $company->name . '/Devis'}}">
                                     <i class="fas fa-file-invoice fa-2x text-warning"></i>
                                     <p>Devis</p>
                                 </a>
                             </li>
-                            <li class="nav-item ml-5 text-center">
-                                <a class="nav-link mt-4 " href="{{ $company->name . '/Facture'}}">
+                            <li class="nav-item ml-4 text-center">
+                                <a class="nav-link mt-4 " href="{{ '/' . $company->name . '/Facture'}}">
                                     <i class="fas fa-file-invoice-dollar fa-2x text-info"></i>
                                     <p>Facture</p>
                                 </a>
                             </li> 
                             @if (Auth::user()->role == 'Manager')
-                                <li class="nav-item ml-5 text-center">
-                                    <a class="nav-link mt-4" href="{{ $company->name . '/Client'}}">
+                                <li class="nav-item ml-4 text-center">
+                                    <a class="nav-link mt-4" href="{{'/' . $company->name . '/Payement'}}">
                                         <i class="fas fa-calculator fa-2x text-danger"></i>
                                         <p class="">Caisse</p>
                                     </a>
                                 </li>
                             @endif
-                            <li class="nav-item ml-5 text-center">
-                                <a class="nav-link mt-4 " href="{{ $company->name . '/Client'}}">
+                            <li class="nav-item ml-4 text-center">
+                                <a class="nav-link mt-4 " href="{{ '/' . $company->name . '/Client'}}">
                                     <i class="fas fa-users fa-2x text-success"></i>
                                     <p class="">Clients</p>
                                 </a>
                             </li> 
+                            @if (Auth::user()->role == 'Manager')
+                                <li class="nav-item ml-4 text-center">
+                                    <a class="nav-link mt-4 not-allowed" href="{{'/' . $company->name . '/Produits'}}">
+                                        <i class="fas fa-boxes fa-2x text-secondary"></i>
+                                        <p class="">Produits</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item ml-4 text-center ">
+                                    <a class="nav-link mt-4 not-allowed " href="{{'/' . $company->name . '/Services'}}">
+                                        <i class="fas fa-file-contract fa-2x text-secondary"></i>
+                                        <p class="">Services</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item ml-4 text-center">
+                                    <a class="nav-link mt-4 not-allowed" href="{{'/' . $company->name . '/Fournisseurs'}}">
+                                        <i class="fas fa-user-tie fa-2x text-secondary"></i>
+                                        <p class="">Fournisseur</p>
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     @endisset
                         
@@ -129,7 +149,7 @@
             @yield('content')
         </main>
 
-        <footer class="fixed-bottom black-gradient box-shadow">
+        {{-- <footer class="fixed-bottom black-gradient box-shadow">
             <div class="row pt-4">
                 <div class="col">
                     <a class="ml-5 mr-2" href="https://www.facebook.com/serv2i" target="_blank"><i class="fab fa-facebook-f"></i></a>
@@ -141,7 +161,7 @@
                     </p>
                 </div>
             </div>
-        </footer>
+        </footer> --}}
     </div>
 </body>
 </html>

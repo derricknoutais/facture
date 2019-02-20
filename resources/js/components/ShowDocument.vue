@@ -1,11 +1,14 @@
 <template>
-    <div class='container mb$user = Auth::user();$user = Auth::user();$user = Auth::user();$user = Auth::user();$user = Auth::user();$user = Auth::user();-5'>
+    <div class='container'>
         <!-- En-tête  -->
-        <div class="row mt-3">
-            <div class="col">
-                <h1 class="text-center">{{ type }} Nº {{ document.numéro }}</h1>
-            </div>  
+        <div class="row">
+            <div class="col text-center">
+                <img src="/img/logo.png" alt="" class="text-center img-fluid" width="300vw"> 
+            </div>
         </div>
+        
+
+        
         <!-- Info Client -->
         <div class="row mt-3">
             <!-- Si On est Pas En Mode Edit, Display Info Client -->
@@ -73,7 +76,8 @@
             </div>
         </div>
         <!-- Infos Document -->
-        <div class="row mt-5" v-if="!validé && !payé">
+        <div id="buttons">
+        <div class="row mt-5" v-if="!validé && !payé" >
             <!-- Date -->
             <div class="col">
                 <div class="input-group mb-3" v-if="document.date === null">
@@ -111,44 +115,70 @@
         </div>
 
         <!-- Bouttons de fonctionnalité  -->
-        <div class="row mt-5">
-            <div class="col">       
+        <div class="row mt-5" id="buttons">
+            <div class="">       
             </div>
             <div class="col text-right">
                 <div class="text-right">
                     
                     <!-- Créer Facture -->
-                    <span data-toggle="tooltip" title="Créer Facture"><button data-toggle="modal" data-target="#devisToFactureModal" class="btn btn-primary" v-if="this.type==='Devis' && validé && manager">
-                        <i class="fas fa-file-invoice-dollar"></i>
-                    </button></span>
+                    <span data-toggle="tooltip" title="Créer Facture">
+                        <button data-toggle="modal" data-target="#devisToFactureModal" class="btn btn-primary" v-if="this.type==='Devis' && validé && manager">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </button>
+                    </span>
+
                     <!-- Ajouter Payement -->
                     <span data-toggle="tooltip" title="Ajouter Payement"><button data-toggle="modal" data-target="#payementModal" class="btn btn-primary" v-if="this.type==='Facture' && (validé || eap || pp) && manager">
-                        <i class="far fa-money-bill-alt"></i>
-                    </button></span>
+                            <i class="far fa-money-bill-alt"></i>
+                        </button>
+                    </span>
+
                     <!-- Valider Facture -->
                     <span data-toggle="tooltip" title="Valider"><button type="button" class="btn btn-primary" v-if="(eav && manager) || (this.type === 'Devis' && agent)" @click="ajouterAValider(document)">
-                        <i class="fas fa-check"></i>
-                    </button></span>
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </span>
+
                     <!-- Rejetter Facture -->
-                    <span data-toggle="tooltip" title="Rejetter"><button type="button" class="btn btn-danger" v-if="(eav && manager) || (this.type === 'Devis' && agent)" @click="ajouterARejetter(document)" >
-                        <i class="fas fa-times"></i>
-                    </button></span>
+                    <span data-toggle="tooltip" title="Rejetter">
+                        <button type="button" class="btn btn-danger" v-if="(eav && manager) || (this.type === 'Devis' && agent)" @click="ajouterARejetter(document)" >
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </span>
+
+                    <!-- Imprimer Document  -->
+                    <span data-toggle="tooltip" title="Imprimer" id="">
+                        <button class="btn btn-info text-white" @click="printDocument()">
+                            <i class="fas fa-print"></i>
+                        </button>
+                    </span>
+
                     <!-- Ajouter Ligne -->
                     <button name="" class="btn btn-primary" v-if="!validé && !eap && !payé" @click="addLine()" data-toggle="tooltip" title="Ajouter Ligne"><i class="fa fa-plus"></i></button>
+                    
                     <!-- Editer -->
                     <button id="editButton" v-if="this.editMode === false && this.infoEditMode === false && !validé && !eap && !payé " class="btn btn-secondary" @click="editSelected()" data-toggle="tooltip" title="Modifier"><i class="fa fa-edit"></i></button></span>
+                    
                     <!-- Sauvegarder Modif -->
                     <button name="" v-if="this.editMode === true" class="btn btn-primary" @click="updateSelected()" data-toggle="tooltip" title="Sauvegarder Modifications"><i class="fa fa-save"></i></button>
                     <button name="" v-if="this.infoEditMode === true" class="btn btn-primary" @click="saveInfo()" data-toggle="tooltip" title="Sauvegarder Modifications"><i class="fa fa-save"></i></button>
+                    
                     <!-- Supprimer  -->
                     <span  data-toggle="tooltip" title="Supprimer Lignes"><a name="" v-if="!validé && !eap && !payé" :class="this.itemsChecked ? 'btn btn-danger' : 'btn btn-danger'" href="#" role="button" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i></a></span>
                 </div>
             </div>
         </div>
-
-        <!-- Tableau des Entrées du Document  -->
-        <div class="row mt-3" :class="document.etat === 'Rejetté' ? 'rejetté' : '' ">
+        </div>
+        <!-- En-Tête -->
+        <div class="row mt-3">
             <div class="col">
+                <h1 class="text-center">{{ type }} Nº {{ document.numéro }}</h1>
+            </div>  
+        </div>
+        <!-- Tableau des Entrées du Document  -->
+        <div class="row mt-5" :class="document.etat === 'Rejetté' ? 'rejetté' : '' " style="height:10vh">
+            <div class="col-8 offset-2">
                 <table class="table table-bordered table-fit no-border">
                     <thead>
                         <tr class="">
@@ -214,8 +244,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-
+        
         <div class="row mt-5" v-if="grandTotal !== 0">
             <h6 class="col-12">Arrêté le présent devis à la somme de:</h6>
             <br>
@@ -227,8 +256,11 @@
                     <i class="fas fa-save"></i>
                 </button>
             </div>
-            
+
         </div>
+        </div>
+
+        
         <!-- <div class="row mt-5 text-center" v-if="grandTotal !== 0">
             <h6 class="col-md-12">Veuillez établir les chèques à l’ordre de Mlle AMPOUMET-MBOUMBA Sophie</h6>
             <h6 class="col-md-12"><strong>Merci de votre commande!</strong></h6>
@@ -449,7 +481,8 @@ export default {
                 taxable: 0,
                 numero: null,
                 entrees: [],
-            }
+            },
+            printing: false
         }
     },
     computed: {
@@ -775,7 +808,14 @@ export default {
             }).catch(error => {
                 console.log(error);
             });
-        }
+        },
+        // Print Document
+        printDocument(){
+            $('[data-toggle="tooltip"]').tooltip('hide')
+            document.getElementById('buttons').style.visibility = 'hidden'
+            window.print()
+            document.getElementById('buttons').style.visibility = 'visible'
+        },
     }, 
     mounted(){
         this.entrees = this.document.entrees

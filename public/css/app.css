@@ -10528,3 +10528,7 @@ p {
   box-shadow: 14px 13px 67px -9px rgba(0, 0, 0, 0.25);
 }
 
+.not-allowed:hover {
+  cursor: not-allowed;
+}
+
