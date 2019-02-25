@@ -40,4 +40,5 @@ class Company extends Model
     {
         return $this->hasOne('App\Paramètre', 'company_id');
     }
+    //sds
 }
