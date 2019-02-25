@@ -121,9 +121,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ $company['name'] }}/paramètres">Paramètres</a>
+                                    
                                     @isset($company)
-                                        
+                                        <a class="dropdown-item" href="/{{ $company->name }}/paramètres">Paramètres</a>
                                         <a class="dropdown-item">{{ Carbon::parse(now()->startOfDay())->diffInDays($company['expiry_date'])}} Credit(s) Restant(s)</a>
                                     @endisset
                                     <div class="dropdown-divider"></div>
