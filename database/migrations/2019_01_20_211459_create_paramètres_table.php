@@ -15,8 +15,14 @@ class CreateParamètresTable extends Migration
     {
         Schema::create('paramètres', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
+            $table->longText('en_tete')->nullable();
+            $table->longText('pied_page')->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
+        
     }
 
     /**

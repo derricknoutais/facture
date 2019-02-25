@@ -54,34 +54,34 @@
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item ml-4 text-center ">
                                 <a class="nav-link mt-4 " href="{{ '/' . $company->name . '/Devis'}}">
-                                    <i class="fas fa-file-invoice fa-2x text-warning"></i>
+                                    <i class="fas fa-file-invoice-dollar fa-2x text-dark"></i>
                                     <p>Devis</p>
                                 </a>
                             </li>
                             <li class="nav-item ml-4 text-center">
                                 <a class="nav-link mt-4 " href="{{ '/' . $company->name . '/Facture'}}">
-                                    <i class="fas fa-file-invoice-dollar fa-2x text-info"></i>
+                                    <i class="fas fa-handshake fa-2x text-dark"></i>
                                     <p>Facture</p>
                                 </a>
                             </li> 
                             @if (Auth::user()->role == 'Manager')
                                 <li class="nav-item ml-4 text-center">
                                     <a class="nav-link mt-4" href="{{'/' . $company->name . '/Payement'}}">
-                                        <i class="fas fa-calculator fa-2x text-danger"></i>
+                                        <i class="fas fa-calculator fa-2x text-dark"></i>
                                         <p class="">Caisse</p>
                                     </a>
                                 </li>
                             @endif
                             <li class="nav-item ml-4 text-center">
                                 <a class="nav-link mt-4 " href="{{ '/' . $company->name . '/Client'}}">
-                                    <i class="fas fa-users fa-2x text-success"></i>
+                                    <i class="fas fa-users fa-2x text-dark"></i>
                                     <p class="">Clients</p>
                                 </a>
                             </li> 
                             @if (Auth::user()->role == 'Manager')
                                 <li class="nav-item ml-4 text-center">
                                     <a class="nav-link mt-4 not-allowed" href="{{'/' . $company->name . '/Produits'}}">
-                                        <i class="fas fa-boxes fa-2x text-secondary"></i>
+                                        <i class="fas fa-boxes fa-2x text-secondary "></i>
                                         <p class="">Produits</p>
                                     </a>
                                 </li>

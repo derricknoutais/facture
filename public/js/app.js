@@ -51014,7 +51014,7 @@ var render = function() {
         staticStyle: { height: "10vh" }
       },
       [
-        _c("div", { staticClass: "col-8 offset-2" }, [
+        _c("div", { staticClass: "col" }, [
           _c(
             "table",
             { staticClass: "table table-bordered table-fit no-border" },
@@ -52256,7 +52256,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\na { text-decoration: none !important\n}\n.black-gradient {\n    background: rgb(181,189,200); /* Old browsers */ /* FF3.6-15 */ /* Chrome10-25,Safari5.1-6 */\n    background: -webkit-gradient(linear, left top, right top, from(rgba(181,189,200,1)),color-stop(40%, rgba(130,140,149,1)),color-stop(50%, rgba(130,140,149,1)),color-stop(56%, rgba(130,140,149,1)),color-stop(62%, rgba(130,140,149,1)),to(rgba(181,189,200,1)));\n    background: linear-gradient(to right, rgba(181,189,200,1) 0%,rgba(130,140,149,1) 40%,rgba(130,140,149,1) 50%,rgba(130,140,149,1) 56%,rgba(130,140,149,1) 62%,rgba(181,189,200,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\n    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5bdc8', endColorstr='#b5bdc8',GradientType=1 ); /* IE6-9 */\n}\n", ""]);
+exports.push([module.i, "\na { text-decoration: none !important\n}\n.black-gradient {\n    background: rgb(181,189,200); /* Old browsers */ /* FF3.6-15 */\n    background: -webkit-linear-gradient(left, rgb(231, 232, 235) 0%, rgb(205, 210, 214) 40%, rgb(190, 194, 199) 50%, rgb(219, 223, 226) 56%, rgb(233, 235, 238) 62%, rgb(231, 232, 235) 0%); /* Chrome10-25,Safari5.1-6 */\n    \n    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b5bdc8', endColorstr='#b5bdc8',GradientType=1 ); /* IE6-9 */\n}\n", ""]);
 
 // exports
 
@@ -52337,7 +52337,7 @@ var render = function() {
     _c("div", { staticClass: "container-fluid " }, [
       _c("div", { staticClass: "row jumbotron black-gradient box-shadow" }, [
         _c("div", { staticClass: "col-md-12" }, [
-          _c("h1", { staticClass: "text-center text-white" }, [
+          _c("h1", { staticClass: "text-center text-dark" }, [
             _vm._v("Système de Facturation " + _vm._s(_vm.company.name) + " ")
           ])
         ])
@@ -52350,7 +52350,7 @@ var render = function() {
           "a",
           {
             staticClass:
-              "text-shadow box-shadow col border rounded text-center py-7 px-3 mx-1 bg-warning",
+              "icon-hover text-shadow box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light",
             attrs: { href: "/" + _vm.company.name + "/" + "Devis" }
           },
           [_vm._m(0)]
@@ -52360,7 +52360,7 @@ var render = function() {
           "a",
           {
             staticClass:
-              " box-shadow col border rounded text-center py-7 px-3 mx-1 bg-info",
+              "icon-hover box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light",
             attrs: { href: "/" + _vm.company.name + "/" + "Facture" }
           },
           [_vm._m(1)]
@@ -52371,7 +52371,7 @@ var render = function() {
               "a",
               {
                 staticClass:
-                  " box-shadow col border rounded text-center py-7 px-3 mx-1 bg-danger",
+                  "icon-hover box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light",
                 attrs: { href: "/" + _vm.company.name + "/" + "Payement" }
               },
               [_vm._m(2)]
@@ -52382,7 +52382,7 @@ var render = function() {
           "a",
           {
             staticClass:
-              " box-shadow col border rounded text-center py-7 px-3 mx-1 bg-success",
+              "icon-hover box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light",
             attrs: { href: "/" + _vm.company.name + "/" + "Client" }
           },
           [_vm._m(3)]
@@ -52397,9 +52397,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [
-      _c("i", { staticClass: "fas fa-file-invoice fa-3x text-light" }),
+      _c("i", { staticClass: "fas fa-file-invoice-dollar fa-3x text-dark" }),
       _vm._v(" "),
-      _c("h3", { staticClass: "mt-3 text-white" }, [_vm._v("Devis")])
+      _c("h3", { staticClass: "mt-3 text-dark" }, [_vm._v("Devis")])
     ])
   },
   function() {
@@ -52407,9 +52407,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [
-      _c("i", { staticClass: "fas fa-file-invoice-dollar fa-3x text-light" }),
+      _c("i", { staticClass: "fas fa-handshake fa-3x text-dark" }),
       _vm._v(" "),
-      _c("h3", { staticClass: "mt-3 text-white" }, [_vm._v("Factures")])
+      _c("h3", { staticClass: "mt-3 text-dark" }, [_vm._v("Factures")])
     ])
   },
   function() {
@@ -52417,9 +52417,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [
-      _c("i", { staticClass: "fas fa-calculator fa-3x text-light" }),
+      _c("i", { staticClass: "fas fa-calculator fa-3x text-dark" }),
       _vm._v(" "),
-      _c("h3", { staticClass: "mt-3 text-white" }, [_vm._v("Caisse")])
+      _c("h3", { staticClass: "mt-3 text-dark" }, [_vm._v("Caisse")])
     ])
   },
   function() {
@@ -52427,9 +52427,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [
-      _c("i", { staticClass: "fas fa-users fa-3x text-light" }),
+      _c("i", { staticClass: "fas fa-users fa-3x text-dark " }),
       _vm._v(" "),
-      _c("h3", { staticClass: "mt-3 text-white" }, [_vm._v("Clients")])
+      _c("h3", { staticClass: "mt-3 text-dark" }, [_vm._v("Clients")])
     ])
   }
 ]

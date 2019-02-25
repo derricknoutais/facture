@@ -6,11 +6,10 @@
         <div class="nav nav-tabs w-100 text-right" id="nav-tab" role="tablist">
             @foreach (Auth::user()->companies as $company)
                 <a  
-
                     @if($loop->first) 
-                        class="nav-item nav-link active" 
+                        class="nav-item bg-dark nav-link active" 
                     @else 
-                        class="nav-item nav-link" 
+                        class="nav-item bg-dark nav-link" 
                     @endif
                     
                     data-toggle="tab" href="#company{{ $company->id }}" 
@@ -26,6 +25,8 @@
             <div 
                 @if($loop->first) class="tab-pane fade show active" @else class="tab-pane fade" @endif
                 id="company{{ $company->id }}" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+                
                 <company-home :company="{{ $company }}" :user="{{ $user }}"></company-home>
             </div>
             

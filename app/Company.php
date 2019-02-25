@@ -36,4 +36,8 @@ class Company extends Model
     public function retraits(){
         return $this->hasMany('App\Retrait', 'company_id');
     }
+    public function paramètres()
+    {
+        return $this->hasOne('App\Paramètre', 'company_id');
+    }
 }

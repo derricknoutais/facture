@@ -29,7 +29,7 @@ Route::post('/api/facture', function(Request $request){
         'prix_unitaire' => $request->prix_unitaire
     ]);
 
-    return $request;
+    return $facture;
 });
 
 

@@ -178,7 +178,7 @@
         </div>
         <!-- Tableau des Entrées du Document  -->
         <div class="row mt-5" :class="document.etat === 'Rejetté' ? 'rejetté' : '' " style="height:10vh">
-            <div class="col-8 offset-2">
+            <div class="col">
                 <table class="table table-bordered table-fit no-border">
                     <thead>
                         <tr class="">
