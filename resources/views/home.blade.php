@@ -10,7 +10,6 @@
         </div>
         <h1 class="display-5 text-center">Créer un Compte Pour Gérer vos Factures</h1>
 
-
         <p class="lead text">Un Agent Validera votre demande dans les plus Brefs Délais</p>
         <p class="lead">
             <a class="btn btn-primary btn-lg" href="/register" role="button">Créer un Compte</a>
