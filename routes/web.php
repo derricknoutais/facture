@@ -8,13 +8,17 @@ header('Access-Control-Allow-Origin:  *');
 header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
 header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-Type, X-Auth-Token, Origin, Authorization');
 
-// Auth::loginUsingId(1);
+Auth::loginUsingId(1);
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/api/facture', function(Request $request){
+    $numero = Facture::numero(1);
+
     $facture = Facture::create([
+        'numéro' => $numero,
         'company_id' => 1,
+        'client_id' => $request->client,
         'etabli_par' => 1,
         'etat' => 'Validé',
         'objet' => $request->objet,
@@ -22,6 +26,7 @@ Route::post('/api/facture', function(Request $request){
         'échéance' => $request->échéance,
         'taxable' => false
     ]);
+
     App\FactureEntree::create([
         'facture_id' => $facture->id,
         'quantité' => $request->quantité,
@@ -30,6 +35,20 @@ Route::post('/api/facture', function(Request $request){
     ]);
 
     return $facture;
+});
+
+Route::post('/api/client/nouveau', function(Request $request){
+    $company = App\Company::find(1);
+    $company->clients()->save(
+        $client = App\Client::create([
+            'nom' => $request->nom,
+            'prénom' => $request->prenom,
+            'addresse' => $request->addresse,
+            'numéro' => $request->numero_telephone,
+            'origine' => 'Rental Pro'
+        ])
+    );
+    return $client;
 });
 
 

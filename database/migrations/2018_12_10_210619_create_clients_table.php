@@ -19,6 +19,7 @@ class CreateClientsTable extends Migration
             $table->string('prénom');
             $table->longText('addresse');
             $table->string('numéro');
+            $table->string('origine')->nullable();
             $table->timestamps();
         });
     }

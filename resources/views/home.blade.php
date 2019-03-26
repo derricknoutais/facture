@@ -15,6 +15,10 @@
             <a class="btn btn-primary btn-lg" href="/register" role="button">Créer un Compte</a>
             <a class="btn btn-primary btn-lg" href="/login" role="button">Se Connecter</a>
         </p>
+        
     </div>
+    
 </div>
+
+
 @endsection

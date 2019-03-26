@@ -44,4 +44,18 @@ class Facture extends Model
         return $total;
     }
 
+    public static function numero($company_id){
+        $numero = Facture::where('company_id', $company_id)->count() + 1;
+        if($numero < 10){
+            $numero_facture = 'F00' . $numero . '/' . date('Y');
+        }
+        else if( $numero < 100){
+            $numero_facture = 'F0' . $numero . '/' . date('Y');
+        } 
+        else {
+            $numero_facture = $numero . '/' . date('Y');
+        }
+        return $numero_facture;
+    }
+
 }
