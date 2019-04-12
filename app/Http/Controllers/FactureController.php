@@ -15,6 +15,7 @@ class FactureController extends Controller
     {
         $title = "Cashier | Facture ";
         $company = Company::where('name', $company_name)->first();
+        $company->loadMissing('services');
         $facture = $company->factures;
         $clients = $company->clients;
         $vendeurs = Company::where('name', $company_name)->first()->users;
@@ -60,6 +61,7 @@ class FactureController extends Controller
     public function show($company_name, $numero)
     {
         $company = Company::where('name', $company_name)->first();
+        $company->loadMissing('paramètres', 'services');
         $facture = Facture::find($numero);
         $title = "Cashier | Facture ". $facture->numéro ;
         $facture->loadMissing(['entrees', 'company', 'client', 'créateur', 'payements']);

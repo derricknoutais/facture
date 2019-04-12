@@ -179,8 +179,9 @@
                     </div>
                     <div class="modal-body">
                         <div :class="isLoading ? 'spinner' : '' "></div>
+                        <label>Numéro {{ this.type }}</label>
                         <input class="form-control" disabled :value="newNumber">
-                        <label></label>
+                        <label class="mt-3">Sélectionne Client</label>
                         <select class="form-control" v-model="newDocument.client">
                             <option v-for="client in clients" :value="client.id">{{ client.nom  + ' ' + client.prénom}}</option>
                         </select>

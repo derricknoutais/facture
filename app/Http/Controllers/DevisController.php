@@ -56,6 +56,7 @@ class DevisController extends Controller
     {
     
         $company = Company::where('name', $company_name)->first();
+        $company->loadMissing('services', 'paramètres');
         $devis = Devis::find($numero);
         $title = "Cashier | Devis Nº " . $devis->numéro ;
         $factures = Facture::where('company_id', $company->id)->get();

@@ -8,9 +8,11 @@ header('Access-Control-Allow-Origin:  *');
 header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
 header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-Type, X-Auth-Token, Origin, Authorization');
 
-// Auth::loginUsingId(1);
+Auth::loginUsingId(1);
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::post('/maj-paramètres', 'ParamètreController@store');
 
 Route::post('/api/facture', function(Request $request){
     $numero = Facture::numero(1);
@@ -48,6 +50,18 @@ Route::post('/api/client/nouveau', function(Request $request){
             'origine' => 'Rental Pro'
         ])
     );
+    return $client;
+});
+
+Route::post('/api/client/{client}/update', function (Request $request, Client $client) {
+    
+    // $client->update([
+    //     'nom' => $request->nom,
+    //     'prénom' => $request->prenom,
+    //     'addresse' => $request->addresse,
+    //     'numéro' => $request->numero_telephone,
+    //     'origine' => 'Rental Pro'
+    // ]);
     return $client;
 });
 
@@ -128,6 +142,11 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', 'PayementController@index');
             Route::post('{facture}/addPayment', 'PayementController@store');
             Route::post('retirer-cash', 'RetraitController@store');
+        });
+        //Services
+        Route::prefix('Services')->group(function(){
+            Route::get('/', 'ServiceController@index');
+            Route::post('/store', 'ServiceController@store');
         });
         // Paramètres
         Route::get('paramètres', 'ParamètreController@index');

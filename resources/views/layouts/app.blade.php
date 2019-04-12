@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ isset($title) ? $title : '' }}</title>
-
+    <link rel="icon" href="/img/logo-g.png" type="image/png" sizes="16x16">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
@@ -79,18 +79,19 @@
                                 </a>
                             </li> 
                             @if (Auth::user()->role == 'Manager')
+                                <li class="nav-item ml-4 text-center ">
+                                    <a class="nav-link mt-4" href="{{'/' . $company->name . '/Services'}}">
+                                        <i class="fas fa-file-contract fa-2x text-dark"></i>
+                                        <p class="">Services</p>
+                                    </a>
+                                </li>
                                 <li class="nav-item ml-4 text-center">
                                     <a class="nav-link mt-4 not-allowed" href="{{'/' . $company->name . '/Produits'}}">
                                         <i class="fas fa-boxes fa-2x text-secondary "></i>
                                         <p class="">Produits</p>
                                     </a>
                                 </li>
-                                <li class="nav-item ml-4 text-center ">
-                                    <a class="nav-link mt-4 not-allowed " href="{{'/' . $company->name . '/Services'}}">
-                                        <i class="fas fa-file-contract fa-2x text-secondary"></i>
-                                        <p class="">Services</p>
-                                    </a>
-                                </li>
+                                
                                 <li class="nav-item ml-4 text-center">
                                     <a class="nav-link mt-4 not-allowed" href="{{'/' . $company->name . '/Fournisseurs'}}">
                                         <i class="fas fa-user-tie fa-2x text-secondary"></i>

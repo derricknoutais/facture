@@ -3,11 +3,12 @@
         <!-- En-tête  -->
         <div class="row">
             <div class="col text-center">
-                <img src="/img/logo.png" alt="" class="text-center img-fluid" width="300vw"> 
+                <img v-if="company.paramètres" :src="'/uploads/' + company.paramètres.logo " alt="" class="text-center img-fluid" width="200vw">
+                <a :href="'/' + company.name + '/paramètres'" v-else><img  src='/img/télécharger.png' alt="" class="text-center img-fluid" width="300vw" ></a>
             </div>
         </div>
         
-
+        <h2 class="text-center mt-5" v-if="company.paramètres">{{ company.paramètres.en_tete }}</h2>
         
         <!-- Info Client -->
         <div class="row mt-3">
@@ -77,194 +78,211 @@
         </div>
         <!-- Infos Document -->
         <div id="buttons">
-        <div class="row mt-5" v-if="!validé && !payé" >
-            <!-- Date -->
-            <div class="col">
-                <div class="input-group mb-3" v-if="document.date === null">
-                    <input type="date" class="form-control" placeholder="Vendeur" v-model="infos.date">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-primary" type="button" @click="saveInfo()">
-                            <i class="fa" :class="isLoading ? 'fa-spinner' : ' fa-save'"></i>
-                        </button>
+            <div class="row mt-5" v-if="!validé && !payé" >
+                <!-- Date -->
+                <div class="col" v-if="document.date === null">
+                    <label>Date</label>
+                    <div class="input-group mb-3">
+                        <input type="date" class="form-control" placeholder="Vendeur" v-model="infos.date" @keyup.enter="saveInfo()">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" type="button" @click="saveInfo()">
+                                <i class="fa" :class="isLoading ? 'fa-spinner' : ' fa-save'"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Objet -->
-            <div class="col">
-                <div class="input-group mb-3" v-if="document.objet === null">
-                    <input type="text" class="form-control" placeholder="Objet" v-model="infos.objet">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-primary" type="button" @click="saveInfo()">
-                            <i class="fa" :class="isLoading ? 'fa-spinner' : 'fa-save'"></i>
-                        </button>
+                <!-- Objet -->
+                <div class="col" v-if="document.objet === null">
+                    <label>Objet</label>
+                    <div class="input-group mb-3" >
+                        <input type="text" class="form-control" placeholder="Objet" v-model="infos.objet" @keyup.enter="saveInfo()">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" type="button" @click="saveInfo()">
+                                <i class="fa" :class="isLoading ? 'fa-spinner' : 'fa-save'"></i>
+                            </button>
 
+                        </div>
                     </div>
-                </div>
-            </div>  
-            <!-- Échéance -->
-            <div class="col" v-if="this.type === 'Facture' && document.échéance === null">
-                <div class="input-group mb-3">
-                    <input type="date" class="form-control" placeholder="Échéance" v-model="infos.échéance">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-primary" type="button" @click="saveInfo()">
-                            <i class="fa" :class="isLoading ? 'fa-spinner' : ' fa-save'" ></i>
-                        </button>
+                </div>  
+                <!-- Échéance -->
+                <div class="col" v-if="this.type === 'Facture' && document.échéance === null">
+                    <label>Date d'échéance</label>
+                    <div class="input-group mb-3">
+                        <input type="date" class="form-control" placeholder="Échéance" v-model="infos.échéance" @keyup.enter="saveInfo()">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" type="button" @click="saveInfo()">
+                                <i class="fa" :class="isLoading ? 'fa-spinner' : ' fa-save'" ></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
         <!-- Bouttons de fonctionnalité  -->
-        <div class="row mt-5" id="buttons">
-            <div class="">       
-            </div>
-            <div class="col text-right">
-                <div class="text-right">
-                    
-                    <!-- Créer Facture -->
-                    <span data-toggle="tooltip" title="Créer Facture">
-                        <button data-toggle="modal" data-target="#devisToFactureModal" class="btn btn-primary" v-if="this.type==='Devis' && validé && manager">
-                            <i class="fas fa-file-invoice-dollar"></i>
-                        </button>
-                    </span>
+            <div class="row mt-5" id="buttons">
+                <div class="">       
+                </div>
+                <div class="col text-right">
+                    <div class="text-right">
+                        
+                        <!-- Créer Facture -->
+                        <span data-toggle="tooltip" title="Créer Facture">
+                            <button data-toggle="modal" data-target="#devisToFactureModal" class="btn btn-primary" v-if="this.type==='Devis' && validé && manager">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                            </button>
+                        </span>
 
-                    <!-- Ajouter Payement -->
-                    <span data-toggle="tooltip" title="Ajouter Payement"><button data-toggle="modal" data-target="#payementModal" class="btn btn-primary" v-if="this.type==='Facture' && (validé || eap || pp) && manager">
-                            <i class="far fa-money-bill-alt"></i>
-                        </button>
-                    </span>
+                        <!-- Ajouter Payement -->
+                        <span data-toggle="tooltip" title="Ajouter Payement"><button data-toggle="modal" data-target="#payementModal" class="btn btn-primary" v-if="this.type==='Facture' && (validé || eap || pp) && manager">
+                                <i class="far fa-money-bill-alt"></i>
+                            </button>
+                        </span>
 
-                    <!-- Valider Facture -->
-                    <span data-toggle="tooltip" title="Valider"><button type="button" class="btn btn-primary" v-if="(eav && manager) || (this.type === 'Devis' && agent)" @click="ajouterAValider(document)">
-                            <i class="fas fa-check"></i>
-                        </button>
-                    </span>
+                        <!-- Valider Facture -->
+                        <span data-toggle="tooltip" title="Valider"><button type="button" class="btn btn-primary" v-if="(eav && manager) || (this.type === 'Devis' && agent)" @click="ajouterAValider(document)">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </span>
 
-                    <!-- Rejetter Facture -->
-                    <span data-toggle="tooltip" title="Rejetter">
-                        <button type="button" class="btn btn-danger" v-if="(eav && manager) || (this.type === 'Devis' && agent)" @click="ajouterARejetter(document)" >
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </span>
+                        <!-- Rejetter Facture -->
+                        <span data-toggle="tooltip" title="Rejetter">
+                            <button type="button" class="btn btn-danger" v-if="(eav && manager) || (this.type === 'Devis' && agent)" @click="ajouterARejetter(document)" >
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </span>
 
-                    <!-- Imprimer Document  -->
-                    <span data-toggle="tooltip" title="Imprimer" id="">
-                        <button class="btn btn-info text-white" @click="printDocument()">
-                            <i class="fas fa-print"></i>
-                        </button>
-                    </span>
+                        <!-- Imprimer Document  -->
+                        <span data-toggle="tooltip" title="Imprimer" id="">
+                            <button class="btn btn-info text-white" @click="printDocument()">
+                                <i class="fas fa-print"></i>
+                            </button>
+                        </span>
 
-                    <!-- Ajouter Ligne -->
-                    <button name="" class="btn btn-primary" v-if="!validé && !eap && !payé" @click="addLine()" data-toggle="tooltip" title="Ajouter Ligne"><i class="fa fa-plus"></i></button>
-                    
-                    <!-- Editer -->
-                    <button id="editButton" v-if="this.editMode === false && this.infoEditMode === false && !validé && !eap && !payé " class="btn btn-secondary" @click="editSelected()" data-toggle="tooltip" title="Modifier"><i class="fa fa-edit"></i></button></span>
-                    
-                    <!-- Sauvegarder Modif -->
-                    <button name="" v-if="this.editMode === true" class="btn btn-primary" @click="updateSelected()" data-toggle="tooltip" title="Sauvegarder Modifications"><i class="fa fa-save"></i></button>
-                    <button name="" v-if="this.infoEditMode === true" class="btn btn-primary" @click="saveInfo()" data-toggle="tooltip" title="Sauvegarder Modifications"><i class="fa fa-save"></i></button>
-                    
-                    <!-- Supprimer  -->
-                    <span  data-toggle="tooltip" title="Supprimer Lignes"><a name="" v-if="!validé && !eap && !payé" :class="this.itemsChecked ? 'btn btn-danger' : 'btn btn-danger'" href="#" role="button" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i></a></span>
+                        <!-- Ajouter Ligne -->
+                        <button name="" class="btn btn-primary" v-if="!validé && !eap && !payé" @click="addLine()" data-toggle="tooltip" title="Ajouter Ligne"><i class="fa fa-plus"></i></button>
+                        
+                        <!-- Editer -->
+                        <button id="editButton" v-if="this.editMode === false && this.infoEditMode === false && !validé && !eap && !payé " class="btn btn-secondary" @click="editSelected()" data-toggle="tooltip" title="Modifier"><i class="fa fa-edit"></i></button></span>
+                        
+                        <!-- Sauvegarder Modif -->
+                        <button name="" v-if="this.editMode === true" class="btn btn-primary" @click="updateSelected()" data-toggle="tooltip" title="Sauvegarder Modifications"><i class="fa fa-save"></i></button>
+                        <button name="" v-if="this.infoEditMode === true" class="btn btn-primary" @click="saveInfo()" data-toggle="tooltip" title="Sauvegarder Modifications"><i class="fa fa-save"></i></button>
+                        
+                        <!-- Supprimer  -->
+                        <span  data-toggle="tooltip" title="Supprimer Lignes"><a name="" v-if="!validé && !eap && !payé" :class="this.itemsChecked ? 'btn btn-danger' : 'btn btn-danger'" href="#" role="button" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa fa-trash"></i></a></span>
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
         <!-- En-Tête -->
-        <div class="row mt-3">
+        <div class="row mt-5">
             <div class="col">
                 <h1 class="text-center">{{ type }} Nº {{ document.numéro }}</h1>
             </div>  
         </div>
         <!-- Tableau des Entrées du Document  -->
         <div class="row mt-5" :class="document.etat === 'Rejetté' ? 'rejetté' : '' " style="height:10vh">
-            <div class="col">
-                <table class="table table-bordered table-fit no-border">
-                    <thead>
-                        <tr class="">
-                            <th class="fit">
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="" id="" v-model="isAllChecked" @change="toggleSelectAll()">
-                                    </label>
-                                </div>
-                            </th>
-                            <th>Quantité</th>
-                            <th>Description</th>
-                            <th>Prix Unitaire</th>
-                            <th>Prix Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Entrées -->
-                        <tr v-for="(entree, index) in document.entrees">
-                            <td>
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" v-model="itemsChecked[index]">
-                                    </label>
-                                </div>
-                            </td>
-                            <td scope="row" v-if="entree.edit === false">{{ entree.quantité }}</td>
-                            <td v-if="entree.edit === true"><input class="form-control" v-model="entree.quantité"></td>
-                            <td v-if="entree.edit === false">{{ entree.description }}</td>
-                            <td v-if="entree.edit === true"><input class="form-control" v-model="entree.description"></td>
-                            <td v-if="entree.edit === false">{{ entree.prix_unitaire | currency }}</td>
-                            <td v-if="entree.edit === true"><input class="form-control" v-model="entree.prix_unitaire"></td>
-                            <td><b>{{ entree.quantité * entree.prix_unitaire  | currency}}</b></td>
-                        </tr>
-                        <!-- Nouvelles Entrées (Ajouter Entrées) -->
-                        <tr v-if="nouvellesEntrées" v-for="(nouvellesEntrée, index) in nouvellesEntrées">
-                            <td></td>
-                            <td><input class="form-control" v-model.number="nouvellesEntrée.quantité"></td>
-                            <td><input class="form-control" v-model="nouvellesEntrée.description"></td>
-                            <td><input class="form-control" v-model.number="nouvellesEntrée.prix_unitaire"></td>
-                            <td>
-                                <button name="" class="btn btn-primary" @click="saveLine(index)"><i class="fa fa-save"></i></button>
-                                <button name="" class="btn btn-danger" href="#" role="button" @click="removeNewLine(index)"><i class="fa fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <!-- Totaux -->
-                    
-                        <tr class="no-border" v-if="this.document.entrees.length > 0">
-                            <td colspan="3" class="no-border"></td>
-                            <td class="text-right border-left " >Subtotal</td>
-                            <td class=""><b>{{ subtotal | currency}}</b></td>
-                        </tr>
-                        <tr v-if="this.document.entrees.length > 0 && this.document.taxable">
-                            <td colspan="3" class="no-border"></td>
-                            <td class="text-right border-left">TVA -9.5%</td>
-                            <td class=""> <b>{{ tva | currency }}</b></td>
-                        </tr>
-                        <tr v-if="this.document.entrees.length > 0">
-                            <td colspan="3" class="no-border"></td>
-                            <td class="text-right border-left border-bottom">Grand Total</td>
-                            <td class="border-bottom"><b>{{ grandTotal | currency }}</b></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        
-        <div class="row mt-5" v-if="grandTotal !== 0">
-            <h6 class="col-12">Arrêté le présent devis à la somme de:</h6>
-            <br>
-            <h5 class="col-12"><strong>{{ wn(this.grandTotal) }} Francs CFA</strong></h5>
-        </div>
-        <div class="row mt-3">
-            <div class="col text-center">
-                <button type="button" class="btn btn-success px-5 py-1" v-if="ouvert" @click="ajouterAEAV(document)">
-                    <i class="fas fa-save"></i>
-                </button>
-            </div>
+            
+            <table class="table table-bordered table-fit no-border">
+                <thead>
+                    <tr class="">
+                        <th>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="" id="" v-model="isAllChecked" @change="toggleSelectAll()">
+                                </label>
+                            </div>
+                        </th>
+                        <th>Quantité</th>
+                        <th>Description</th>
+                        <th>Prix Unitaire</th>
+                        <th>Prix Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Entrées -->
+                    <tr v-for="(entree, index) in document.entrees">
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" v-model="itemsChecked[index]">
+                                </label>
+                            </div>
+                        </td>
+                        <td scope="row" v-if="entree.edit === false">{{ entree.quantité }}</td>
+                        <td v-if="entree.edit === true"><input class="form-control" v-model="entree.quantité"></td>
+                        <td v-if="entree.edit === false">{{ entree.description }}</td>
+                        <td v-if="entree.edit === true"><input class="form-control" v-model="entree.description"></td>
+                        <td v-if="entree.edit === false">{{ entree.prix_unitaire | currency }}</td>
+                        <td v-if="entree.edit === true"><input class="form-control" v-model="entree.prix_unitaire"></td>
+                        <td><b>{{ entree.quantité * entree.prix_unitaire  | currency}}</b></td>
+                    </tr>
+                    <!-- Nouvelles Entrées (Ajouter Entrées) -->
+                    <tr v-if="nouvellesEntrées" v-for="(nouvellesEntrée, index) in nouvellesEntrées">
+                        <td>
+                            <select class="form-control" v-model="newService" @change="addServiceInfo(index)">
+                                <option v-for="service in company.services" :value="service">{{ service.référence }}</option>
+                            </select>
+                        </td>
+                        <td><input class="form-control" v-model.number="nouvellesEntrée.quantité"></td>
+                        <td><input class="form-control" v-model="nouvellesEntrée.description"></td>
+                        <td><input class="form-control" v-model.number="nouvellesEntrée.prix_unitaire"></td>
+                        <td>
+                            <button name="" class="btn btn-primary" @click="saveLine(index)"><i class="fa fa-save"></i></button>
+                            <button name="" class="btn btn-danger" href="#" role="button" @click="removeNewLine(index)"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <!-- Totaux -->
+                    <tr class="no-border" v-if="this.document.entrees.length > 0">
+                        <td colspan="3" class="no-border"></td>
+                        <td class="text-right border-left " >Subtotal</td>
+                        <td class=""><b>{{ subtotal | currency}}</b></td>
+                    </tr>
+                    <tr v-if="this.document.entrees.length > 0 && this.document.taxable">
+                        <td colspan="3" class="no-border"></td>
+                        <td class="text-right border-left">TVA -9.5%</td>
+                        <td class=""> <b>{{ tva | currency }}</b></td>
+                    </tr>
+                    <tr v-if="this.document.entrees.length > 0">
 
-        </div>
-        </div>
+                        <td colspan="3" class="no-border"></td>
 
-        
-        <!-- <div class="row mt-5 text-center" v-if="grandTotal !== 0">
-            <h6 class="col-md-12">Veuillez établir les chèques à l’ordre de Mlle AMPOUMET-MBOUMBA Sophie</h6>
-            <h6 class="col-md-12"><strong>Merci de votre commande!</strong></h6>
-        </div> -->
+                        <!-- Si des paiements ont été reçus présente le total -->
+                        
+                        <td class="text-right border-left border-bottom text-primary" v-if="this.document.payements">{{this.document.payements.length}} Paiement(s) Reçu(s)</td>
+                        <td class="border-bottom text-primary" v-if="this.document.payements"><b>{{ this.totalPayements | currency }}</b></td>
+
+                        <!-- Sinon juste présente le grand total  -->
+
+                        <td class="text-right border-left border-bottom" v-if="! this.document.payements">Grand Total</td>
+                        <td class="border-bottom" v-if="! this.document.payements"><b>{{ grandTotal | currency }}</b></td>
+
+                    </tr>
+                    <tr v-if="this.document.payements">
+                        <td colspan="3" class="no-border"></td>
+
+                        <!-- <td class="text-right border-left border-bottom" v-if="document.type === 'Facture' && document.payements.length === 0 ">Grand Total</td> -->
+                        <td class="text-right border-left border-bottom text-danger" >Reste à Payer</td>
+                        <td class="border-bottom text-danger"><b>{{ subtotal - this.totalPayements | currency }}</b></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="row mt-5" v-if="grandTotal !== 0">
+                <h6 class="col-12">Arrêté le présent devis à la somme de:</h6>
+                <br>
+                <h5 class="col-12"><strong>{{ wn(this.grandTotal) }} Francs CFA</strong></h5>
+                <h5 class="col-12 text-center mt-3" v-if="company.paramètres">{{ company.paramètres.pied_page }}</h5>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <button type="button" class="btn btn-success px-5 py-1" v-if="ouvert" @click="ajouterAEAV(document)">
+                        <i class="fas fa-save"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
 
         <!-- Modal de Confirmation de Suppression  -->
         <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
@@ -338,9 +356,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Effectuer Payement</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="row flex justify-content-between px-3">
@@ -447,7 +465,7 @@
 
 <script>
 export default {
-    props:['document', 'type', 'clients', 'documents', 'user'],
+    props:['document', 'type', 'clients', 'documents', 'user', 'company'],
     data(){
         return {
             isAllChecked: false,
@@ -482,6 +500,7 @@ export default {
                 numero: null,
                 entrees: [],
             },
+            newService : null,
             printing: false
         }
     },
@@ -584,6 +603,12 @@ export default {
             }
         }
     },
+    watch: {
+        newService(){
+            console.log(this.newService);
+            
+        }
+    },
     methods:{
         displayModal(msg){
             $('#confirmDeleteModal').modal('hide')
@@ -621,17 +646,24 @@ export default {
             var nouvelleLigne = new Object();
             nouvelleLigne.devis_id = this.document.id
             nouvelleLigne.edit = false
-            nouvelleLigne.quantité = null
+            nouvelleLigne.quantité = 1
             nouvelleLigne.description = ''
-            nouvelleLigne.prix_unitaire = null
+            nouvelleLigne.prix_unitaire = 0
 
             this.nouvellesEntrées.push(
                 nouvelleLigne
             )
             this.$forceUpdate();
         },
+
         removeNewLine(index){
             this.nouvellesEntrées.splice(index,1);
+        },
+        addServiceInfo(index){
+            this.nouvellesEntrées[index].description = this.newService.désignation
+            this.nouvellesEntrées[index].quantité = 1
+            this.nouvellesEntrées[index].prix_unitaire = this.newService.prix
+            this.$forceUpdate();
         },
         saveLine(index){
             axios.post('/' + this.document.company.name + '/' + this.type + '/' + this.document.id + '/saveLine', this.nouvellesEntrées[index]).then(response => {

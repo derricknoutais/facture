@@ -11,6 +11,11 @@
                 <p>{{ clientLocal.numéro }}</p>
                 <p>{{ clientLocal.addresse }}</p>
             </div>
+            <div class="col text-right">
+                <p>Total Factures: {{ this.totalFactures | currency  }}</p>
+                <p>Total Paiements: {{ this.totalPaiements  | currency  }}</p>
+                <p>Solde Client: {{ this.totalFactures - this.totalPaiements | currency }}</p>
+            </div>
         </div>
         <div class="row mt-5">
             <div class="col">
@@ -66,12 +71,37 @@ export default {
     methods:{
         redirectTo(transaction){
             window.location = '/'+ this.company.name+'/' + transaction.type + '/' + transaction.id
+        }, 
+        computeTotal(type){
+            var total = 0;
+            this.transactions.forEach( transaction => {
+                if(transaction.type === type){
+                    total += transaction.total
+                }
+            })
+            return total;
         }
     },
     computed:{
-        totalTransaction(){
-            
-        }
+        totalFactures(){
+            var total = 0;
+            this.transactions.forEach(transaction => {
+                if(transaction.type === 'Facture'){
+                    total += transaction.total
+                }
+            })
+            return total;
+        },
+        totalPaiements(){
+            var total = 0;
+            this.client.factures.forEach( facture => {
+                facture.payements.forEach( payement => {
+                    total += payement.montant
+                })
+            });
+            return total;
+        },
+        
     },
     created(){
         this.clientLocal = this.client

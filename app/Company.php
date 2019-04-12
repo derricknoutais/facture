@@ -40,5 +40,8 @@ class Company extends Model
     {
         return $this->hasOne('App\Paramètre', 'company_id');
     }
+    public function services(){
+        return $this->hasMany('App\Service', 'company_id');
+    }
     //sds
 }
