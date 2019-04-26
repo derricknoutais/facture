@@ -3,6 +3,15 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 
+import Multiselect from 'vue-multiselect';
+Vue.component('multiselect', Multiselect)
+
+const moment = require('moment')
+require('moment/locale/fr')
+
+Vue.use(require('vue-moment'), {
+    moment
+})
 
 const files = require.context('./', true, /\.vue$/i)
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))

@@ -23,6 +23,8 @@
     },
     "dependencies": {
         "vue-currency-filter": "^3.2.0",
+        "vue-moment": "^4.0.0",
+        "vue-multiselect": "^2.1.4",
         "written-number": "^0.8.1"
     }
 }
