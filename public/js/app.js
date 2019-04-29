@@ -72056,7 +72056,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     addServiceInfo: function addServiceInfo(index) {
       var _this2 = this;
 
-      setInterval(function () {
+      setTimeout(function () {
         _this2.nouvellesEntrées[index].description = _this2.newService.désignation;
         _this2.nouvellesEntrées[index].quantité = 1;
         _this2.nouvellesEntrées[index].prix_unitaire = _this2.newService.prix;
@@ -72067,7 +72067,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     editServiceInfo: function editServiceInfo(index) {
       var _this3 = this;
 
-      setInterval(function () {
+      setTimeout(function () {
         _this3.document.entrees[index].description = _this3.newService.désignation;
         _this3.document.entrees[index].quantité = 1;
         _this3.document.entrees[index].prix_unitaire = _this3.newService.prix;
@@ -75064,6 +75064,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['clients', 'company'],
   data: function data() {
@@ -75324,6 +75325,20 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row mt-5" }, [
       _c("div", { staticClass: "col text-right" }, [
+        _c(
+          "span",
+          {
+            attrs: { "data-toggle": "tooltip", title: "Créer Nouveau Client" }
+          },
+          [
+            _c(
+              "a",
+              { staticClass: "btn btn-primary", attrs: { href: "/send-mail" } },
+              [_c("i", { staticClass: "fas fa-envelope" })]
+            )
+          ]
+        ),
+        _vm._v(" "),
         _c(
           "span",
           {

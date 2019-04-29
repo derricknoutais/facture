@@ -36,12 +36,17 @@ class Facture extends Model
         }
         return $total;
     }
+
     public function montantTotal(){
         $total = 0;
         foreach ($this->entrees as $entree) {
             $total += $entree->quantité * $entree->prix_unitaire;
         }
         return $total;
+    }
+
+    public function resteAPayé(){
+        return $this->montantTotal() - $this->totalPayé();
     }
 
     public static function numero($company_id){

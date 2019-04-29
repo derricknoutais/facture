@@ -19,5 +19,15 @@ class Client extends Model
     {
         return $this->belongsToMany('App\Company', 'client_companies', 'client_id', 'company_id');
     }
+    public function solde(){
+        $solde = 0;
+        $factures = $this->factures;
+
+        foreach ($factures as $facture) {
+            $solde += $facture->resteAPayé();
+        }
+        
+        return $solde;
+    }
 
 }

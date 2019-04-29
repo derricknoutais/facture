@@ -3,6 +3,8 @@
 use App\Facture;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RappelPaiement;
 
 header('Access-Control-Allow-Origin:  *');
 header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
@@ -64,9 +66,6 @@ Route::post('/api/client/{client}/update', function (Request $request, Client $c
     // ]);
     return $client;
 });
-
-
-
 
 Route::group(['middleware' => ['auth']], function () {
     
@@ -151,6 +150,13 @@ Route::group(['middleware' => ['auth']], function () {
         // Paramètres
         Route::get('paramètres', 'ParamètreController@index');
     });
+});
+
+
+Route::get('send-mail', function(){
+    $client = App\Client::find(1);
+    $company = App\Company::find(1)->with('paramètres')->first();
+    Mail::to('test@test.com')->send( new RappelPaiement($client, $company) );
 });
 
 
