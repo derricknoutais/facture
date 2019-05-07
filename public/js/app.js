@@ -69987,10 +69987,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['company', 'caisse'],
   data: function data() {
@@ -73623,8 +73619,7 @@ var render = function() {
                       : _vm._e()
                   }),
                   _vm._v(" "),
-                  this.document.entrees.length > 0 &&
-                  this.document.payements.length > 0
+                  this.document.entrees.length > 0
                     ? _c("tr", { staticClass: "no-border" }, [
                         _c("td", {
                           staticClass: "no-border checkButtons",
@@ -73703,8 +73698,9 @@ var render = function() {
                             )
                           : _vm._e(),
                         _vm._v(" "),
-                        this.document.payements &&
-                        this.document.payements.length === 0
+                        (this.document.payements &&
+                          this.document.payements.length === 0) ||
+                        _vm.type === "Devis"
                           ? _c(
                               "td",
                               {
@@ -73715,8 +73711,9 @@ var render = function() {
                             )
                           : _vm._e(),
                         _vm._v(" "),
-                        this.document.payements &&
-                        this.document.payements.length === 0
+                        (this.document.payements &&
+                          this.document.payements.length === 0) ||
+                        _vm.type === "Devis"
                           ? _c("td", { staticClass: "border-bottom" }, [
                               _c("b", [
                                 _vm._v(
@@ -74652,6 +74649,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       } else {
         return false;
       }
+    },
+    agent: function agent() {
+      if (this.user.role === 'Agent') {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    caissier: function caissier() {
+      if (this.user.role === 'Caissier') {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   mounted: function mounted() {}
@@ -74678,27 +74689,31 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "container-fluid" }, [
       _c("div", { staticClass: "row mt-7 px-7" }, [
-        _c(
-          "a",
-          {
-            staticClass:
-              "icon-hover text-shadow box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light",
-            attrs: { href: "/" + _vm.company.name + "/" + "Devis" }
-          },
-          [_vm._m(0)]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass:
-              "icon-hover box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light",
-            attrs: { href: "/" + _vm.company.name + "/" + "Facture" }
-          },
-          [_vm._m(1)]
-        ),
+        _vm.manager || _vm.agent
+          ? _c(
+              "a",
+              {
+                staticClass:
+                  "icon-hover text-shadow box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light",
+                attrs: { href: "/" + _vm.company.name + "/" + "Devis" }
+              },
+              [_vm._m(0)]
+            )
+          : _vm._e(),
         _vm._v(" "),
         _vm.manager
+          ? _c(
+              "a",
+              {
+                staticClass:
+                  "icon-hover box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light",
+                attrs: { href: "/" + _vm.company.name + "/" + "Facture" }
+              },
+              [_vm._m(1)]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.manager || _vm.caissier
           ? _c(
               "a",
               {
@@ -75662,7 +75677,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['documents', 'type', 'clients', 'vendeurs', 'company'],
+  props: ['documents', 'type', 'clients', 'vendeurs', 'company', 'utilisateur'],
   data: function data() {
     return {
       isAllChecked: false,
@@ -76265,47 +76280,49 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(document.etat))]),
                 _vm._v(" "),
-                _c("td", [
-                  document.etat === "E.A.V"
-                    ? _c("div", [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary btn-sm",
-                            attrs: {
-                              type: "button",
-                              "data-toggle": "tooltip",
-                              title: "Valider"
-                            },
-                            on: {
-                              click: function($event) {
-                                _vm.ajouterAValider(document)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fas fa-check" })]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-danger btn-sm",
-                            attrs: {
-                              type: "button",
-                              "data-toggle": "tooltip",
-                              title: "Rejeter"
-                            },
-                            on: {
-                              click: function($event) {
-                                _vm.ajouterARejetter(document)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fas fa-times" })]
-                        )
-                      ])
-                    : _vm._e()
-                ])
+                _vm.utilisateur.role === "Manager"
+                  ? _c("td", [
+                      document.etat === "E.A.V"
+                        ? _c("div", [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary btn-sm",
+                                attrs: {
+                                  type: "button",
+                                  "data-toggle": "tooltip",
+                                  title: "Valider"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.ajouterAValider(document)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fas fa-check" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger btn-sm",
+                                attrs: {
+                                  type: "button",
+                                  "data-toggle": "tooltip",
+                                  title: "Rejeter"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.ajouterARejetter(document)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fas fa-times" })]
+                            )
+                          ])
+                        : _vm._e()
+                    ])
+                  : _vm._e()
               ])
             })
           )

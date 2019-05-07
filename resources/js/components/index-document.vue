@@ -88,7 +88,7 @@
                             <td>{{ document.client ? document.client.nom : 'N/A'}}</td>
                             <td>{{ document.créateur.name }}</td>
                             <td>{{ document.etat }}</td>
-                            <td>
+                            <td v-if="utilisateur.role === 'Manager'">
                                 <div v-if="document.etat === 'E.A.V'">
                                     <button type="button" class="btn btn-primary btn-sm" @click="ajouterAValider(document)" data-toggle="tooltip" title="Valider">
                                         <i class="fas fa-check"></i>
@@ -218,7 +218,7 @@
 
 <script>
 export default {
-    props: ['documents', 'type', 'clients', 'vendeurs', 'company'],
+    props: ['documents', 'type', 'clients', 'vendeurs', 'company', 'utilisateur'],
 
     data(){
         return {

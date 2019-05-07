@@ -19,8 +19,10 @@ class FactureController extends Controller
         $facture = $company->factures;
         $clients = $company->clients;
         $vendeurs = Company::where('name', $company_name)->first()->users;
+        $user = Auth::user();
+
         $facture->loadMissing('créateur', 'company', 'client');
-        return view('facture.index', compact('facture', 'clients', 'vendeurs', 'company', 'title'));
+        return view('facture.index', compact('facture', 'clients', 'vendeurs', 'company', 'title', 'user'));
     }
 
     public function store($company, Request $request)

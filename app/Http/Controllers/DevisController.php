@@ -25,9 +25,11 @@ class DevisController extends Controller
         $devis = Company::where('name', $company_name)->first()->devis;
         $clients =  Company::where('name', $company_name)->first()->clients;
         $vendeurs = Company::where('name', $company_name)->first()->users;
-        
+        $user = Auth::user();
+
+
         $devis->loadMissing('créateur', 'company', 'client');
-        return view('devis.index', compact('devis', 'clients', 'vendeurs', 'title', 'company'));
+        return view('devis.index', compact('devis', 'clients', 'vendeurs', 'title', 'company' , 'user'));
     }
 
     /**

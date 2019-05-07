@@ -9,19 +9,19 @@
         </div>
         <div class='container-fluid'>
             <div class="row mt-7 px-7">
-                <a :href="'/' + company.name + '/' + 'Devis'" class="icon-hover text-shadow box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light">
+                <a :href="'/' + company.name + '/' + 'Devis'" class="icon-hover text-shadow box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light" v-if="manager || agent" >
                     <div>
                         <i class="fas fa-file-invoice-dollar fa-3x text-dark"></i>
                         <h3 class="mt-3 text-dark">Devis</h3>
                     </div>
                 </a>
-                <a :href="'/' + company.name + '/' + 'Facture'" class="icon-hover box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light">
+                <a :href="'/' + company.name + '/' + 'Facture'" class="icon-hover box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light" v-if="manager">
                     <div>
                         <i class="fas fa-handshake fa-3x text-dark"></i>
                         <h3 class="mt-3 text-dark">Factures</h3>
                     </div>
                 </a>
-                <a :href="'/' + company.name + '/' + 'Payement'" class="icon-hover box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light" v-if="manager">
+                <a :href="'/' + company.name + '/' + 'Payement'" class="icon-hover box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light" v-if="manager || caissier">
                     <div>
                         <i class="fas fa-calculator fa-3x text-dark"></i>
                         <h3 class="mt-3 text-dark">Caisse</h3>
@@ -48,6 +48,20 @@ export default {
     computed: {
         manager(){
             if(this.user.role === 'Manager'){
+                return true
+            } else {
+                return false
+            }
+        },
+        agent(){
+            if(this.user.role === 'Agent'){
+                return true
+            } else {
+                return false
+            }
+        },
+        caissier(){
+            if(this.user.role === 'Caissier'){
                 return true
             } else {
                 return false

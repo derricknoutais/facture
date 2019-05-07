@@ -264,7 +264,7 @@
                     </td>
                 </tr>
                 <!-- Totaux -->
-                <tr class="no-border" v-if="this.document.entrees.length > 0 && this.document.payements.length > 0" >
+                <tr class="no-border" v-if="this.document.entrees.length > 0 " >
                     <td :colspan=" printing ? '2' : '3' " class="no-border checkButtons"></td>
                     <td class="text-right border-left " >Sous-Total</td>
                     <td class=""><b>{{ subtotal | currency}}</b></td>
@@ -285,8 +285,8 @@
 
                     <!-- Sinon juste présente le grand total  -->
 
-                    <td class="text-right border-left border-bottom" v-if=" this.document.payements && this.document.payements.length === 0">Grand Total</td>
-                    <td class="border-bottom" v-if=" this.document.payements && this.document.payements.length === 0"><b>{{ grandTotal | currency }}</b></td>
+                    <td class="text-right border-left border-bottom" v-if=" (this.document.payements && this.document.payements.length === 0) || type === 'Devis'">Grand Total</td>
+                    <td class="border-bottom" v-if=" ( this.document.payements && this.document.payements.length === 0 ) || type === 'Devis'"><b>{{ grandTotal | currency }}</b></td>
 
                 </tr>
                 <tr v-if="this.document.payements && this.document.payements.length > 0">

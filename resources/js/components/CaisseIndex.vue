@@ -203,10 +203,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
 </template>
 
@@ -290,7 +286,6 @@ export default {
                         payement.type = 'Payement'
                         this.transactions.push(payement)
                     }
-                    
                 })
             });
             this.company.retraits.forEach( retrait => {
