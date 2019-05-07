@@ -75660,6 +75660,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['documents', 'type', 'clients', 'vendeurs', 'company'],
   data: function data() {
@@ -76185,141 +76186,127 @@ var render = function() {
           _c(
             "tbody",
             _vm._l(_vm.localDocs, function(document, index) {
-              return _c(
-                "tr",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.redirectToDocument(document)
-                    }
-                  }
-                },
-                [
-                  _c("td", [
-                    _c("div", { staticClass: "form-check form-check-inline" }, [
-                      _c("label", { staticClass: "form-check-label" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.itemsChecked[index],
-                              expression: "itemsChecked[index]"
-                            }
-                          ],
-                          staticClass: "form-check-input",
-                          attrs: { type: "checkbox" },
-                          domProps: {
-                            checked: Array.isArray(_vm.itemsChecked[index])
-                              ? _vm._i(_vm.itemsChecked[index], null) > -1
-                              : _vm.itemsChecked[index]
-                          },
-                          on: {
-                            change: function($event) {
-                              var $$a = _vm.itemsChecked[index],
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = null,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    _vm.$set(
-                                      _vm.itemsChecked,
-                                      index,
-                                      $$a.concat([$$v])
-                                    )
-                                } else {
-                                  $$i > -1 &&
-                                    _vm.$set(
-                                      _vm.itemsChecked,
-                                      index,
-                                      $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1))
-                                    )
-                                }
+              return _c("tr", [
+                _c("td", [
+                  _c("div", { staticClass: "form-check form-check-inline" }, [
+                    _c("label", { staticClass: "form-check-label" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.itemsChecked[index],
+                            expression: "itemsChecked[index]"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "checkbox" },
+                        domProps: {
+                          checked: Array.isArray(_vm.itemsChecked[index])
+                            ? _vm._i(_vm.itemsChecked[index], null) > -1
+                            : _vm.itemsChecked[index]
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.itemsChecked[index],
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    _vm.itemsChecked,
+                                    index,
+                                    $$a.concat([$$v])
+                                  )
                               } else {
-                                _vm.$set(_vm.itemsChecked, index, $$c)
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    _vm.itemsChecked,
+                                    index,
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
                               }
+                            } else {
+                              _vm.$set(_vm.itemsChecked, index, $$c)
                             }
                           }
-                        })
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "a",
-                      {
-                        attrs: {
-                          href:
-                            "/" +
-                            document.company.name +
-                            "/" +
-                            _vm.type +
-                            "/" +
-                            document.id
                         }
-                      },
-                      [_vm._v(_vm._s(document.numéro))]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(
-                      _vm._s(document.client ? document.client.nom : "N/A")
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(document.créateur.name))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(document.etat))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    document.etat === "E.A.V"
-                      ? _c("div", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary btn-sm",
-                              attrs: {
-                                type: "button",
-                                "data-toggle": "tooltip",
-                                title: "Valider"
-                              },
-                              on: {
-                                click: function($event) {
-                                  _vm.ajouterAValider(document)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fas fa-check" })]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-danger btn-sm",
-                              attrs: {
-                                type: "button",
-                                "data-toggle": "tooltip",
-                                title: "Rejeter"
-                              },
-                              on: {
-                                click: function($event) {
-                                  _vm.ajouterARejetter(document)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fas fa-times" })]
-                          )
-                        ])
-                      : _vm._e()
+                      })
+                    ])
                   ])
-                ]
-              )
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href:
+                          "/" +
+                          document.company.name +
+                          "/" +
+                          _vm.type +
+                          "/" +
+                          document.id
+                      }
+                    },
+                    [_vm._v(_vm._s(document.numéro))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _vm._v(_vm._s(document.client ? document.client.nom : "N/A"))
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(document.créateur.name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(document.etat))]),
+                _vm._v(" "),
+                _c("td", [
+                  document.etat === "E.A.V"
+                    ? _c("div", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary btn-sm",
+                            attrs: {
+                              type: "button",
+                              "data-toggle": "tooltip",
+                              title: "Valider"
+                            },
+                            on: {
+                              click: function($event) {
+                                _vm.ajouterAValider(document)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fas fa-check" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-sm",
+                            attrs: {
+                              type: "button",
+                              "data-toggle": "tooltip",
+                              title: "Rejeter"
+                            },
+                            on: {
+                              click: function($event) {
+                                _vm.ajouterARejetter(document)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fas fa-times" })]
+                        )
+                      ])
+                    : _vm._e()
+                ])
+              ])
             })
           )
         ])
@@ -76348,9 +76335,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.message) +
-                    "\n                "
+                  "\n                    Êtes-vous sûr de vouloir supprimer cette ressource?\n                "
                 )
               ]),
               _vm._v(" "),

@@ -18,6 +18,7 @@
                 </div>
             </div>
         </div>
+        <!-- Filtres -->
         <div class="row collapse" id="filterCollapse">
             <div class="row col-12 mt-3">
                 <div class="col">
@@ -75,7 +76,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(document, index) in localDocs" @click="redirectToDocument(document)"> 
+                        <tr v-for="(document, index) in localDocs"> 
                             <td>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
@@ -113,7 +114,7 @@
                             </button>
                     </div>
                     <div class="modal-body">
-                        {{ message }}
+                        Êtes-vous sûr de vouloir supprimer cette ressource?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -218,6 +219,7 @@
 <script>
 export default {
     props: ['documents', 'type', 'clients', 'vendeurs', 'company'],
+
     data(){
         return {
             isAllChecked : false,
@@ -241,9 +243,9 @@ export default {
                 taxable: 0,
                 numero: null
             }
-            
         }
     },
+
     computed:{
         newNumber(){
             let firstLetter = '';

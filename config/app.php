@@ -166,6 +166,8 @@ return [
          * Package Service Providers...
          */
 
+        // 'BigName\BackupManager\Integrations\Laravel\BackupManagerServiceProvider',
+
         /*
          * Application Service Providers...
          */
