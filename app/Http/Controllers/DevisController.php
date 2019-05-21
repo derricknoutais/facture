@@ -88,7 +88,7 @@ class DevisController extends Controller
      */
     public function updateEntries($company, $numero, Request $request)
     {
-        $devis = Devis::where('numéro', $numero)->first();
+        $devis = Devis::find( $numero );
         $devis->loadMissing('entrees');
         for ($i=0; $i < sizeof($request->all()) ; $i++) { 
             $devis->entrees[$i]->update([

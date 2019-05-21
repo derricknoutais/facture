@@ -16,8 +16,8 @@ class ServiceController extends Controller
     public function index($company_name)
     {
         $title = "Cashier | Services ";
-        $company = Company::where('name', $company_name)->first();
-        $services = Service::all();
+        $company = Company::where('name', $company_name)->with('services')->first();
+        $services = Service::where('company_id', $company->id)->get();
         return view('service.index', compact('services', 'title', 'company'));
     }
 
