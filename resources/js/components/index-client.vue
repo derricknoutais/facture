@@ -75,10 +75,10 @@ export default {
     data(){
         return {
             newClient: {
-                nom: null,
-                prenom: null,
-                addresse: null,
-                numéro: null
+                nom: '',
+                prenom: '',
+                addresse: '',
+                numéro: ''
             },
             newCompany : {
 
