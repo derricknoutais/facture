@@ -72591,17 +72591,33 @@ var render = function() {
                 _c("p", { staticClass: "mt-5 text-left" }, [
                   _vm._v(
                     _vm._s(
-                      _vm.document.client.nom + " " + _vm.document.client.prénom
+                      _vm.document.client.nom +
+                        " " +
+                        (_vm.document.client.prénom
+                          ? _vm.document.client.prénom
+                          : "")
                     )
                   )
                 ]),
                 _vm._v(" "),
                 _c("p", { staticClass: "text-left" }, [
-                  _vm._v(_vm._s(_vm.document.client.numéro))
+                  _vm._v(
+                    _vm._s(
+                      _vm.document.client.numéro
+                        ? _vm.document.client.numéro
+                        : ""
+                    )
+                  )
                 ]),
                 _vm._v(" "),
                 _c("p", { staticClass: "text-left" }, [
-                  _vm._v(_vm._s(_vm.document.client.addresse))
+                  _vm._v(
+                    _vm._s(
+                      _vm.document.client.addresse
+                        ? _vm.document.client.addresse
+                        : ""
+                    )
+                  )
                 ])
               ]
             )
@@ -72655,7 +72671,15 @@ var render = function() {
                         return _c(
                           "option",
                           { domProps: { value: client.id } },
-                          [_vm._v(_vm._s(client.nom + " " + client.prénom))]
+                          [
+                            _vm._v(
+                              _vm._s(
+                                client.nom +
+                                  " " +
+                                  (client.prénom ? client.prénom : "")
+                              )
+                            )
+                          ]
                         )
                       })
                     ],
@@ -74016,7 +74040,9 @@ var render = function() {
                               _vm._s(
                                 _vm.document.client.nom +
                                   " " +
-                                  _vm.document.client.prénom
+                                  (_vm.document.client.prénom
+                                    ? _vm.document.client.prénom
+                                    : "")
                               )
                             )
                           ])
@@ -75100,13 +75126,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this = this;
 
       axios.post('/' + this.company.name + '/Client/store', this.newClient).then(function (response) {
-        _this.newClient.prénom = _this.newClient.prenom;
-
-        _this.clientLocal.push(_this.newClient);
-
-        _this.$forceUpdate();
-
-        $('#newClient').modal('hide');
+        console.log(_this.newClient);
+        console.log(response.data); // this.newClient.prénom = this.newClient.prenom;
+        // this.clientLocal.push(this.newClient)
+        // this.$forceUpdate();
+        // $('#newClient').modal('hide')
       }).catch(function (error) {
         console.log(error);
       });
@@ -75166,7 +75190,15 @@ var render = function() {
                         href: "/" + _vm.company.name + "/Client/" + client.id
                       }
                     },
-                    [_vm._v(_vm._s(client.nom + " " + client.prénom))]
+                    [
+                      _vm._v(
+                        _vm._s(
+                          client.nom +
+                            " " +
+                            (client.prénom ? client.prénom : "")
+                        )
+                      )
+                    ]
                   )
                 ])
               ])
@@ -75988,7 +76020,11 @@ var render = function() {
                 _vm._v(" "),
                 _vm._l(_vm.clients, function(client) {
                   return _c("option", { domProps: { value: client.id } }, [
-                    _vm._v(_vm._s(client.nom + " " + client.prénom))
+                    _vm._v(
+                      _vm._s(
+                        client.nom + " " + (client.prénom ? client.prénom : "")
+                      )
+                    )
                   ])
                 })
               ],
@@ -76584,7 +76620,13 @@ var render = function() {
                   },
                   _vm._l(_vm.clients, function(client) {
                     return _c("option", { domProps: { value: client.id } }, [
-                      _vm._v(_vm._s(client.nom + " " + client.prénom))
+                      _vm._v(
+                        _vm._s(
+                          client.nom +
+                            " " +
+                            (client.prénom ? client.prénom : "")
+                        )
+                      )
                     ])
                   })
                 ),

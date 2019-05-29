@@ -23,6 +23,7 @@ class ClientController extends Controller
     public function store($company, Request $request)
     {
         $company = Company::where('name', $company)->first();
+        // return $request->prenom;
         $company->clients()->save(
             Client::create([
                 'nom' => $request->nom,

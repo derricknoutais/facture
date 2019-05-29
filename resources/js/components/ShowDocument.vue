@@ -64,9 +64,9 @@
             <!-- Si On est Pas En Mode Edit, Display Info Client -->
             <div :class=" printing ? 'offset-8': '' " class="col-4 text-center border border-dark px-5 pt-4" v-if="infoEditMode === false && document.client !== null" style="padding-left:50%">
                 <h4 class="d-inline-block float-left mt-2"><strong><u>Client:</u></strong></h4>
-                <p class="mt-5 text-left">{{ document.client.nom + ' ' + document.client.prénom }}</p>
-                <p class="text-left">{{ document.client.numéro }}</p>
-                <p class="text-left">{{ document.client.addresse }}</p>
+                <p class="mt-5 text-left">{{ document.client.nom + ' ' + (document.client.prénom ? document.client.prénom : '') }}</p>
+                <p class="text-left">{{ (document.client.numéro ? document.client.numéro : '') }}</p>
+                <p class="text-left">{{ document.client.addresse ? document.client.addresse : ''}}</p>
             </div>
             <!-- Sinon Display Le Formulaire Pour Choisir Un Client -->
             <div class="col-3 text-center border border-primary px-5 py-4" v-else>
@@ -74,7 +74,7 @@
                 <div class="input-group">
                     <select class="custom-select" v-model="infos.client_id">
                         <option selected>Client...</option>
-                        <option :value="client.id" v-for="client in clients">{{ client.nom + ' ' + client.prénom }}</option>
+                        <option :value="client.id" v-for="client in clients">{{ client.nom + ' ' + (client.prénom ? client.prénom : '') }}</option>
                     </select>
                     <div class="input-group-append">
                         <button class="btn btn-outline-primary" type="button" @click="saveInfo()"><i class="fa fa-save"></i></button>
@@ -399,7 +399,7 @@
                             <p><strong>Montant Facture:</strong></p>
                         </div>
                         <div class="row flex justify-content-between px-3 mt-0">
-                            <p v-if="document.client">{{ document.client.nom + ' ' + document.client.prénom }}</strong></p>
+                            <p v-if="document.client">{{ document.client.nom + ' ' + (document.client.prénom ? document.client.prénom : '') }}</strong></p>
                             <p>{{ grandTotal | currency }}</p>
                         </div>
                         <div class="row flex justify-content-between px-3" v-if="this.type === 'Facture'">

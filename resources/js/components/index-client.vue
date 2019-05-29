@@ -26,7 +26,7 @@
                     <tbody>
                         <tr v-for="client in clientLocal">
                             <td scope="row"> 
-                                <a :href="'/' + company.name + '/Client/' + client.id">{{ client.nom + ' ' + client.prénom }}</a>
+                                <a :href="'/' + company.name + '/Client/' + client.id">{{ client.nom + ' ' + ( client.prénom ? client.prénom : '' ) }}</a>
                             </td>
                         </tr>
                     </tbody>
@@ -90,10 +90,13 @@ export default {
     methods:{
         créerClient(){
             axios.post('/' + this.company.name + '/Client/store', this.newClient ).then( response => {
-                this.newClient.prénom = this.newClient.prenom;
-                this.clientLocal.push(this.newClient)
-                this.$forceUpdate();
-                $('#newClient').modal('hide')
+                console.log(this.newClient)
+                console.log(response.data)
+                // this.newClient.prénom = this.newClient.prenom;
+                // this.clientLocal.push(this.newClient)
+                // this.$forceUpdate();
+                // $('#newClient').modal('hide')
+
             }).catch(error => {
                 console.log(error);
             });

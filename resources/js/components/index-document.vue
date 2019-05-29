@@ -25,7 +25,7 @@
                     Par Client:
                     <select class="custom-select" v-model="filtrerPar.client">
                         <option value="0">Select All</option>
-                        <option :value="client.id" v-for="client in clients">{{ client.nom + " " + client.prénom }}</option>
+                        <option :value="client.id" v-for="client in clients">{{ client.nom + " " + (client.prénom ? client.prénom : '') }}</option>
                     </select>
                 </div>
                 <div class="col">
@@ -184,7 +184,7 @@
                         <input class="form-control" disabled :value="newNumber">
                         <label class="mt-3">Sélectionne Client</label>
                         <select class="form-control" v-model="newDocument.client">
-                            <option v-for="client in clients" :value="client.id">{{ client.nom  + ' ' + client.prénom}}</option>
+                            <option v-for="client in clients" :value="client.id">{{ client.nom  + ' ' + (client.prénom ? client.prénom : '')}}</option>
                         </select>
                         <div class="row mt-3">
                             <div class="col-2">
