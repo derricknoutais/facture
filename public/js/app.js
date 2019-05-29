@@ -75085,10 +75085,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       newClient: {
-        nom: null,
-        prenom: null,
-        addresse: null,
-        numéro: null
+        nom: '',
+        prenom: '',
+        addresse: '',
+        numéro: ''
       },
       newCompany: {},
       isLoading: false,
