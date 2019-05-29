@@ -59,12 +59,14 @@
                                     <p>Devis</p>
                                 </a>
                             </li>
+                            @if (Auth::user()->role == 'Manager')
                             <li class="nav-item ml-4 text-center">
                                 <a class="nav-link mt-4 " href="{{ '/' . $company->name . '/Facture'}}">
                                     <i class="fas fa-handshake fa-2x text-dark"></i>
                                     <p>Facture</p>
                                 </a>
                             </li> 
+                            @endif
                             @if (Auth::user()->role == 'Manager')
                                 <li class="nav-item ml-4 text-center">
                                     <a class="nav-link mt-4" href="{{'/' . $company->name . '/Payement'}}">
