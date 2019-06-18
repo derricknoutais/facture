@@ -45,9 +45,18 @@ class ClientController extends Controller
     {
         //
     }
-    public function update(Request $request, Client $client)
+    public function update($company_name,  Client $client, Request $request)
     {
-        //
+        $updated = $client->update([
+            'nom' => $request->nom,
+            'prénom' => $request->prénom,
+            'numéro' => $request->numéro,
+            'addresse' => $request->addresse
+        ]);
+        if($updated){
+            return redirect()->back();
+        }
+
     }
     public function destroy(Client $client)
     {

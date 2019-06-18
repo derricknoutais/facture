@@ -1,73 +1,4 @@
-<template>
-    <div class='container'>
-        <div class="row mt-6">
-            <div class="col">
-                <h1 class="text-center">Répertoire Clients</h1>
-            </div>
-        </div>
-        
-        <!-- Boutons de Fonctionnalité -->
-        <div class="row mt-5">
-            <div class="col text-right">
-                <span data-toggle="tooltip" title="Créer Nouveau Client"><a href="/send-mail" class="btn btn-primary"><i class="fas fa-envelope"></i></a></span>
-                <span data-toggle="tooltip" title="Créer Nouveau Client"><button class="btn btn-primary" data-toggle="modal" data-target="#newClient"><i class="fa fa-plus"></i></button></span>
-            </div>
-        </div>
 
-        <!-- Tableau Liste Des Clients -->
-        <div class="row mt-3">
-            <div class="col">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="client in clientLocal">
-                            <td scope="row"> 
-                                <a :href="'/' + company.name + '/Client/' + client.id">{{ client.nom + ' ' + ( client.prénom ? client.prénom : '' ) }}</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- New Client -->
-        <div class="modal fade" id="newClient" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-            
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    
-                    <div class="modal-header">
-                        <h5 class="modal-title">Créer Nouveau Client</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    
-                    <div class="modal-body">
-                        <div :class="isLoading ? 'spinner' : '' "></div>
-                        <label>Nom:</label>
-                        <input class="form-control" v-model="newClient.nom">
-                        <label>Prénom:</label>
-                        <input class="form-control" v-model="newClient.prenom">
-                        <label>Addresse</label>
-                        <textarea class="form-control" v-model="newClient.addresse"></textarea>
-                        <label>Numéro:</label>
-                        <input class="form-control" v-model="newClient.numéro">
-                    </div>
-                    
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success" @click="créerClient()">Créer</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
 
 <script>
 export default {
@@ -80,8 +11,13 @@ export default {
                 addresse: '',
                 numéro: ''
             },
+            clientUpdate: {
+                nom: '',
+                prenom: '',
+                addresse: '',
+                numéro: ''
+            },
             newCompany : {
-
             },
             isLoading: false,
             clientLocal: null
@@ -97,6 +33,13 @@ export default {
                 // this.$forceUpdate();
                 // $('#newClient').modal('hide')
 
+            }).catch(error => {
+                console.log(error);
+            });
+        },
+        updateClient(index){
+            axios.post('/client/' + clientLocal[index].id + '/update', this.clientUpdate).then(response => {
+                console.log(response.data);
             }).catch(error => {
                 console.log(error);
             });

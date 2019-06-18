@@ -43,6 +43,8 @@
                         <option>E.A.V</option>
                         <option>Validé</option>
                         <option>Rejetté</option> 
+                        <option>Paiement Partiel</option> 
+                        <option>Payé</option> 
                     </select>
                 </div>
                 <div class="col">
@@ -315,6 +317,7 @@ export default {
         },
         filtrer(){
             this.localDocs = this.documents
+            console.log('Filtering...')
             if(this.filtrerPar.client !== null){
                 this.localDocs = this.localDocs.filter( document => {
                     return document.client_id === this.filtrerPar.client
