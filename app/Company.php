@@ -13,7 +13,7 @@ class Company extends Model
     }
     public function clients()
     {
-        return $this->belongsToMany('App\Client', 'client_companies', 'company_id', 'client_id');
+        return $this->belongsToMany('App\Client', 'client_companies', 'company_id', 'client_id')->orderBy('nom');
     }
     public function devis()
     {

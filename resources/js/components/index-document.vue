@@ -23,10 +23,7 @@
             <div class="row col-12 mt-3">
                 <div class="col">
                     Par Client:
-                    <select class="custom-select" v-model="filtrerPar.client">
-                        <option value="0">Select All</option>
-                        <option :value="client.id" v-for="client in clients">{{ client.nom + " " + (client.prénom ? client.prénom : '') }}</option>
-                    </select>
+                    <multiselect v-model="filtrerPar.client" label="nom_complet" :options="clientLocal" :searchable="true" :close-on-select="true" :show-labels="false" placeholder="Pick a value"></multiselect>
                 </div>
                 <div class="col">
                     Par Vendeur
@@ -244,7 +241,8 @@ export default {
                 client: null,
                 taxable: 0,
                 numero: null
-            }
+            },
+            clientLocal: null
         }
     },
 
@@ -320,7 +318,7 @@ export default {
             console.log('Filtering...')
             if(this.filtrerPar.client !== null){
                 this.localDocs = this.localDocs.filter( document => {
-                    return document.client_id === this.filtrerPar.client
+                    return document.client_id === this.filtrerPar.client.id
                 })
             }
             if(this.filtrerPar.vendeur !== null){
@@ -407,9 +405,16 @@ export default {
             // this.isLoading = false
             return Promise.reject(error);
         });
+        this.clientLocal = this.clients ;
+
+        this.clientLocal.forEach( client => {
+            client.nom_complet = client.nom + ' ' + client.prénom
+        });
+
     }
 }
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style>
 .no-border{
       border: none!important;
