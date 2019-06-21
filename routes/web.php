@@ -10,7 +10,10 @@ header('Access-Control-Allow-Origin:  *');
 header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
 header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-Type, X-Auth-Token, Origin, Authorization');
 
-// Auth::loginUsingId(1);
+if(config('app.env') === 'local'){
+    Auth::loginUsingId(1);
+}
+
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
