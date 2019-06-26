@@ -58,7 +58,7 @@ class Facture extends Model
             $numero_facture = 'F0' . $numero . '/' . date('Y');
         } 
         else {
-            $numero_facture = $numero . '/' . date('Y');
+            $numero_facture = 'F0' . $numero . '/' . date('Y');
         }
         return $numero_facture;
     }

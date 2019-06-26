@@ -2,17 +2,24 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-
 import Multiselect from 'vue-multiselect';
-Vue.component('multiselect', Multiselect)
+import VueAlertify from 'vue-alertify';
 
+Vue.use(VueAlertify, {
+    notifier: {
+        delay: 2,
+        position: 'top-right',
+        closeButton: true,
+    }
+});
+
+Vue.component('multiselect', Multiselect)
 const moment = require('moment')
 require('moment/locale/fr')
 
 Vue.use(require('vue-moment'), {
     moment
 })
-
 const files = require.context('./', true, /\.vue$/i)
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
 

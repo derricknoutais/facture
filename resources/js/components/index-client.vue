@@ -24,15 +24,27 @@ export default {
         }
     },
     methods:{
+        clearClient(){
+            this.newClient.nom = ''
+            this.newClient.prenom = ''
+            this.newClient.addresse = ''
+            this.newClient.numéro = ''
+        },
         créerClient(){
             axios.post('/' + this.company.name + '/Client/store', this.newClient ).then( response => {
                 console.log(this.newClient)
                 console.log(response.data)
-                // this.newClient.prénom = this.newClient.prenom;
-                // this.clientLocal.push(this.newClient)
-                // this.$forceUpdate();
-                // $('#newClient').modal('hide')
-
+                
+                this.newClient.prénom = this.newClient.prenom;
+                this.clientLocal.push(this.newClient)
+                this.$alertify.confirm(
+                  'confirm title',
+                  'This is comfirm',
+                  () => this.$alertify.success('ok'),
+                  () => this.$alertify.error('cancel')
+                );
+                this.$forceUpdate();
+                $('#newClient').modal('hide')
             }).catch(error => {
                 console.log(error);
             });
