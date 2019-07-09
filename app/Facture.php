@@ -62,5 +62,12 @@ class Facture extends Model
         }
         return $numero_facture;
     }
+    public function ajoutePaiement($montant, $note = ''){
+        Payement::create([
+            'facture_id' => $this->id,
+            'montant' => $montant,
+            'note' => $note
+        ]);
+    }
 
 }

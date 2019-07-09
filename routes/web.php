@@ -44,6 +44,11 @@ Route::post('/api/facture', function(Request $request){
     return $facture;
 });
 
+Route::post('/api/paiement', function(Request $request){
+    $facture = Facture::find($request->facture_id);
+    $facture->ajoutePaiement($request->montant, 'Reçu par ...');
+}); 
+
 Route::post('/api/client/nouveau', function(Request $request){
     $company = App\Company::find(1);
     $company->clients()->save(

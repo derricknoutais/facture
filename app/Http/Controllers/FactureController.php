@@ -63,7 +63,10 @@ class FactureController extends Controller
     public function show($company_name, $numero)
     {
         $company = Company::where('name', $company_name)->first();
-        $company->loadMissing('paramètres', 'services');
+        if($company->paramètres && $company->services){
+            $company->loadMissing('paramètres', 'services');
+        }
+        
         $facture = Facture::find($numero);
         $title = "Cashier | Facture ". $facture->numéro ;
         $facture->loadMissing(['entrees', 'company', 'client', 'créateur', 'payements']);
