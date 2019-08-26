@@ -5,6 +5,7 @@ use App\Facture;
 use App\FactureEntree;
 use App\Company;
 use App\Client;
+use App\Events\FactureCree;
 use App\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -55,6 +56,7 @@ class FactureController extends Controller
                     ]);
                 }
             }
+            FactureCree::dispatch($facture);
             
             return $facture;
         }

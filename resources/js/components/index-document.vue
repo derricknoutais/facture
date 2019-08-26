@@ -376,7 +376,10 @@ export default {
             axios.post('/' + this.company.name + '/' + this.type + '/store', {company: this.company.id, document: this.newDocument}).then(response => {
                 $('#newDocument').modal('hide');
                 // console.log(response.data.id)
-                window.location.href = '/' + this.company.name + '/' + this.type + '/' + response.data.id;
+                setTimeout(() => {
+                    window.location.href = '/' + this.company.name + '/' + this.type + '/' + response.data.id;
+                }, 2300);
+                
             }).catch(error => {
                 console.log(error);
             });

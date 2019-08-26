@@ -37,12 +37,12 @@ export default {
                 
                 this.newClient.prénom = this.newClient.prenom;
                 this.clientLocal.push(this.newClient)
-                this.$alertify.confirm(
-                  'confirm title',
-                  'This is comfirm',
-                  () => this.$alertify.success('ok'),
-                  () => this.$alertify.error('cancel')
-                );
+                // this.$alertify.confirm(
+                //   'confirm title',
+                //   'This is comfirm',
+                //   () => this.$alertify.success('ok'),
+                //   () => this.$alertify.error('cancel')
+                // );
                 this.$forceUpdate();
                 $('#newClient').modal('hide')
             }).catch(error => {

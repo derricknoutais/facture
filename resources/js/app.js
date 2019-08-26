@@ -58,7 +58,9 @@ const app = new Vue({
         });
     },
     created(){
-
+        window.Echo.channel('facture').listen('FactureCree', () =>{
+            this.$alertify.success("Une factur vient d'être créé")
+        });
     }
 });
 

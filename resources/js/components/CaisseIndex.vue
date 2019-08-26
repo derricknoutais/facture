@@ -1,10 +1,16 @@
 <template>
     <div class='container'>
-        <div class="jumbotron text-center">
-            <p class="lead">Cash Balance</p>
-            <h1 class="display-3">FCFA {{ totalCaisse | currency}}</h1>
+        
+        <div class="jumbotron text-center bg-special">
+            <!-- <p class="lead">{{ new Date().toUTCString() }}</p> -->
+           
             <hr class="my-2">
-            <p class="lead mt-5">
+            <!-- <h1 class="display-3">FCFA {{ totalCaisse | currency}}</h1> -->
+            <p class="lead mt-3">
+                <div id="clock">
+                    <p class="date">{{ date }}</p>
+                    <p class="time">{{ time }}</p>
+                </div>
                 <button class="btn btn-success btn-lg" role="button" data-toggle="modal" data-target="#recevoirPayement">Reçevoir Payement</button>
                 <button class="btn btn-danger btn-lg" role="button" data-toggle="modal" data-target="#retirerEspece">Retirer Espèce</button>
                 <button class="btn btn-dark btn-lg" role="button" data-toggle="modal" data-target="#fermerCaisse">Fermer Caisse</button>
@@ -229,7 +235,11 @@ export default {
             },
             successMessage: null,
             errorMessage : null,
-            facture : null
+            facture : null,
+            time: '',
+            date: '',
+            week : ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+            timerID : 0
         }
     },
     computed : {
@@ -277,8 +287,24 @@ export default {
                 return total;
             } 
         },
+        
+        
+        
     },
     methods:{
+        updateTime() {
+            var cd = new Date();
+            this.time = this.zeroPadding(cd.getHours(), 2) + ':' + this.zeroPadding(cd.getMinutes(), 2) + ':' + this.zeroPadding(cd.getSeconds(), 2);
+            this.date = this.zeroPadding(cd.getFullYear(), 4) + '-' + this.zeroPadding(cd.getMonth()+1, 2) + '-' + this.zeroPadding(cd.getDate(), 2) + ' ' + this.week[cd.getDay()];
+        },
+
+        zeroPadding(num, digit) {
+            var zero = '';
+            for(var i = 0; i < digit; i++) {
+                zero += '0';
+            }
+            return (zero + num).slice(-digit);
+        },
         getPayements(){
             this.company.factures.forEach(facture => {
                 facture.payements.forEach(payement => {
@@ -349,6 +375,9 @@ export default {
         })
         this.transactions.reverse();
 
+    },
+    created(){
+        this.timerID = setInterval(this.updateTime, 1000)
     }
 }
 </script>
@@ -357,4 +386,5 @@ export default {
     border: 0;
     box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
 }
+
 </style>

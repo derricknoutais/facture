@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\FactureCree;
 use App\Facture;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
@@ -8,7 +9,7 @@ use App\Mail\RappelPaiement;
 
 header('Access-Control-Allow-Origin:  *');
 header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
-header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-Type, X-Auth-Token, Origin, Authorization');
+header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-Type, X-Auth-Token, Origin, Authorization', 'X-Socket-Id');
 
 if(config('app.env') === 'local'){
     Auth::loginUsingId(1);
@@ -45,7 +46,7 @@ Route::post('/api/facture', function(Request $request){
         'description' => $request->description,
         'prix_unitaire' => $request->prix_unitaire
     ]);
-
+    FactureCree::dispatch($facture);
     return $facture;
 });
 
