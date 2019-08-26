@@ -31458,6 +31458,20 @@ if (token) {
 
 
 
+Vue.http.interceptors.push(function (request, next) {
+  //some api's dont like the X-CSFR-token or Pusher token.. remove it..
+  var removeAuthHeaders = request.url.includes("location");
+  request.headers['Access-Control-Allow-Origin'] = '*';
+
+  if (removeAuthHeaders) {
+    request.headers.delete('Access-Control-Request-Headers');
+    request.headers.delete('X-Socket-ID');
+  } else {
+    request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
+  }
+
+  next(function (response) {});
+});
 window.Pusher = __webpack_require__(171);
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo__["a" /* default */]({
   broadcaster: 'pusher',

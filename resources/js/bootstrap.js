@@ -48,24 +48,18 @@ import Echo from 'laravel-echo';
 
 Vue.http.interceptors.push(function (request, next) {
 
-    //some api's dont like the X-CSFR-token or Pusher token.. remove it..
-    const removeAuthHeaders = request.url.includes("openiban.com");
+        //some api's dont like the X-CSFR-token or Pusher token.. remove it..
+        const removeAuthHeaders = request.url.includes("location");
 
-    request.headers['Access-Control-Allow-Origin'] = '*';
+        request.headers['Access-Control-Allow-Origin'] = '*';
 
-    if (removeAuthHeaders) {
-        request.headers.delete('Access-Control-Request-Headers')
-        request.headers.delete('X-Socket-ID');
-
-    }
-    else {
-        request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
-    }
-
-
-
-    next(function (response) {
-
+        if ( removeAuthHeaders ) {
+            request.headers.delete('Access-Control-Request-Headers')
+            request.headers.delete('X-Socket-ID');
+        } else {
+            request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
+        }
+        next(function (response) {
     });
 });
 
