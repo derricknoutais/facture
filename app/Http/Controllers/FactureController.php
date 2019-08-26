@@ -56,7 +56,7 @@ class FactureController extends Controller
                     ]);
                 }
             }
-            FactureCree::dispatch($facture);
+            // FactureCree::dispatch($facture);
             
             return $facture;
         }
