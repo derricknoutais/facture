@@ -89456,6 +89456,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['documents', 'type', 'clients', 'vendeurs', 'company', 'utilisateur'],
   data: function data() {
@@ -90046,23 +90050,31 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("td", [
-                  _c(
-                    "a",
-                    {
-                      attrs: {
-                        href:
-                          "/" +
-                          document.company.name +
-                          "/Client/" +
-                          document.client.id
-                      }
-                    },
-                    [
-                      _vm._v(
-                        _vm._s(document.client ? document.client.nom : "N/A")
+                  document.client
+                    ? _c(
+                        "a",
+                        {
+                          attrs: {
+                            href:
+                              "/" +
+                              document.company.name +
+                              "/Client/" +
+                              document.client.id
+                          }
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(
+                              document.client ? document.client.nom : "N/A"
+                            )
+                          )
+                        ]
                       )
-                    ]
-                  )
+                    : _c("span", [
+                        _vm._v(
+                          _vm._s(document.client ? document.client.nom : "N/A")
+                        )
+                      ])
                 ]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(document.créateur.name))]),

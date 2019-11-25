@@ -84,7 +84,11 @@
                                 </div>
                             </td>
                             <td><a :href="'/'+ document.company.name+'/' + type + '/' + document.id">{{ document.numéro }}</a></td>
-                            <td><a :href="'/'+ document.company.name + '/Client/' + document.client.id">{{ document.client ? document.client.nom : 'N/A'}}</a></td>
+                            <td>
+                                <a :href="'/'+ document.company.name + '/Client/' + document.client.id" v-if="document.client">{{ document.client ? document.client.nom : 'N/A'}}</a>
+                                <span v-else>{{ document.client ? document.client.nom : 'N/A'}}</span>
+
+                            </td>
                             <td>{{ document.créateur.name }}</td>
                             <td>{{ document.etat }}</td>
                             <td v-if="utilisateur.role === 'Manager'">
