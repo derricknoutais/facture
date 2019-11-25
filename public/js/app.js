@@ -90046,7 +90046,23 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("td", [
-                  _vm._v(_vm._s(document.client ? document.client.nom : "N/A"))
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href:
+                          "/" +
+                          document.company.name +
+                          "/Client/" +
+                          document.client.id
+                      }
+                    },
+                    [
+                      _vm._v(
+                        _vm._s(document.client ? document.client.nom : "N/A")
+                      )
+                    ]
+                  )
                 ]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(document.créateur.name))]),

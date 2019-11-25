@@ -84,7 +84,7 @@
                                 </div>
                             </td>
                             <td><a :href="'/'+ document.company.name+'/' + type + '/' + document.id">{{ document.numéro }}</a></td>
-                            <td>{{ document.client ? document.client.nom : 'N/A'}}</td>
+                            <td><a :href="'/'+ document.company.name + '/Client/' + document.client.id">{{ document.client ? document.client.nom : 'N/A'}}</a></td>
                             <td>{{ document.créateur.name }}</td>
                             <td>{{ document.etat }}</td>
                             <td v-if="utilisateur.role === 'Manager'">
