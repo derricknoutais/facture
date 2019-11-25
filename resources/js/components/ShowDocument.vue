@@ -64,7 +64,11 @@
             <!-- Si On est Pas En Mode Edit, Display Info Client -->
             <div :class=" printing ? 'offset-8': '' " class="col-4 text-center border border-dark px-5 pt-4" v-if="infoEditMode === false && document.client !== null" style="padding-left:50%">
                 <h4 class="d-inline-block float-left mt-2"><strong><u>Client:</u></strong></h4>
-                <p class="mt-5 text-left">{{ document.client.nom + ' ' + (document.client.prénom ? document.client.prénom : '') }}</p>
+                <p class="mt-5 text-left">
+                    <a :href="'/' + company.name + '/Client/' + document.client.id">
+                    {{ document.client.nom + ' ' + (document.client.prénom ? document.client.prénom : '') }}
+                    </a>
+                </p>
                 <p class="text-left">{{ (document.client.numéro ? document.client.numéro : '') }}</p>
                 <p class="text-left">{{ document.client.addresse ? document.client.addresse : ''}}</p>
             </div>
@@ -491,6 +495,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- En-Tête -->
+        <div class="footer">
+            Agrément Nº 0000010735/MCDI/DGC Nº Stat 231214 X Compte BICIG Nº40001 09085 40007 100072
         </div>
         
     </div>

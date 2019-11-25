@@ -8,29 +8,29 @@
             </div>
         </div>
         <div class='container-fluid'>
-            <div class="row mt-7 px-7">
-                <a :href="'/' + company.name + '/' + 'Devis'" class="icon-hover text-shadow box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light" v-if="manager || agent" >
+            <div class="row tw-mt-10 tw-px-10">
+                <a :href="'/' + company.name + '/' + 'Devis'" class="icon-hover text-shadow box-shadow col border rounded text-center tw-py-16 tw-px-5 mx-1 bg-light tw-" v-if="manager || agent" >
                     <div>
                         <i class="fas fa-file-invoice-dollar fa-3x text-dark"></i>
-                        <h3 class="mt-3 text-dark">Devis</h3>
+                        <h3 class="mt-3 text-dark tw-text-2xl">Devis</h3>
                     </div>
                 </a>
-                <a :href="'/' + company.name + '/' + 'Facture'" class="icon-hover box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light" v-if="manager">
+                <a :href="'/' + company.name + '/' + 'Facture'" class="icon-hover box-shadow col border rounded text-center tw-py-16 tw-px-5 mx-1 bg-light" v-if="manager">
                     <div>
                         <i class="fas fa-handshake fa-3x text-dark"></i>
-                        <h3 class="mt-3 text-dark">Factures</h3>
+                        <h3 class="mt-3 text-dark tw-text-2xl">Factures</h3>
                     </div>
                 </a>
-                <a :href="'/' + company.name + '/' + 'Payement'" class="icon-hover box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light" v-if="manager || caissier">
+                <a :href="'/' + company.name + '/' + 'Payement'" class="icon-hover box-shadow col border rounded text-center tw-py-16 tw-px-5 mx-1 bg-light" v-if="manager || caissier">
                     <div>
                         <i class="fas fa-calculator fa-3x text-dark"></i>
-                        <h3 class="mt-3 text-dark">Caisse</h3>
+                        <h3 class="mt-3 text-dark tw-text-2xl">Caisse</h3>
                     </div>
                 </a>
-                <a :href="'/' + company.name + '/' + 'Client'" class="icon-hover box-shadow col border rounded text-center py-7 px-3 mx-1 bg-light">
+                <a :href="'/' + company.name + '/' + 'Client'" class=" box-shadow col border rounded text-center tw-py-16 tw-px-5 mx-1 bg-light hover:tw-bg-red-500">
                     <div>
                         <i class="fas fa-users fa-3x text-dark " ></i>
-                        <h3 class="mt-3 text-dark">Clients</h3>
+                        <h3 class="mt-3 text-dark tw-text-2xl">Clients</h3>
                     </div>
                 </a>
             </div>

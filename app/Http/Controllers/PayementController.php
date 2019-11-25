@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Payement;
 use App\Facture;
 use App\Company;
+use App\Events\FacturePayee;
 use Illuminate\Http\Request;
 
 class PayementController extends Controller
@@ -29,6 +30,9 @@ class PayementController extends Controller
             $facture->update([
                 'etat' => 'Payé'
             ]);
+            if($facture->client->origine === 'Elfi'){
+                FacturePayee::dispatch($facture);
+            }
         } else {
             return "Erreur";
         }

@@ -10,17 +10,16 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class FactureCree implements ShouldBroadcast
+class FacturePayee implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $facture;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public $facture;
-
     public function __construct($facture)
     {
         $this->facture = $facture;

@@ -44,7 +44,7 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo';
+import Echo from 'laravel-echo';
 
 // Vue.http.interceptors.push(function (request, next) {
 
@@ -63,12 +63,12 @@ if (token) {
 //     });
 // });
 
-// window.Pusher = require('pusher-js');
+window.Pusher = require('pusher-js');
 
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: '095504f2e6840cb659c7',
-//     cluster: 'eu',
-//     forceTLS: true
-// });
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: '095504f2e6840cb659c7',
+    cluster: 'eu',
+    forceTLS: true
+});
 

@@ -8,6 +8,11 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+// Tailwind
+
+@import "~tailwindcss/base";
+@import "~tailwindcss/components";
+@import "~tailwindcss/utilities";
 
 .navbar-laravel {
   background-color: #fff;
@@ -73,4 +78,18 @@ p {
   background: #0f3854;
   background: radial-gradient(ellipse at center,  #0a2e38  0%, #000000 70%);
   background-size: 100%;
+}
+
+.py-5 {
+  padding-top: 5em;
+  padding-bottom: 5em;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
 }

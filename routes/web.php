@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RappelPaiement;
 
-header('Access-Control-Allow-Origin:  *');
-header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
-header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-Type, X-Auth-Token, Origin, Authorization', 'X-Socket-Id');
+// header('Access-Control-Allow-Origin:  *');
+// header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
+// header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-Type, X-Auth-Token, Origin, Authorization');
 
 if(config('app.env') === 'local'){
     Auth::loginUsingId(1);
@@ -63,7 +63,7 @@ Route::post('/api/client/nouveau', function(Request $request){
             'prénom' => $request->prenom,
             'addresse' => $request->addresse,
             'numéro' => $request->numero_telephone,
-            'origine' => 'Rental Pro'
+            'origine' => 'Elfi'
         ])
     );
     return $client;
