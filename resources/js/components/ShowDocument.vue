@@ -4,11 +4,13 @@
         <div class="row">
             <div class="col text-center">
                 <img v-if="company.paramètres" :src="'/uploads/' + company.paramètres.logo " alt="" class="text-center img-fluid" width="200vw">
-                <a :href="'/' + company.name + '/paramètres'" v-else><img  src='/img/télécharger.png' alt="" class="text-center img-fluid" width="200vw" ></a>
+                <a :href="'/' + company.name + '/paramètres'" v-else><img  src='/img/télécharger.png' alt="" class="text-center img-fluid" width="300vw" ></a>
             </div>
         </div>
         
-        <h2 class="text-center mt-5" v-if="company.paramètres">{{ company.paramètres.en_tete }}</h2>
+        <h2 class="text-center mt-5" v-if="company.paramètres">{{ company.paramètres.en_tete_ligne1 }}</h2>
+        <h2 class="text-center mt-5" v-if="company.paramètres">{{ company.paramètres.en_tete_ligne2 }}</h2>
+        <h2 class="text-center mt-5" v-if="company.paramètres">{{ company.paramètres.en_tete_ligne3 }}</h2>
         
         <!-- Info Client -->
         <div class="row" v-if="printing">
@@ -192,9 +194,7 @@
                 <h5 class="text-left "><strong><u>Objet:</u></strong>  {{ document.objet }}</h5>
             </div>  
         </div>
-        <!-- Tableau des Entrées du Document  -->
-        
-            
+        <!-- Tableau des Entrées du Document  -->      
         <table class="table table-bordered table-fit no-border mt-5">
             <thead>
                 <tr class="">
@@ -226,10 +226,7 @@
                         <!-- <select class="form-control" v-model="newService" @change="addServiceInfo(index)">
                             <option v-for="service in company.services" :value="service">{{ service.référence }}</option>
                         </select> -->
-                        <multiselect 
-                            v-model="newService" :options="company.services" :searchable="true"  
-                            label="ref" placeholder="Pick a value" @select="editServiceInfo(index)" selectLabel="" selectedLabel="ss">
-                        </multiselect>
+                        
                     </td>
 
                     <td scope="row" v-if="entree.edit === false">{{ entree.quantité }}</td>

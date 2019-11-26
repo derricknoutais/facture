@@ -85869,9 +85869,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['document', 'type', 'clients', 'documents', 'user', 'company'],
   data: function data() {
@@ -86361,7 +86358,7 @@ var render = function() {
                     attrs: {
                       src: "/img/télécharger.png",
                       alt: "",
-                      width: "200vw"
+                      width: "300vw"
                     }
                   })
                 ]
@@ -86371,7 +86368,19 @@ var render = function() {
       _vm._v(" "),
       _vm.company.paramètres
         ? _c("h2", { staticClass: "text-center mt-5" }, [
-            _vm._v(_vm._s(_vm.company.paramètres.en_tete))
+            _vm._v(_vm._s(_vm.company.paramètres.en_tete_ligne1))
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.company.paramètres
+        ? _c("h2", { staticClass: "text-center mt-5" }, [
+            _vm._v(_vm._s(_vm.company.paramètres.en_tete_ligne2))
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.company.paramètres
+        ? _c("h2", { staticClass: "text-center mt-5" }, [
+            _vm._v(_vm._s(_vm.company.paramètres.en_tete_ligne3))
           ])
         : _vm._e(),
       _vm._v(" "),
@@ -87355,36 +87364,7 @@ var render = function() {
                           ])
                         : _vm._e(),
                       _vm._v(" "),
-                      entree.edit === true
-                        ? _c(
-                            "td",
-                            [
-                              _c("multiselect", {
-                                attrs: {
-                                  options: _vm.company.services,
-                                  searchable: true,
-                                  label: "ref",
-                                  placeholder: "Pick a value",
-                                  selectLabel: "",
-                                  selectedLabel: "ss"
-                                },
-                                on: {
-                                  select: function($event) {
-                                    _vm.editServiceInfo(index)
-                                  }
-                                },
-                                model: {
-                                  value: _vm.newService,
-                                  callback: function($$v) {
-                                    _vm.newService = $$v
-                                  },
-                                  expression: "newService"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        : _vm._e(),
+                      entree.edit === true ? _c("td") : _vm._e(),
                       _vm._v(" "),
                       entree.edit === false
                         ? _c("td", { attrs: { scope: "row" } }, [
