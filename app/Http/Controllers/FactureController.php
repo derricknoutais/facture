@@ -70,11 +70,16 @@ class FactureController extends Controller
         }
         
         $facture = Facture::find($numero);
-        $title = "Cashier | Facture ";
-        $facture->loadMissing(['entrees', 'company', 'client', 'créateur', 'payements']);
-        $clients = $company->clients;
-        $user = Auth::user();
-        return view('facture.show', compact('facture', 'clients', 'title', 'user', 'company'));
+        if($facture){
+            $title = "Cashier | Facture ". $facture['numéro'] ;
+            $facture->loadMissing(['entrees', 'company', 'client', 'créateur', 'payements']);
+            $clients = $company->clients;
+            $user = Auth::user();
+            return view('facture.show', compact('facture', 'clients', 'title', 'user', 'company'));
+        } else {
+            return "Erreur";
+        }
+        
     }
 
     public function updateEntries($company, $numero, Request $request)
