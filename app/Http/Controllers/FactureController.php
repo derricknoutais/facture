@@ -70,7 +70,7 @@ class FactureController extends Controller
         }
         
         $facture = Facture::find($numero);
-        $title = "Cashier | Facture ". $facture->numéro ;
+        $title = "Cashier | Facture ";
         $facture->loadMissing(['entrees', 'company', 'client', 'créateur', 'payements']);
         $clients = $company->clients;
         $user = Auth::user();
