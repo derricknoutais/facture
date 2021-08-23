@@ -20,13 +20,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/maj-paramètres', 'ParamètreController@store');
 
-Route::get('/api/get-paiements/{factureId}', function($factureId){
+Route::get('/api/get-paiement/{factureId}', function($factureId){
     if($facture = Facture::find($factureId)){
         return $facture->payements;
     } else {
         return -1;
     }
 });
+
+Route::post('/api/get-payments', function(Request $request){
+    return Paiement::whereIn('id', $request->ids);
+})
 
 
 Route::post('/api/facture', function(Request $request){
