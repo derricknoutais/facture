@@ -21,7 +21,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/maj-paramètres', 'ParamètreController@store');
 
 Route::get('/api/get-paiements/{facture}', function(Facture $facture){
-    return $facture->payements;
+    if($facture){
+        return $facture->payements;
+    } else {
+        return -1;
+    }
 });
 
 
