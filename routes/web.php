@@ -2,6 +2,7 @@
 
 use App\Events\FactureCree;
 use App\Facture;
+use App\Payement;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -29,7 +30,7 @@ Route::get('/api/get-paiement/{factureId}', function($factureId){
 });
 
 Route::post('/api/get-payments', function(Request $request){
-    return Paiement::whereIn('id', $request->ids);
+    return Payement::whereIn('id', $request->ids);
 });
 
 
