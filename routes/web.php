@@ -30,7 +30,7 @@ Route::get('/api/get-paiement/{factureId}', function($factureId){
 });
 
 Route::post('/api/get-payments', function(Request $request){
-    return Payement::whereIn('id', $request->ids);
+    return Payement::whereIn('id', $request->ids)->get();
 });
 
 
